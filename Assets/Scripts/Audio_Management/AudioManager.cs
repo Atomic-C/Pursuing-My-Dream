@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -9,29 +7,18 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        
         if(instance == null)
         {
-
             instance = this;
-
-        }
-
-        else if (instance != this)
+        } else if (instance != this)
         {
-
             Destroy(gameObject);
-
         }
-
     }
 
     public void PlayAudio(AudioClip audioClip)
     {
-
         sounds.clip = audioClip;
         sounds.Play();
-
     }
-    
 }

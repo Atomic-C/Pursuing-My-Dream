@@ -1,39 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioControll : MonoBehaviour
 {
-    public AudioSource music;
-    void Start()
-    {
-        
-    }
+    private bool muted;
 
     // Update is called once per frame
     void Update()
     {
-        
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-
-            music.Play();
-
+            if (muted)
+            {
+                this.GetComponent<AudioSource>().Play();
+                muted = false;
+            }
+            else
+            {
+                this.GetComponent<AudioSource>().Pause();
+                muted = true;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-
-            music.Stop();
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-
-            music.Pause();
-
-        }
-
     }
 }

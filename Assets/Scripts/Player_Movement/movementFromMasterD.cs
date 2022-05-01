@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody2D))]
 [RequireComponent (typeof (Collider2D))]
-public class Player : MonoBehaviour {
+public class movementFromMasterD : MonoBehaviour {
 
     [Header("Movement Settings")]
     public float moveSpeed = 2;

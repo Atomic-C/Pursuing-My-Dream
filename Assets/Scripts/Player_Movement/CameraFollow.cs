@@ -16,7 +16,15 @@ public class CameraFollow : MonoBehaviour
     // Offset of the camera position. It is manipulated to create create an emphasis
     // in the player jump (the camera move a bit up)
     public Vector3 offset;
- 
+
+    // Weird bug with the camera that began happening outta nowhere.
+    // The z axis of the camera transform began acting weird, "going behind" everything, making it unable to see anything
+    private void Start()
+    {
+        offset.x = 0;
+        offset.z = -2;
+    }
+
     private void FixedUpdate()
     {
         // If the player jumped, manipulate the offset variable

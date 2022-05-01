@@ -5,6 +5,7 @@ public class ShowExplanation : MonoBehaviour
 {
     // Which object to manipulate
     public GameObject effectorExplanation;
+    public AudioClip showSound;
 
     // Guarantee that the object will begin deactivated
     private void Awake()
@@ -18,6 +19,7 @@ public class ShowExplanation : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             effectorExplanation.SetActive(true);
+            AudioManager.instance.PlayAudio(showSound);
         }
     }
 

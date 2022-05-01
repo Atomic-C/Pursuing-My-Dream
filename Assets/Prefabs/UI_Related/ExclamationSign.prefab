@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectorExplanation: {fileID: 0}
+  showSound: {fileID: 8300000, guid: b73832a9c6642ef4488f13d5c5606de7, type: 3}

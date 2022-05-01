@@ -5,6 +5,7 @@ using UnityEngine;
 public class Platform_Movement : MonoBehaviour {
 
     [Header("Movement Settings")]
+    // Which layer will the RayCast will collide with
     [SerializeField] private LayerMask platformLayerMask;
     private Rigidbody2D rigidBody2d;
     private CircleCollider2D circleCollider2d;
@@ -16,79 +17,46 @@ public class Platform_Movement : MonoBehaviour {
     public float rayCastOffSet = .1f;
     public float jumpSpeed = 8f;
     public float movementSpeed = 5f;
-    public bool isFacingLeft;
-    public bool isGrounded;
-
-    // Player sounds
+    // Float that holds the physics calculation of the player x axis movement
+    private float horizontalSpeed;
+    // Bool used to check if the character is grounded
+    private bool isGrounded;
+    // Character sounds
     public AudioClip jumpSound;
+    // Character animator
+    private Animator animator;
 
-    public Animator animator;
-
-    private void Awake()
+    void Start()
     {
         rigidBody2d = transform.GetComponent<Rigidbody2D>();
         circleCollider2d = transform.GetComponent<CircleCollider2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         GroundCheck(WhichCastToUse);
-        Move();
-        Jump();
-
+        CheckInputs();
     }
 
-    // Function that controls the character movement
-    void Move()
+    private void FixedUpdate()
     {
-        float horizontalSpeed = Input.GetAxisRaw("Horizontal") * movementSpeed;
-        Flip(horizontalSpeed, isFacingLeft);
-
-        // Movement using the game object transform (no physics manipulation, right?)
-        //transform.Translate(new Vector2(horizontalSpeed * Time.deltaTime, 0));
-
-        // Slippery movement
-        //rigidBody2d.AddForce(new Vector2(horizontalSpeed, 0), ForceMode2D.Force);
-
-        // Movement using physics (needed to determine the character animation
-        rigidBody2d.velocity = new Vector2(horizontalSpeed, rigidBody2d.velocity.y);
-        
-        // Ternary that set the xVelocity to the desired ammount, to trigger the corresponding animation
-        // 1 means moving animation
-        // 0 means iddle animation
-        // Using the rigid body y velocity so that the moving animations is only played if the character is "not in the air", aka jumping or falling
-        animator.SetFloat("xVelocity", rigidBody2d.velocity.x != 0 && rigidBody2d.velocity.y == 0 ? 1f : 0f);
-
-        // Little animation to crouch, just for the giggles
-        animator.SetBool("Crouch", Input.GetKey(KeyCode.S) && rigidBody2d.velocity.x == 0);
-
+        CalculatePhysics();
     }
 
-    // Function that flips the character sprite, simulating moving to the left / right
-    void Flip(float horizontalSpeed, bool facingDirection)
+    // Function that checks all inputs, used in the Update event
+    private void CheckInputs()
     {
-        if (horizontalSpeed > 0 && isFacingLeft == false || horizontalSpeed < 0 && isFacingLeft == true)
-        {
-            this.transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-            isFacingLeft = !facingDirection;
-        }
-    }
+        horizontalSpeed = Input.GetAxisRaw("Horizontal") * movementSpeed;
+        Flip();
 
-    // Function that controls the character jump as well its animations
-    private void Jump()
-    {
+        // Trying to use this in FixedUpdate caused some problems
+        // Not every space key press was being detected (FixedUpdate has a slower pace in comparison to Update)
+        // Thus, making the jumping to fail sometimes
         // If the character is on the ground and space is pressed
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            
             // Two ways for simulate a jump, i guess?
             //rigidBody2d.velocity = Vector2.up * jumpSpeed;
             rigidBody2d.AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
@@ -99,11 +67,47 @@ public class Platform_Movement : MonoBehaviour {
             // Play the jumping sound
             AudioManager.instance.PlayAudio(jumpSound);
         }
+        
+        // Movement using the game object transform (no physics manipulation, right?)
+        //transform.Translate(new Vector2(horizontalSpeed * Time.deltaTime, 0));
+
+    }
+
+    // Function that flips the character sprite, simulating moving to the left / right
+    void Flip()
+    {
+        if (horizontalSpeed > 0)
+        {
+            this.transform.localScale = new Vector2(1, transform.localScale.y);
+        } else if (horizontalSpeed < 0)
+        {
+            this.transform.localScale = new Vector2(-1, transform.localScale.y);
+        }
+    }
+
+    // Function that controls all physics calculations, used in the FixedUpdate event
+    private void CalculatePhysics()
+    {
+
+        // Slippery movement
+        //rigidBody2d.AddForce(new Vector2(horizontalSpeed, 0), ForceMode2D.Force);
+
+        // Movement using physics (needed to determine the character animation
+        rigidBody2d.velocity = new Vector2(horizontalSpeed, rigidBody2d.velocity.y);
 
         // Set the animator yVelocity Float where:
         // > 0 = jumping
         // < 0 = falling
         animator.SetFloat("yVelocity", rigidBody2d.velocity.y);
+
+        // Ternary that set the xVelocity to the desired ammount, to trigger the corresponding animation
+        // 1 means moving animation
+        // 0 means iddle animation
+        // Using the rigid body y velocity so that the moving animations is only played if the character is "not in the air", aka jumping or falling
+        animator.SetFloat("xVelocity", rigidBody2d.velocity.x != 0 && rigidBody2d.velocity.y == 0 ? 1f : 0f);
+
+        // Little animation to crouch, just for the giggles
+        animator.SetBool("Crouch", Input.GetKey(KeyCode.S) && rigidBody2d.velocity.x == 0);
 
     }
 

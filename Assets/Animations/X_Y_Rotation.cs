@@ -5,7 +5,7 @@ using UnityEngine;
 public class X_Y_Rotation : MonoBehaviour
 {
     // Enum used to dynamically set which axis to rotate
-    public WhichAxis vector;
+    public WhichAxis axis;
 
     public int speed = 200;
 
@@ -15,7 +15,7 @@ public class X_Y_Rotation : MonoBehaviour
     void Start()
     {
         // Set the speed to rotate the axis, at start
-        switch (vector)
+        switch (axis)
         {
             case WhichAxis.X:
                 rotation.x = speed;
@@ -34,9 +34,6 @@ public class X_Y_Rotation : MonoBehaviour
     {
         // Rotate the object using the selected axis
         this.gameObject.transform.Rotate(rotation * Time.deltaTime);
-
-
-        this.GetComponent<PointEffector2D>().gameObject.SetActive(true);
     }
 
     // Enum used to specify which axis to rotate
@@ -46,5 +43,4 @@ public class X_Y_Rotation : MonoBehaviour
         Y,
         Z
     } 
-
 }

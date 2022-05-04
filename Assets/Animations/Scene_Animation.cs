@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Simple script to animate the background
 public class Scene_Animation : MonoBehaviour
 {
 

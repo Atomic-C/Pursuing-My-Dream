@@ -22,6 +22,8 @@ TagManager:
   - TopRightCorner
   - BottomLeftCorner
   - BottomRightCorner
+  - PlatformEffector
+  - CameraBound
   layers:
   - Default
   - TransparentFX

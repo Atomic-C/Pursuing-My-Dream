@@ -1,29 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
+// Simple script that destroys collectables on touch and increment the player coins ammount each time
 public class CollectStuff : MonoBehaviour
 {
     public int coins = 0;
+    public TextMeshProUGUI coinsUiText; 
     public AudioClip coinPickSound;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void OnTriggerEnter2D(Collider2D otherObject)
     {
         if (otherObject.gameObject.CompareTag("collectable"))
         {
             coins++;
+            coinsUiText.text = "x " + coins;
             Destroy(otherObject.gameObject);
             AudioManager.instance.PlayAudio(coinPickSound);
         }

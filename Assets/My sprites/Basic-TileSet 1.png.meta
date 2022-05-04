@@ -4,82 +4,82 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -2157600390742962999
-    second: TopLeftSurface
+    second: SurfaceTopLeft
   - first:
       213: 5843830355160650253
-    second: MiddleSurface
+    second: SurfaceMiddle
   - first:
       213: -4056189161548100852
-    second: TopRightSurface
+    second: SurfaceTopRight
   - first:
       213: 3452794743316231261
-    second: SingleSurface
+    second: SurfaceSingle
   - first:
       213: 6099585087922794758
-    second: TopLeftDetailUnderground
+    second: UndergroundDetailLeft
   - first:
       213: -739451648019902872
-    second: TopRightDetailUnderground
+    second: UndergroundDetailRight
   - first:
       213: 4857697475404888831
-    second: SteepLeft
+    second: SlopeLeft
   - first:
       213: 8511773566333363305
-    second: SteepRight
+    second: SlopeRight
   - first:
       213: -3312462031230810950
-    second: LeftUnderground
+    second: UndergroundMiddleLeft
   - first:
       213: 8682173118854735943
-    second: MiddleUnderground
+    second: UndergroundMiddle
   - first:
       213: -841874758368643983
-    second: RightUnderground
+    second: UndergroundMiddleRight
   - first:
       213: 2498874268202023279
-    second: SingleMiddle
+    second: MiddleSingle
   - first:
       213: 9117050310484016212
-    second: BottomLeftDetailUnderground
+    second: UndergroundDetailBottomLeft
   - first:
       213: -7381764315566600051
-    second: BottomRightDetailUnderground
+    second: UndergroundDetailBottomRight
   - first:
       213: -9085491984427934027
-    second: SteepUndergroundLeft
+    second: SlopeUndergroundLeft
   - first:
       213: -4916598836917024939
-    second: SteepUndergroundRight
+    second: SlopeUndergroundRight
   - first:
       213: 3550668286412036835
-    second: BottomLeftUnderground
+    second: UndergroundBottomLeft
   - first:
       213: -7766333773730616368
-    second: BottomMiddleUnderground
+    second: UndergroundBottomMiddle
   - first:
       213: 5638330129742244657
-    second: BottomRightUnderground
+    second: UndergroundBottomRight
   - first:
       213: 604442528779490285
-    second: SingleBottom
+    second: UndergroundSingleBottom
   - first:
       213: -3863757851345235184
-    second: SmallSteepLeft
+    second: SmallSlopeLeft
   - first:
       213: 2474647108969792875
-    second: SmallSteepLeftMiddle
+    second: SmallSlopeMiddleLeft
   - first:
       213: 6692825813873493817
-    second: SmallSteepRightMiddle
+    second: SmallSlopeMiddleRight
   - first:
       213: 1041409330426561691
-    second: SmallSteepRight
+    second: SmallSlopeRight
   - first:
       213: 8990299389138510294
     second: SingleLeft
   - first:
       213: 654028707291530488
-    second: SingleMiddl
+    second: SingleMiddle
   - first:
       213: 6704408324537352005
     second: SingleRight
@@ -88,43 +88,91 @@ TextureImporter:
     second: Single
   - first:
       213: -2899090699266531922
-    second: SmallSteepLeftUnderground
+    second: SmallSlopeUndegroundLeft
   - first:
       213: 4896842321341766168
-    second: SmallSteepMiddleLeftIntersection
+    second: SmallSlopeUndergroundML
   - first:
       213: 1812373341578756920
-    second: SmallSteepMiddleRightIntersection
+    second: SmallSlopeUndergroundMR
   - first:
       213: -7111573486744040550
-    second: Basic-TileSet 1_31
+    second: SmallSlopeUndergroundRight
   - first:
       213: 3600863698103212658
-    second: Bush1
+    second: DarkSingleLeft
   - first:
       213: 5803845252320757033
-    second: Bush2
+    second: DarkSingleMiddle
   - first:
       213: -6585373823021974419
-    second: Bush3
+    second: DarkSingleRight
   - first:
       213: 7481025521993150616
-    second: BigTreeTopLeft
+    second: DarkSingle
   - first:
       213: -1538096929100530786
-    second: BigTreeTopRight
+    second: DarkSurfaceTopLeft
   - first:
       213: -3944350487521490676
-    second: SmallTreeTop
+    second: DarkSurfaceMiddle
   - first:
       213: 6420182713749056253
-    second: BigTreeBottomLeft
+    second: DarkSurfaceTopRight
   - first:
       213: 8227987603773649710
-    second: BigTreeBottomRight
+    second: DarkSurfaceSingle
   - first:
       213: 2086974390029623458
-    second: SmallTreeBottom
+    second: Bush1
+  - first:
+      213: 6683626166106278572
+    second: DarkSingleMiddle
+  - first:
+      213: -1246251508206411728
+    second: DarkSingleRight
+  - first:
+      213: 7195766949194433196
+    second: DarkUndergroundMiddleLeft
+  - first:
+      213: 2353138313201543029
+    second: DarkUndergroundMiddle
+  - first:
+      213: -95905531702635911
+    second: Basic-TileSet 1_45
+  - first:
+      213: -2499853431373484540
+    second: DarkMiddleSingle
+  - first:
+      213: 6956587574952992011
+    second: DarkSurfaceMiddle
+  - first:
+      213: -8613285260329181690
+    second: DarkSingle
+  - first:
+      213: -4421849631155830824
+    second: DarkSurfaceTopLeft
+  - first:
+      213: -8667114048267731480
+    second: DarkUndergroundBottomLeft
+  - first:
+      213: 5106995983240005051
+    second: DarkUndergroundBottomMiddle
+  - first:
+      213: -904673077746533466
+    second: DarkUndergroundBottomRight
+  - first:
+      213: 3533786915175742601
+    second: DarkUndergroundSingleBottom
+  - first:
+      213: 1699329984861060800
+    second: Bush1
+  - first:
+      213: -1851012462850618575
+    second: BigTreeBottomLeft
+  - first:
+      213: 5364116114678556905
+    second: DarkSurfaceSingle
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -286,7 +334,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TopLeftSurface
+      name: SurfaceTopLeft
       rect:
         serializedVersion: 2
         x: 0
@@ -307,7 +355,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiddleSurface
+      name: SurfaceMiddle
       rect:
         serializedVersion: 2
         x: 80
@@ -328,7 +376,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TopRightSurface
+      name: SurfaceTopRight
       rect:
         serializedVersion: 2
         x: 160
@@ -349,7 +397,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SingleSurface
+      name: SurfaceSingle
       rect:
         serializedVersion: 2
         x: 240
@@ -370,7 +418,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TopLeftDetailUnderground
+      name: UndergroundDetailLeft
       rect:
         serializedVersion: 2
         x: 320
@@ -391,7 +439,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TopRightDetailUnderground
+      name: UndergroundDetailRight
       rect:
         serializedVersion: 2
         x: 400
@@ -412,7 +460,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SteepLeft
+      name: SlopeLeft
       rect:
         serializedVersion: 2
         x: 480
@@ -433,10 +481,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SteepRight
+      name: SlopeRight
       rect:
         serializedVersion: 2
-        x: 560
+        x: 559
         y: 560
         width: 80
         height: 80
@@ -454,7 +502,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LeftUnderground
+      name: UndergroundMiddleLeft
       rect:
         serializedVersion: 2
         x: 0
@@ -475,7 +523,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiddleUnderground
+      name: UndergroundMiddle
       rect:
         serializedVersion: 2
         x: 80
@@ -496,7 +544,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RightUnderground
+      name: UndergroundMiddleRight
       rect:
         serializedVersion: 2
         x: 160
@@ -517,7 +565,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SingleMiddle
+      name: MiddleSingle
       rect:
         serializedVersion: 2
         x: 240
@@ -538,7 +586,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BottomLeftDetailUnderground
+      name: UndergroundDetailBottomLeft
       rect:
         serializedVersion: 2
         x: 320
@@ -559,7 +607,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BottomRightDetailUnderground
+      name: UndergroundDetailBottomRight
       rect:
         serializedVersion: 2
         x: 400
@@ -580,7 +628,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SteepUndergroundLeft
+      name: SlopeUndergroundLeft
       rect:
         serializedVersion: 2
         x: 480
@@ -601,7 +649,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SteepUndergroundRight
+      name: SlopeUndergroundRight
       rect:
         serializedVersion: 2
         x: 560
@@ -622,7 +670,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BottomLeftUnderground
+      name: UndergroundBottomLeft
       rect:
         serializedVersion: 2
         x: 0
@@ -643,7 +691,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BottomMiddleUnderground
+      name: UndergroundBottomMiddle
       rect:
         serializedVersion: 2
         x: 80
@@ -664,7 +712,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BottomRightUnderground
+      name: UndergroundBottomRight
       rect:
         serializedVersion: 2
         x: 160
@@ -685,7 +733,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SingleBottom
+      name: UndergroundSingleBottom
       rect:
         serializedVersion: 2
         x: 240
@@ -706,7 +754,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepLeft
+      name: SmallSlopeLeft
       rect:
         serializedVersion: 2
         x: 320
@@ -727,7 +775,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepLeftMiddle
+      name: SmallSlopeMiddleLeft
       rect:
         serializedVersion: 2
         x: 400
@@ -748,7 +796,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepRightMiddle
+      name: SmallSlopeMiddleRight
       rect:
         serializedVersion: 2
         x: 480
@@ -769,7 +817,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepRight
+      name: SmallSlopeRight
       rect:
         serializedVersion: 2
         x: 560
@@ -811,7 +859,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SingleMiddl
+      name: SingleMiddle
       rect:
         serializedVersion: 2
         x: 80
@@ -874,7 +922,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepLeftUnderground
+      name: SmallSlopeUndegroundLeft
       rect:
         serializedVersion: 2
         x: 320
@@ -895,7 +943,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepMiddleLeftIntersection
+      name: SmallSlopeUndergroundML
       rect:
         serializedVersion: 2
         x: 400
@@ -916,7 +964,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallSteepMiddleRightIntersection
+      name: SmallSlopeUndergroundMR
       rect:
         serializedVersion: 2
         x: 480
@@ -937,7 +985,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic-TileSet 1_31
+      name: SmallSlopeUndergroundRight
       rect:
         serializedVersion: 2
         x: 560
@@ -958,7 +1006,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bush1
+      name: DarkSingleLeft
       rect:
         serializedVersion: 2
         x: 0
@@ -979,7 +1027,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bush2
+      name: DarkSingleMiddle
       rect:
         serializedVersion: 2
         x: 80
@@ -1000,7 +1048,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bush3
+      name: DarkSingleRight
       rect:
         serializedVersion: 2
         x: 160
@@ -1021,11 +1069,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BigTreeTopLeft
+      name: DarkSingle
       rect:
         serializedVersion: 2
-        x: 241
-        y: 241
+        x: 240
+        y: 240
         width: 80
         height: 80
       alignment: 0
@@ -1042,11 +1090,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BigTreeTopRight
+      name: DarkSurfaceTopLeft
       rect:
         serializedVersion: 2
-        x: 320
-        y: 240
+        x: 1
+        y: 159
         width: 80
         height: 80
       alignment: 0
@@ -1063,10 +1111,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallTreeTop
+      name: DarkSurfaceMiddle
       rect:
         serializedVersion: 2
-        x: 0
+        x: 80
         y: 160
         width: 80
         height: 80
@@ -1084,10 +1132,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BigTreeBottomLeft
+      name: DarkSurfaceTopRight
       rect:
         serializedVersion: 2
-        x: 241
+        x: 160
         y: 160
         width: 80
         height: 80
@@ -1105,10 +1153,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BigTreeBottomRight
+      name: DarkSurfaceSingle
       rect:
         serializedVersion: 2
-        x: 320
+        x: 240
         y: 160
         width: 80
         height: 80
@@ -1126,7 +1174,70 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallTreeBottom
+      name: Bush1
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 160
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a0ad05862c66fc10800000000000000
+      internalID: 2086974390029623458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bush2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caa4542369201cc50800000000000000
+      internalID: 6683626166106278572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bush3
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 160
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 030ef803bdc64bee0800000000000000
+      internalID: -1246251508206411728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkUndergroundMiddleLeft
       rect:
         serializedVersion: 2
         x: 0
@@ -1140,8 +1251,281 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a0ad05862c66fc10800000000000000
-      internalID: 2086974390029623458
+      spriteID: ca20b3d5aef7cd360800000000000000
+      internalID: 7195766949194433196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkUndergroundMiddle
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5776db114d608a020800000000000000
+      internalID: 2353138313201543029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Basic-TileSet 1_45
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9729ed25d664baef0800000000000000
+      internalID: -95905531702635911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkMiddleSingle
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40e21788c8cbe4dd0800000000000000
+      internalID: -2499853431373484540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallTreeTop
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0d18f5ba83ca8060800000000000000
+      internalID: 6956587574952992011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigTreeTopLeft
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60e98fcd0b6777880800000000000000
+      internalID: -8613285260329181690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigTreeTopRight
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dfb3cc303f62a2c0800000000000000
+      internalID: -4421849631155830824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkUndergroundBottomLeft
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ed343581b938b780800000000000000
+      internalID: -8667114048267731480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkUndergroundBottomMiddle
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb50e5ae9c1bfd640800000000000000
+      internalID: 5106995983240005051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkUndergroundBottomRight
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6abfe0301a4f173f0800000000000000
+      internalID: -904673077746533466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DarkUndergroundSingleBottom
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98c39fef9788a0130800000000000000
+      internalID: 3533786915175742601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallTreeBottom
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ce30d72e9b359710800000000000000
+      internalID: 1699329984861060800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigTreeBottomLeft
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13bc7fcd8f1ef46e0800000000000000
+      internalID: -1851012462850618575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BigTreeBottomRight
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e82d5d9f2b217a40800000000000000
+      internalID: 5364116114678556905
       vertices: []
       indices: 
       edges: []

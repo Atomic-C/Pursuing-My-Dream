@@ -3,41 +3,58 @@ using UnityEngine;
 public class Platform_Movement : MonoBehaviour {
 
     [Header("Movement Settings")]
-    // Which layer will the RayCast will collide with
+    // Which layer will the RayCast collide with
     [SerializeField] private LayerMask platformLayerMask;
+
     private Rigidbody2D rigidBody2d;
     private CircleCollider2D circleCollider2d;
+
     // RaycastHit2d used in the GroundCheck function
     private RaycastHit2D raycastHitDown;
     private RaycastHit2D raycastHitUp;
+
     // GameObjects positioned on the player foot and head and used in the GroundCheck function
     public Transform playerFootPosition;
     public Transform playerHeadPosition;
+
     // ENUM to change which type of RayCast2d to use
     public CastType WhichCastToUse;
+
     // Adjust the length of the RayCast2d (going directly down / up from the player), depending on the game platforms colliders
     public float rayCastOffSet = .1f;
+
     public float jumpSpeed = 8f;
     public float movementSpeed = 5f;
+
     // Float that holds the physics calculation of the player x axis movement
-    private float horizontalSpeed;
+    private float xInput, yInput;
+
     // Bool used to check if the player is grounded
     private bool isGrounded;
-    // Player jump sound
-    public AudioClip jumpSound;
+
+    // Coyote time variables
+    private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+
+    // Jump buffer variable
+    private float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+
     // Player animator
     private Animator animator;
+
     // Enable debugging features
     public bool enableDebug;
     public bool castHitLog;
+
     // Float used as a timer for the CastHit function
     private float timer;
 
     // Initialize variables
     void Start()
     {
-        rigidBody2d = transform.GetComponent<Rigidbody2D>();
-        circleCollider2d = transform.GetComponent<CircleCollider2D>();
+        rigidBody2d = GetComponent<Rigidbody2D>();
+        circleCollider2d = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
     }
 
@@ -57,7 +74,30 @@ public class Platform_Movement : MonoBehaviour {
     // Function that checks all inputs, used in the Update event
     private void CheckInputs()
     {
-        horizontalSpeed = Input.GetAxisRaw("Horizontal") * movementSpeed;
+        // Refactoring following the best practices, as seen on the movement script provided by Master D
+        xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Jump");
+        
+        // Implementation of jump buffering
+        if (yInput.Equals(1))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        // Implementation of coyote time
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
         Flip();
 
         // This is used to allow the player to jump down from a platform (only possible in platforms with the Platform Effector)
@@ -68,33 +108,17 @@ public class Platform_Movement : MonoBehaviour {
                 raycastHitDown.collider.isTrigger = true;
             }
         }
-        
-        // Trying to use this in FixedUpdate caused some problems
-        // Not every space key press was being detected (FixedUpdate has a slower pace in comparison to Update, i think)
-        // Thus, making the jumping to fail sometimes
-        // If the character is on the ground and space is pressed
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            // Two ways for simulate a jump, i guess?
-            //rigidBody2d.velocity = Vector2.up * jumpSpeed;
-            rigidBody2d.AddForce(new Vector2(0f, jumpSpeed), ForceMode2D.Impulse);
-
-            // Play the jumping sound
-            AudioManager.instance.PlayAudio(jumpSound);
-        }
-
         // Movement using the game object transform (no physics manipulation, right?)
         //transform.Translate(new Vector2(horizontalSpeed * Time.deltaTime, 0));
-
     }
 
     // Function that flips the character sprite, simulating moving to the left / right
     private void Flip()
     {
-        if (horizontalSpeed > 0)
+        if (xInput > 0)
         {
             this.transform.localScale = new Vector2(1, transform.localScale.y);
-        } else if (horizontalSpeed < 0)
+        } else if (xInput < 0)
         {
             this.transform.localScale = new Vector2(-1, transform.localScale.y);
         }
@@ -103,12 +127,43 @@ public class Platform_Movement : MonoBehaviour {
     // Function that controls all physics calculations, used in the FixedUpdate event
     private void CalculatePhysics()
     {
+        // Refactoring following the best practices, as seen on the movement script provided by Master D
+        float horizontalSpeed = xInput * movementSpeed;
+        float verticalSpeed = rigidBody2d.velocity.y;
+
+        // Coyote time and jump buffer in action
+        if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
+        {
+            verticalSpeed = jumpSpeed;
+
+            jumpBufferCounter = 0f;
+            // Play the jumping sound
+            AudioManager.instance.PlaySound("Jump");
+        }
+
+        if (yInput.Equals(0))
+            coyoteTimeCounter = 0f;
+
 
         // Slippery movement
         //rigidBody2d.AddForce(new Vector2(horizontalSpeed, 0), ForceMode2D.Force);
 
         // Movement using physics (needed to determine the character animation)
-        rigidBody2d.velocity = new Vector2(horizontalSpeed, rigidBody2d.velocity.y);
+        rigidBody2d.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+
+        // Trying to use this in FixedUpdate caused some problems
+        // Not every space key press was being detected (FixedUpdate has a slower pace in comparison to Update, i think)
+        // Thus, making the jumping to fail sometimes
+        // If the character is on the ground and space is pressed
+        //if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        //{
+        // Two ways for simulate a jump, i guess?
+        //rigidBody2d.velocity = Vector2.up * jumpSpeed;
+        //rigidBody2d.AddForce(new Vector2(rigidBody2d.velocity.x, jumpSpeed), ForceMode2D.Impulse);
+
+        // Play the jumping sound
+        //AudioManager.instance.PlayAudio(jumpSound);
+        //}
 
         // Set the animator yVelocity Float where:
         // > 0 = jumping
@@ -123,8 +178,7 @@ public class Platform_Movement : MonoBehaviour {
 
         // Little animation to crouch, just for the giggles
         animator.SetBool("Crouch", Input.GetKey(KeyCode.S) && rigidBody2d.velocity.x == 0);
-
-    }
+}
 
     // Function using the selected cast to detect if the character is in touch with the ground
     // or if it is jumping through a platform effector with one way property enabled
@@ -282,7 +336,7 @@ public class Platform_Movement : MonoBehaviour {
     // of the circle cast. With or without the use of object parenting
     void OnDrawGizmosSelected()
     {
-        if (enableDebug)
+        if (enableDebug && WhichCastToUse == CastType.CIRCLE)
         {
             // Ground check color
             Gizmos.color = CastHit(raycastHitDown, true);

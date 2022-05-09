@@ -7,7 +7,6 @@ public class CollectStuff : MonoBehaviour
 {
     public int coins = 0;
     public TextMeshProUGUI coinsUiText; 
-    public AudioClip coinPickSound;
 
     void OnTriggerEnter2D(Collider2D otherObject)
     {
@@ -16,7 +15,7 @@ public class CollectStuff : MonoBehaviour
             coins++;
             coinsUiText.text = "x " + coins;
             Destroy(otherObject.gameObject);
-            AudioManager.instance.PlayAudio(coinPickSound);
+            AudioManager.instance.PlaySound("CoinPickup");
         }
     }
 

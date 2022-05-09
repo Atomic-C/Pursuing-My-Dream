@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class MovingPlatform_x_Player : MonoBehaviour
 {
-    public class OnTriggerEnterMoveRigidbody : MonoBehaviour
+    private Rigidbody2D rb;
+
+    private void Start()
     {
-        Vector3 lastPosition, lastMove;
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-        void FixedUpdate()
-        {
-            lastMove = transform.position - lastPosition;
-            lastPosition = transform.position;
-        }
-
-        void OnTriggerStay(Collider other)
-        {
-            if (!other.attachedRigidbody) return;
-            other.attachedRigidbody.MovePosition(other.attachedRigidbody.position + lastMove);
-        }
+    void OnTriggerStay(Collider other)
+    {
+        if (!other.attachedRigidbody) return;
+        other.attachedRigidbody.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
     }
 }

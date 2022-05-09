@@ -5,30 +5,40 @@ public class ShowExplanation : MonoBehaviour
 {
     // Which object to manipulate
     public GameObject effectorExplanation;
-    public AudioClip showSound;
+    
+    // The initial idea was to deactivate everything related to the UI explanation that was connected to this script
+    // But since all those objects are "children" of the main one (effectorExplanation), by just deactivating / activating it
+    // will affect all the others
+    //public GameObject[] pointingSigns;
 
-    // Guarantee that the object will begin deactivated
-    private void Awake()
-    {
-        effectorExplanation.SetActive(false);
-    }
-
-    // On trigger with the player, activate the object
+    // On trigger with the player, activate the parent object
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            effectorExplanation.SetActive(true);
-            AudioManager.instance.PlayAudio(showSound);
+            SetVisibility();
+            AudioManager.instance.PlaySound("ShowExplanation");
         }
     }
 
-    // On trigger exit with the player, deactivate the object
+    // On trigger exit with the player, deactivate the parent object
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            effectorExplanation.SetActive(false);
+            SetVisibility();
         }
+    }
+
+    // Function to activate / deactivate the parent object
+    private void SetVisibility()
+    {
+        effectorExplanation.SetActive(!effectorExplanation.activeSelf);
+
+        // Initial idea to deactivate / activate everything
+        /*for (int i = 0; i < pointingSigns.Length; i++)
+        {
+        pointingSigns[i].SetActive(!pointingSigns[i].activeSelf);
+        }*/
     }
 }

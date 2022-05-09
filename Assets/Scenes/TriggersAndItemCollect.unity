@@ -32713,7 +32713,7 @@ SliderJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: -128.52, y: 4.99}
   m_AutoConfigureAngle: 0
-  m_Angle: 120
+  m_Angle: 180
   m_UseMotor: 1
   m_Motor:
     m_MotorSpeed: 1
@@ -86542,7 +86542,9 @@ GameObject:
   - component: {fileID: 1375627280}
   - component: {fileID: 1375627282}
   - component: {fileID: 1375627279}
+  - component: {fileID: 1375627283}
   - component: {fileID: 1375627278}
+  - component: {fileID: 1375627284}
   m_Layer: 8
   m_Name: SurfaceEffector
   m_TagString: Untagged
@@ -86562,7 +86564,7 @@ SurfaceEffector2D:
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Speed: 50
+  m_Speed: 5
   m_SpeedVariation: 0
   m_ForceScale: 0.5
   m_UseContactForce: 1
@@ -86581,7 +86583,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.009312868, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -86592,7 +86594,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.5, y: 1.8012917}
+  m_Size: {x: 4.9973226, y: 1.8012917}
   m_EdgeRadius: 0
 --- !u!212 &1375627280
 SpriteRenderer:
@@ -86680,6 +86682,44 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &1375627283
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375627277}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.009303331, y: 0.43043128}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.5, y: 1.8012917}
+    newSize: {x: 5.5, y: 1.8012917}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.9973226, y: 1.9578116}
+  m_EdgeRadius: 0
+--- !u!114 &1375627284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375627277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a690f5fbec4de046abf746afb7dcd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1376232010
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,8 +9,9 @@ To create a simple level were i can experiment with the tools Unity provides. Li
 
 Already implemented:
 - Character movement, with built-in debug features
-- Character animations, yet simple but functional
+- Character animations, simple but functional
 - Effectors 2d, serving as examples of what they can do (with some UI explanations of them)
+- All sprites for the yellow slime / ground / trees and bushes are mine. I've spent some time with Aseprite and ended up mading then 😆
 
 Next steps:
 - Finish the visual aspects of the level

@@ -26,18 +26,18 @@ public class Platform_Movement : MonoBehaviour {
     public float jumpSpeed = 8f;
     public float movementSpeed = 5f;
 
-    // Float that holds the physics calculation of the player x axis movement
+    // Float that holds the physics calculation of the player x / y axis movement
     private float xInput, yInput;
 
     // Bool used to check if the player is grounded
     private bool isGrounded;
 
     // Coyote time variables
-    private float coyoteTime = 0.2f;
+    [SerializeField] private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
 
     // Jump buffer variable
-    private float jumpBufferTime = 0.2f;
+    [SerializeField] private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
     // Player animator
@@ -49,6 +49,9 @@ public class Platform_Movement : MonoBehaviour {
 
     // Float used as a timer for the CastHit function
     private float timer;
+
+    // Vector3 used to hold the last grounded position
+    public Vector3 lastPosition;
 
     // Initialize variables
     void Start()
@@ -287,6 +290,17 @@ public class Platform_Movement : MonoBehaviour {
 
         // isGrounded bool receives true or false, if the cast hit any collider with the platform layer mask
         isGrounded = raycastHitDown.collider != null;
+
+        // If the player is grounded, cache this position (used to reset the player position later, if it falls from the level platform)
+        if (isGrounded)
+        {
+            lastPosition = this.transform.position;
+            // Work-around for a problem found: when the player is near the edge of a platform, it will slowly slip until it falls. When caching this last position
+            // that causes the player to slip, this can lead to other falls for the distracted human behind the keyboard. Which can be annoying...
+            // To fix this, the last position of the X axis is cached with a little calculation: it the xInput is negative (the player is moving to the left) then the
+            // value cached will be a little to the right, avoiding the edge slip problem. The same goes for when the player is moving to the right (cached a little to the left)
+            lastPosition.x = xInput < 0 ? lastPosition.x + 0.5f : lastPosition.x - 0.5f;
+        }
 
         // Set the animator Jump bool accordingly
         // Is grounded = true, and vice versa

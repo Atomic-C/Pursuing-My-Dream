@@ -25,7 +25,7 @@ public class TimeBasedRepulsion : MonoBehaviour
         if (activateTimer <= 0)
         {
             Activate();
-
+            AudioManager.instance.PlaySound("Explosion");
             // ... call the Deactivate function after the explosion animation ends
             Invoke("Deactivate", this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
 

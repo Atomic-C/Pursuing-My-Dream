@@ -3,23 +3,35 @@ using UnityEngine;
 // Simple script to animate the background
 public class Scene_Animation : MonoBehaviour
 {
-
-    public float spd = 0.1f;
+    // Animation speed
+    public float speed = 0.1f;
+    // The game object renderer
     public Renderer rend;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // Enum used to determine which renderer this game object is using
+    public RendererType rendererType;
 
     // Update is called once per frame
     void Update()
     {
+        switch (rendererType)
+        {
+            // If its a sprite renderer, animate differently...
+            case RendererType.SPRITE:
+                Vector3 offsetV3 = new Vector3(speed * Time.deltaTime, 0);
+                rend.transform.position += offsetV3;
+                break;
+            // ...than a mesh renderer
+            case RendererType.MESH:
+                Vector2 offsetV2 = new Vector2(speed * Time.deltaTime, 0);
+                rend.material.mainTextureOffset += offsetV2;
+                break;
+        }
+    }
 
-        Vector2 offset = new Vector2(spd * Time.deltaTime, 0);
-
-        rend.material.mainTextureOffset += offset;
-
+    // The renderer enum
+    public enum RendererType
+    {
+        SPRITE,
+        MESH
     }
 }

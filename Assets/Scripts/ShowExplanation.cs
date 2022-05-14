@@ -5,7 +5,7 @@ public class ShowExplanation : MonoBehaviour
 {
     // Which object to manipulate
     public GameObject effectorExplanation;
-    
+
     // The initial idea was to deactivate everything related to the UI explanation that was connected to this script
     // But since all those objects are "children" of the main one (effectorExplanation), by just deactivating / activating it
     // will affect all the others
@@ -17,7 +17,7 @@ public class ShowExplanation : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             SetVisibility();
-            AudioManager.instance.PlaySound("ShowExplanation");
+            AudioManager.instance.PlaySound("ShowExplanation", gameObject.transform.position);
         }
     }
 

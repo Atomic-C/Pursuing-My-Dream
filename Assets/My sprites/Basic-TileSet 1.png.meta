@@ -191,10 +191,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -233,6 +235,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1540,9 +1543,66 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      DarkUndergroundBottomMiddle: 5106995983240005051
+      UndergroundDetailBottomLeft: 9117050310484016212
+      SlopeUndergroundRight: -4916598836917024939
+      SingleMiddle: 654028707291530488
+      SmallSlopeMiddleRight: 6692825813873493817
+      Bush3: -1246251508206411728
+      DarkSurfaceTopRight: 6420182713749056253
+      Basic-TileSet 1_45: -95905531702635911
+      SlopeRight: 8511773566333363305
+      UndergroundMiddleRight: -841874758368643983
+      DarkSingleRight: -6585373823021974419
+      SmallSlopeUndegroundLeft: -2899090699266531922
+      Bush2: 6683626166106278572
+      SmallTreeBottom: 1699329984861060800
+      Single: 4539206057028990066
+      SurfaceTopLeft: -2157600390742962999
+      SurfaceTopRight: -4056189161548100852
+      UndergroundDetailLeft: 6099585087922794758
+      DarkSurfaceMiddle: -3944350487521490676
+      BigTreeTopLeft: -8613285260329181690
+      SlopeUndergroundLeft: -9085491984427934027
+      SmallSlopeUndergroundRight: -7111573486744040550
+      UndergroundDetailRight: -739451648019902872
+      SmallTreeTop: 6956587574952992011
+      MiddleSingle: 2498874268202023279
+      SmallSlopeMiddleLeft: 2474647108969792875
+      SmallSlopeUndergroundMR: 1812373341578756920
+      DarkMiddleSingle: -2499853431373484540
+      DarkUndergroundBottomLeft: -8667114048267731480
+      SurfaceMiddle: 5843830355160650253
+      DarkSingle: 7481025521993150616
+      SmallSlopeLeft: -3863757851345235184
+      Bush1: 2086974390029623458
+      DarkUndergroundMiddle: 2353138313201543029
+      DarkSingleMiddle: 5803845252320757033
+      BigTreeTopRight: -4421849631155830824
+      BigTreeBottomLeft: -1851012462850618575
+      DarkUndergroundSingleBottom: 3533786915175742601
+      UndergroundBottomLeft: 3550668286412036835
+      SmallSlopeUndergroundML: 4896842321341766168
+      DarkSurfaceSingle: 8227987603773649710
+      DarkUndergroundMiddleLeft: 7195766949194433196
+      DarkUndergroundBottomRight: -904673077746533466
+      BigTreeBottomRight: 5364116114678556905
+      SingleLeft: 8990299389138510294
+      UndergroundBottomRight: 5638330129742244657
+      UndergroundSingleBottom: 604442528779490285
+      UndergroundBottomMiddle: -7766333773730616368
+      UndergroundMiddle: 8682173118854735943
+      SingleRight: 6704408324537352005
+      SlopeLeft: 4857697475404888831
+      UndergroundDetailBottomRight: -7381764315566600051
+      UndergroundMiddleLeft: -3312462031230810950
+      SmallSlopeRight: 1041409330426561691
+      DarkSingleLeft: 3600863698103212658
+      SurfaceSingle: 3452794743316231261
+      DarkSurfaceTopLeft: -1538096929100530786
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

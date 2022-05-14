@@ -101,10 +101,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -143,6 +145,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -748,9 +751,36 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      gun_sprite_sheet_0: -490087019247727121
+      gun_sprite_sheet_24: 246068867787573501
+      gun_sprite_sheet_13: -1813513726736743527
+      gun_sprite_sheet_4: -2302360622102962866
+      gun_sprite_sheet_5: -3062330866224443222
+      gun_sprite_sheet_17: 2793762997160224761
+      gun_sprite_sheet_19: 8515043511056422381
+      gun_sprite_sheet_26: -4417472842887143515
+      gun_sprite_sheet_12: -3874186261844833754
+      gun_sprite_sheet_25: 4823565878259173777
+      gun_sprite_sheet_6: 1052033248706232103
+      gun_sprite_sheet_16: 1371604226996307106
+      gun_sprite_sheet_8: 8205812251252740443
+      gun_sprite_sheet_10: 8305233381391690839
+      gun_sprite_sheet_22: -886631278584350266
+      gun_sprite_sheet_1: -7333475163487919036
+      gun_sprite_sheet_20: 6712054349785638492
+      gun_sprite_sheet_7: 6139095562253404120
+      gun_sprite_sheet_21: 8937949692186959432
+      gun_sprite_sheet_9: 7824418335155011306
+      gun_sprite_sheet_14: -7728969288234883849
+      gun_sprite_sheet_15: 6934570266166679419
+      gun_sprite_sheet_3: -8390428878039816450
+      gun_sprite_sheet_2: 2576494417840500926
+      gun_sprite_sheet_18: -8336927057369532267
+      gun_sprite_sheet_23: 4713339325553932259
+      gun_sprite_sheet_11: -4701815217351832889
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -38,17 +38,17 @@ public class AudioManager : MonoBehaviour
             newSound.transform.SetParent(this.transform);
             sounds[i].SetSource(newSound.AddComponent<AudioSource>());
         }
-        PlaySound("Music");
+        PlaySound("Music", Vector3.zero);
     }
 
     // Function that plays the sound with the respective parameter
-    public void PlaySound(string soundName)
+    public void PlaySound(string soundName, Vector3 positionToPlay)
     {
         for (int i = 0; i < sounds.Length; i++)
         {
             if (sounds[i].name == soundName)
             {
-                sounds[i].Play();
+                sounds[i].Play(positionToPlay);
                 return;
             }
         }
@@ -75,10 +75,16 @@ public class Sound
 {
     public string name;
     [Range(0f, 1f)]
-    public float volume;
+    public float volume = 0.7f;
+    [Range(0.5f, 1.5f)]
+    public float pitch = 1f;
+    [Range(0f, 0.5f)]
+    public float randomVolume = 0.1f;
+    [Range(0f, 0.5f)]
+    public float randomPitch = 0.1f;
     public bool loop, isMusic, isPlaying;
     public AudioClip clip;
-    private AudioSource source;
+    private AudioSource source { get; set; }
 
     // Set the properties below accordingly to our choices in the editor 
     public void SetSource(AudioSource audioSource)
@@ -91,15 +97,17 @@ public class Sound
     // Function used to play the audio clip
     // If it is a music (isMusic bool), call the Play function
     // If its not a music (SFX), call the PlayOneShot function
-    public void Play()
+    public void Play(Vector3 positionToPlay)
     {
-        source.volume = volume;
+        source.volume = volume * (1 + UnityEngine.Random.Range(-randomVolume / 2f, randomVolume / 2f));
+        source.pitch = pitch * (1 + UnityEngine.Random.Range(-randomPitch / 2f, randomPitch / 2f));
+        
         if (isMusic)
             source.Play();
         else
              if (!isPlaying)
         {
-            source.PlayOneShot(clip);
+            AudioSource.PlayClipAtPoint(clip, positionToPlay);
 
             // Jump sound needs the delay to avoid the sound bug
             // All other sounds can repeat

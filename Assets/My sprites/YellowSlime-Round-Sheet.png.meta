@@ -98,10 +98,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -140,6 +142,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -796,9 +799,35 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Damage2: 1285937184951978474
+      Falling1: -6191991636534525690
+      Death4: -9214401241830318751
+      Impact1: -2080827987338687575
+      Jump2: 1020648406593762152
+      Death1: 3329231626184569849
+      Crouch2: -4005897216106757385
+      JumpTopHeight3: -7526386362044538651
+      JumpTopHeight1: 4730213815366675687
+      Death2: -668503182973216769
+      MovingRight2: 1828043170780554332
+      Impact4: -66350072744377890
+      Death5: 3922718247121990414
+      Death3: 725201951521992301
+      JumpTopHeight2: -201997260941465798
+      Jump3: -5498827705609456915
+      Jump1: 2054158175092387126
+      Iddle2: 5620305689255338217
+      Impact2: -2333191195884633309
+      Damage1: 7201364350621711633
+      Crouch1: 2516805082475195109
+      Iddle1: -2043167824384449797
+      Crouch3: -1262105974839775541
+      Falling2: -8334347949024425324
+      Impact3: -8037494386103474699
+      MovingRight1: 4115568304093609634
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -50,10 +50,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -92,6 +94,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -412,9 +415,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      conveyour belt-Sheet_5: -6375567433887789993
+      conveyour belt-Sheet_9: 3028666138146772214
+      conveyour belt-Sheet_7: 3863316088280965905
+      conveyour belt-Sheet_3: -5331144264654136529
+      conveyour belt-Sheet_4: 6927534620284814056
+      conveyour belt-Sheet_0: 6515475000327587635
+      conveyour belt-Sheet_8: -1631735066429967500
+      conveyour belt-Sheet_1: 934075382704137520
+      conveyour belt-Sheet_6: 6723558364093207915
+      conveyour belt-Sheet_2: 3137987197753899570
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

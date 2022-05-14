@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyEffect: {fileID: 1783276646780061817, guid: 2c6ae88821cc99d45b231edfcb005e4c, type: 3}
   lifeSpan: 5
+  audioSource: {fileID: 0}
 --- !u!199 &7921348615930565351
 ParticleSystemRenderer:
   serializedVersion: 6

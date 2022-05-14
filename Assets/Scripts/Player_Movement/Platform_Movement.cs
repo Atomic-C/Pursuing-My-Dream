@@ -141,7 +141,7 @@ public class Platform_Movement : MonoBehaviour {
 
             jumpBufferCounter = 0f;
             // Play the jumping sound
-            AudioManager.instance.PlaySound("Jump");
+            AudioManager.instance.PlaySound("Jump", gameObject.transform.position);
         }
 
         if (yInput.Equals(0))

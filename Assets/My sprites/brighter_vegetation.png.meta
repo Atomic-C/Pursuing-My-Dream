@@ -20,10 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -62,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -634,9 +637,31 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      dandelionspore1: 564808213310940221
+      wheat4: 8902396509863913534
+      dandelionspore2: -4934474502498716312
+      wheat3: 4435769784414576266
+      wheat5: -1447189560536518740
+      grass2: -6563074914105319014
+      grass6: 5506441615375864247
+      sunflower2: 2247245598898574411
+      grass3: 5215441700239546762
+      sunflower1: -9046476301909485314
+      brighter_vegetation_19: 3096557267715865775
+      bush3: -248831413725729483
+      grass1: 3666862321213629198
+      wheat2: 6996330595561947128
+      sunflower3: -240643893765420194
+      bush1: -4048650613102838481
+      grass5: -8123796844617361794
+      wheat1: 4381194180403898836
+      grass4: -7597886395522594654
+      bush2: -3363169776338227417
+      tree1: 7750082163659043984
+      tree2: -7057300314933585119
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -1,33 +1,59 @@
 using UnityEngine;
 
-// As the name implies, this is a simple script to simulate the gradual loss of hearing
-// Used by the black hole, i found it interesting to have this effect when the player enters into contact with the black hole
+/// <summary>
+/// As the name implies, this is a simple script to simulate the gradual loss of hearing 
+/// Used by the black hole, i found it interesting to have this effect when the player enters into contact with the black hole
+/// </summary>
 public class SlowlyCutOffSound : MonoBehaviour
 {
-    // The camera high pass filter
+    /// <summary>
+    /// The camera high pass filter 
+    /// </summary>
     public AudioHighPassFilter highFilter;
+
+    /// <summary>
+    /// The camera low pass filter 
+    /// </summary>
     public AudioLowPassFilter lowFilter;
-    public float cutOffFrequency;
+
+    /// <summary>
+    /// Bool changed when the player enter this game object trigger collider
+    /// </summary>
     public bool enteredCutOffZone;
+
+    /// <summary>
+    /// Enum that determines which audio filter will be used
+    /// </summary>
     public WhichFilter whichFilter;
 
+    /// <summary>
+    /// Int used to increment / decrement the audio filter frequency over time
+    /// </summary>
+    [SerializeField]
+    private int frequencyNum;
 
-    public int changeNum;
+    /// <summary>
+    /// Int used as a multiplier to boost the audio normalize speed, after the player exited the trigger area
+    /// It is not used for when the player enter this area, because a faster audio "cut" is buggy, so to avoid this drastic change and the audio bug
+    /// this is only used to normalize the audio
+    /// </summary>
+    [SerializeField]
+    private int normalizeAudio;
 
+    /// <summary>
+    /// Int that holds the audio filter minimum frequency value
+    /// </summary>
     private int minCutOffFrequency = 10;
+
+    /// <summary>
+    /// Int that holds the audio filter maximum frequency value
+    /// </summary>
     private int maxCutOffFrequency = 22000;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (whichFilter == WhichFilter.HIGHPASS)
-            cutOffFrequency = highFilter.cutoffFrequency;
-        if (whichFilter == WhichFilter.LOWPASS)
-            cutOffFrequency = lowFilter.cutoffFrequency;
-    }
-
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Call the respective function depending on which audio filter is being used
+    /// </summary>
+    void Update() 
     {
         if (whichFilter == WhichFilter.HIGHPASS)
             UsingHighPass();
@@ -35,76 +61,89 @@ public class SlowlyCutOffSound : MonoBehaviour
             UsingLowPass();
     }
 
+    /// <summary>
+    /// Function using the high pass audio filter. Since the effects kicks at a higher frequency (22000 mutes the sound, basically), the audio filter frequency is incremented
+    /// as time passes by a fixed ammount, when the player enters the trigger area. And stops after hiting the frequency cap of 22000. It is quickly decremented after the player
+    /// exits the trigger area
+    /// </summary>
     private void UsingHighPass()
     {
         if (enteredCutOffZone)
         {
-            if (cutOffFrequency != maxCutOffFrequency)
+            if (highFilter.cutoffFrequency < maxCutOffFrequency)
             {
-                highFilter.cutoffFrequency = cutOffFrequency;
-                cutOffFrequency += changeNum;
-                if (cutOffFrequency > maxCutOffFrequency)
+                highFilter.cutoffFrequency += frequencyNum;
+                if (highFilter.cutoffFrequency >= maxCutOffFrequency)
                 {
-                    cutOffFrequency = maxCutOffFrequency;
-                    highFilter.cutoffFrequency = cutOffFrequency;
+                    highFilter.cutoffFrequency = maxCutOffFrequency;
                 }
             }
         }
         else
         {
-            if (cutOffFrequency != minCutOffFrequency)
+            if (highFilter.cutoffFrequency > minCutOffFrequency)
             {
-                highFilter.cutoffFrequency = cutOffFrequency;
-                cutOffFrequency -= changeNum * 20;
-                if (cutOffFrequency < minCutOffFrequency)
+                highFilter.cutoffFrequency -= frequencyNum * normalizeAudio;
+                if (highFilter.cutoffFrequency <= minCutOffFrequency)
                 {
-                    cutOffFrequency = minCutOffFrequency;
-                    highFilter.cutoffFrequency = cutOffFrequency;
+                    highFilter.cutoffFrequency = minCutOffFrequency;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Function using the low pass audio filter. Since the effects kicks at a lower frequency (10 mutes the sound, basically), the audio filter frequency is decremented
+    /// as time passes by a fixed ammount, when the player enters the trigger area. And stops after hiting the frequency cap of 10. It is quickly incremented after the player
+    /// exits the trigger area
+    /// </summary>
     private void UsingLowPass()
     {
         if (enteredCutOffZone)
         {
-            if (cutOffFrequency != minCutOffFrequency)
+            if (lowFilter.cutoffFrequency != minCutOffFrequency)
             {
-                lowFilter.cutoffFrequency = cutOffFrequency;
-                cutOffFrequency -= changeNum;
-                if (cutOffFrequency < minCutOffFrequency)
+                lowFilter.cutoffFrequency -= frequencyNum;
+                if (lowFilter.cutoffFrequency < minCutOffFrequency)
                 {
-                    cutOffFrequency = minCutOffFrequency;
-                    lowFilter.cutoffFrequency = cutOffFrequency;
+                    lowFilter.cutoffFrequency = minCutOffFrequency;
                 }
             }
         }
         else
         {
-            if (cutOffFrequency != maxCutOffFrequency)
+            if (lowFilter.cutoffFrequency != maxCutOffFrequency)
             {
-                lowFilter.cutoffFrequency = cutOffFrequency;
-                cutOffFrequency += changeNum * 20;
-                if (cutOffFrequency > maxCutOffFrequency)
+                lowFilter.cutoffFrequency += frequencyNum * normalizeAudio;
+                if (lowFilter.cutoffFrequency > maxCutOffFrequency)
                 {
-                    cutOffFrequency = maxCutOffFrequency;
-                    lowFilter.cutoffFrequency = cutOffFrequency;
+                    lowFilter.cutoffFrequency = maxCutOffFrequency;
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Player entered the trigger area, so set the enteredCutOffZone bool to true
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         enteredCutOffZone = true;
     }
 
+    /// <summary>
+    /// Player exited the trigger area, so set the enteredCutOffZone bool to false
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         enteredCutOffZone = false;
     }
 
+    /// <summary>
+    /// Enum used to determine which audio filter will be used
+    /// </summary>
     public enum WhichFilter {
         HIGHPASS,
         LOWPASS

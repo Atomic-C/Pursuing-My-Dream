@@ -1,25 +1,25 @@
 using UnityEngine;
 
+/// <summary>
+/// Class that controls the camera movement 
+/// Mainly, by following the player position
+/// </summary>
 public class CameraFollow : MonoBehaviour
 {
-    // Player transform, used to get its position
+    /// <summary>
+    /// Player transform, used to get its position 
+    /// </summary>
     public Transform playerPosition;
 
-    // Float used to give the sensation of the camera going to the player position
-    // so its not instant
+    /// <summary>
+    /// Float used to give the sensation of the camera going to the player position so its not instant
+    /// </summary>
     public float smoothSpeed = 0.125f;
 
     private void FixedUpdate()
     {
-        // The actual position the player is (plus offset)
-        Vector3 desiredPosition = playerPosition.position + new Vector3(0,0,-1);
-
-        // Using the Lerp function, it is possible to create the smooth movement of the camera
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-
-        // Pass the smoothedPosition to the camera position
-        transform.position = smoothedPosition;
-
+        SmoothFollow.instance.FollowObject(transform,playerPosition, new Vector3(0, 0, -1), smoothSpeed);
+        
         // The camera angle follows the player, useful for 3d games
         //transform.LookAt(target); 
 

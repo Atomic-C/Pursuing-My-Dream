@@ -36,7 +36,7 @@ TagManager:
   - Platform
   - Player
   - Collectable
-  - 
+  - DistortionEffect
   - 
   - 
   - 
@@ -60,4 +60,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HighestLayerForDistortionEffect
+    uniqueID: 685346543
     locked: 0

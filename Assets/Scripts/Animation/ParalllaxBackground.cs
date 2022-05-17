@@ -1,13 +1,51 @@
 using UnityEngine;
 
+/// <summary>
+/// Class that controls the background parallax effect
+/// </summary>
 public class ParalllaxBackground : MonoBehaviour
 {
+
     [SerializeField] private Vector2 parallaxEffectMultiplier;
-    [SerializeField] private bool infiniteHorizontal, infiniteVertical, textureIsScaled, useParallax;
+
+    /// <summary>
+    /// Bool used to trigger the infinite scroll horizontally
+    /// </summary>
+    [SerializeField] private bool infiniteHorizontal;
+
+    /// <summary>
+    /// Bool used to trigger the infinite scroll vertically
+    /// </summary>
+    [SerializeField] private bool infiniteVertical;
+
+    /// <summary>
+    /// Bool used to determine if the sprite used had its scale changed
+    /// </summary>
+    [SerializeField] private bool textureIsScaled;
+
+    /// <summary>
+    /// Bool used to determine if the parallax effect will be applied or not
+    /// </summary>
+    [SerializeField] private bool useParallax;
+
+    /// <summary>
+    /// Float used to determine the speed in which the sprite will scroll (horizontally)
+    /// </summary>
     [SerializeField] private float autoScrollSpeed;
     
+    /// <summary>
+    /// The transform of the camera
+    /// </summary>
     private Transform cameraTransform;
+
+    /// <summary>
+    /// The last position of the camera
+    /// </summary>
     private Vector3 lastCameraPosition;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private float textureUnitSizeX, textureUnitSizeY;
 
     private void Start()

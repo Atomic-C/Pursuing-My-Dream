@@ -1,15 +1,28 @@
 using UnityEngine;
 
-// Simple script to animate the background
+/// <summary>
+/// Simple script to animate the background
+/// </summary>
 public class Scene_Animation : MonoBehaviour
 {
-    // Animation speed
+    /// <summary>
+    /// Animation speed
+    /// </summary>
     public float speed = 0.1f;
-    // The game object renderer
+
+    /// <summary>
+    /// The game object renderer
+    /// </summary>
     public Renderer rend;
-    // Enum used to determine which renderer this game object is using
+
+    /// <summary>
+    /// Enum used to determine which renderer this game object is using
+    /// </summary>
     public RendererType rendererType;
 
+    /// <summary>
+    /// Animate the sprite / mesh renderer depending on the renderer type enum
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
@@ -28,7 +41,9 @@ public class Scene_Animation : MonoBehaviour
         }
     }
 
-    // The renderer enum
+    /// <summary>
+    /// The renderer enum
+    /// </summary>
     public enum RendererType
     {
         SPRITE,

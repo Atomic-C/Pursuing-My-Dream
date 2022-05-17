@@ -1,13 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-// Script attached to the exploding ball game object
-// The idea is simple: the ball explodes after a set time (lifeSpan) and if it collides with the player
+/// <summary>
+/// Class used by the exploding ball game object
+/// The idea is simple: the ball explodes after a set time (lifeSpan) and if it collides with the player
+/// </summary>
 public class ExplodingBall : MonoBehaviour
 {
-    // Game object that contains the particle system that simulates the explosion
+    /// <summary>
+    /// Game object that contains the particle system that simulates the explosion
+    /// </summary>
     public GameObject destroyEffect;
-    // Timer before the ball explode
+
+    /// <summary>
+    /// Timer before the ball explode
+    /// </summary>
     public float lifeSpan;
     // Bool to detect the player collision
     private bool collidedWithPlayer = false;

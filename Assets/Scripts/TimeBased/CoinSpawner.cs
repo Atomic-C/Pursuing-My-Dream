@@ -1,24 +1,45 @@
 using UnityEngine;
 
-// Script that spawns an game object (a coin) at the position of another game object (the hat) after every x seconds
+/// <summary>
+/// Script that spawns an game object (a coin) at the position of another game object (the hat) after every x seconds
+/// </summary>
 public class CoinSpawner : MonoBehaviour
 {
-    // Timer set at the editor
+    /// <summary>
+    /// Timer set at the editor
+    /// </summary>
     public float timerNum;
-    // The actual timer
+    
+    /// <summary>
+    /// The actual timer 
+    /// </summary>
     private float timer;
-    // The game object to be instantiated
+
+    /// <summary>
+    /// The game object to be instantiated
+    /// </summary>
     public GameObject coin;
-    // Random range used as force to the instantiated game object
+
+    /// <summary>
+    /// Random range used as force to the instantiated game object
+    /// </summary>
     public float minRandomRange, maxRandomRange;
-    // The position the game object will be instantiated
+
+    /// <summary>
+    /// The position the game object will be instantiated
+    /// </summary>
     public Transform hatCoinSpawner;
-    // The player collider used to trigger the whole spawn proccess
+
+    /// <summary>
+    /// The player collider used to trigger the whole spawn proccess
+    /// </summary>
     public CircleCollider2D playerCollider;
 
-    // When the player touches the trigger, the timer variable begins decrementing. After it reaches 0 or less, instantiate a coin at the hat position, but a little bit above it 
-    // (its an upside down hat, so makes sense the coins is being spit out from above, 'hatCoinSpawner.position.y + 1') and immediately after that, applies a force to this coin
-    // making it fly some distance from the hat (spit the coin out!) using random X and Y force from the range of minRandomRange and maxRandomRange. Reset the timer after that
+    /// <summary>
+    /// When the player touches the trigger, the timer variable begins decrementing. After it reaches 0 or less, instantiate a coin at the hat position, but a little bit above it 
+    /// (its an upside down hat, so makes sense the coins is being spit out from above, 'hatCoinSpawner.position.y + 1') and immediately after that, applies a force to this coin
+    /// making it fly some distance from the hat (spit the coin out!) using random X and Y force from the range of minRandomRange and maxRandomRange. Reset the timer after that
+    /// </summary>
     private void Update()
     {
         if (this.GetComponent<Collider2D>().IsTouching(playerCollider))
@@ -31,5 +52,4 @@ public class CoinSpawner : MonoBehaviour
             }
         }
     }
-
 }

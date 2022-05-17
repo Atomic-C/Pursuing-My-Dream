@@ -26,8 +26,8 @@ public class Platform_Movement : MonoBehaviour {
     public float jumpSpeed = 8f;
     public float movementSpeed = 5f;
 
-    // Float that holds the physics calculation of the player x / y axis movement
-    private float xInput, yInput;
+    // Float that holds the physics calculation of the player x axis movement
+    private float xInput;
 
     // Bool used to check if the player is grounded
     private bool isGrounded;
@@ -79,10 +79,9 @@ public class Platform_Movement : MonoBehaviour {
     {
         // Refactoring following the best practices, as seen on the movement script provided by Master D
         xInput = Input.GetAxisRaw("Horizontal");
-        yInput = Input.GetAxisRaw("Jump");
         
         // Implementation of jump buffering
-        if (yInput.Equals(1))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             jumpBufferCounter = jumpBufferTime;
         }
@@ -144,7 +143,7 @@ public class Platform_Movement : MonoBehaviour {
             AudioManager.instance.PlaySound("Jump", gameObject.transform.position);
         }
 
-        if (yInput.Equals(0))
+        if (Input.GetKeyUp(KeyCode.Space))
             coyoteTimeCounter = 0f;
 
 

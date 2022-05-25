@@ -13,12 +13,18 @@ public class Scene_Animation : MonoBehaviour
     /// <summary>
     /// The game object renderer
     /// </summary>
-    public Renderer rend;
+    private Renderer rend;
 
     /// <summary>
     /// Enum used to determine which renderer this game object is using
     /// </summary>
     public RendererType rendererType;
+
+    // Cache the sprite renderer component
+    private void Start()
+    {
+        rend = GetComponent<Renderer>();
+    }
 
     /// <summary>
     /// Animate the sprite / mesh renderer depending on the renderer type enum

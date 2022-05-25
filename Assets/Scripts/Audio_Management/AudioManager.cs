@@ -52,7 +52,6 @@ public class AudioManager : MonoBehaviour
         PlaySound("Music", Vector3.zero);
     }
 
-    // 
     /// <summary>
     /// Function that plays the sound with the respective sound name and at a specific position
     /// </summary>
@@ -138,7 +137,6 @@ public class Sound
     /// </summary>
     private AudioSource source { get; set; }
 
-    // 
     /// <summary>
     /// Set the properties below accordingly to the choices in the editor 
     /// </summary>
@@ -183,7 +181,6 @@ public class Sound
         source.Stop();
     }
 
-    // 
     /// <summary>
     /// Function used as a work-around fix for a bug (found with the jumping sound)
     /// Basically, just using PlayOneShot would make the sound repeat more than one time, in quick sucessions

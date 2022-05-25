@@ -38,7 +38,7 @@ public class SurfaceEffector2d : MonoBehaviour
     /// <summary>
     /// On trigger with the player, cache its rigidbody
     /// </summary>
-    /// <param name="collision"></param>
+    /// <param name="collision">The other object collider 2d</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -48,7 +48,7 @@ public class SurfaceEffector2d : MonoBehaviour
     /// <summary>
     /// On trigger exit with the player, remove its rigidbody reference, stopping the x axis movement
     /// </summary>
-    /// <param name="collision"></param>
+    /// <param name="collision">The other object collider 2d</param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

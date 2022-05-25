@@ -1,8 +1,7 @@
 using UnityEngine;
 
-// Since the camera and the shooting gem will both follow the player using the same code, to avoid code repetition, this helper class will be used instead
 /// <summary>
-/// Helper class that controls the aspects of the follow movement
+/// Since the camera and the shooting gem will both follow the player using the same code, to avoid code repetition, this helper class will be used instead
 /// </summary>
 public class SmoothFollow : MonoBehaviour
 {

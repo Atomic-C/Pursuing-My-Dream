@@ -30,6 +30,9 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     public float smoothSpeed = 0.125f;
 
+    /// <summary>
+    /// Follow the player with a small delay (defined in the smoothSpeed variable)
+    /// </summary>
     private void FixedUpdate()
     {
         SmoothFollow.instance.FollowObject(transform,playerPosition,followOffset,smoothSpeed);

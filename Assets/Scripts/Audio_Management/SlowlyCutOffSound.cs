@@ -129,6 +129,7 @@ public class SlowlyCutOffSound : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.CompareTag("Player"))
         enteredCutOffZone = true;
     }
 
@@ -138,6 +139,7 @@ public class SlowlyCutOffSound : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if(collision.CompareTag("Player"))
         enteredCutOffZone = false;
     }
 

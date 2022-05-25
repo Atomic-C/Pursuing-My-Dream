@@ -1,9 +1,13 @@
 using UnityEngine;
 
-// Simple logic to hide and show the UI explanation on contact with the player
+/// <summary>
+/// Simple logic to hide and show the UI explanation on contact with the player
+/// </summary>
 public class ShowExplanation : MonoBehaviour
 {
-    // Which object to manipulate
+    /// <summary>
+    /// Which object to manipulate
+    /// </summary>
     public GameObject effectorExplanation;
 
     // The initial idea was to deactivate everything related to the UI explanation that was connected to this script
@@ -11,7 +15,10 @@ public class ShowExplanation : MonoBehaviour
     // will affect all the others
     //public GameObject[] pointingSigns;
 
-    // On trigger with the player, activate the parent object
+    /// <summary>
+    /// On trigger with the player, activate the parent object
+    /// </summary>
+    /// <param name="collision">The other object collider 2d</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -21,7 +28,10 @@ public class ShowExplanation : MonoBehaviour
         }
     }
 
-    // On trigger exit with the player, deactivate the parent object
+    /// <summary>
+    /// On trigger exit with the player, deactivate the parent object
+    /// </summary>
+    /// <param name="collision">The other object collider 2d</param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -30,7 +40,9 @@ public class ShowExplanation : MonoBehaviour
         }
     }
 
-    // Function to activate / deactivate the parent object
+    /// <summary>
+    /// Function to activate / deactivate the parent object
+    /// </summary>
     private void SetVisibility()
     {
         effectorExplanation.SetActive(!effectorExplanation.activeSelf);

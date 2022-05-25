@@ -1,59 +1,122 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Platform_Movement : MonoBehaviour {
 
     [Header("Movement Settings")]
-    // Which layer will the RayCast collide with
+    /// <summary>
+    /// Which layer will the RayCast collide with
+    /// </summary>
     [SerializeField] private LayerMask platformLayerMask;
 
+    /// <summary>
+    /// The player rigidbody 2d
+    /// </summary>
     private Rigidbody2D rigidBody2d;
+
+    /// <summary>
+    /// The player collider 2d
+    /// </summary>
     private CircleCollider2D circleCollider2d;
 
-    // RaycastHit2d used in the GroundCheck function
+    /// <summary>
+    /// RaycastHit2d used in the GroundCheck function to detect platforms bellow the player
+    /// </summary>
     private RaycastHit2D raycastHitDown;
+
+    /// <summary>
+    /// RaycastHit2d used in the GroundCheck function to detect platforms above the player
+    /// </summary>
     private RaycastHit2D raycastHitUp;
 
-    // GameObjects positioned on the player foot and head and used in the GroundCheck function
+    /// <summary>
+    /// GameObject positioned on the player foot, used in the GroundCheck function
+    /// </summary>
     public Transform playerFootPosition;
+
+    /// <summary>
+    /// GameObject positioned on the player head, used in the GroundCheck function
+    /// </summary>
     public Transform playerHeadPosition;
 
-    // ENUM to change which type of RayCast2d to use
+    /// <summary>
+    /// GameObject used as a target for the camera. This way, its possible to make the camera follow this object, not necessarilly using the player position 
+    /// and thus, controlling dynamically the camera (cutscenes for example, to shift the player attention to something, is easily doable by just manipulating
+    /// this object position
+    /// </summary>
+    public Transform mainCameraTarget;
+
+    /// <summary>
+    /// ENUM to change which type of RayCast2d to use
+    /// </summary>
     public CastType WhichCastToUse;
 
-    // Adjust the length of the RayCast2d (going directly down / up from the player), depending on the game platforms colliders
+    /// <summary>
+    /// Adjust the length of the RayCast2d (going directly down / up from the player), depending on the game platforms colliders
+    /// </summary>
     public float rayCastOffSet = .1f;
 
+    /// <summary>
+    /// Player jump speed
+    /// </summary>
     public float jumpSpeed = 8f;
+
+    /// <summary>
+    /// Player movement speed
+    /// </summary>
     public float movementSpeed = 5f;
 
-    // Float that holds the physics calculation of the player x axis movement
+    /// <summary>
+    /// Float that holds the physics calculation of the player x axis movement
+    /// </summary>
     private float xInput;
 
-    // Bool used to check if the player is grounded
+    /// <summary>
+    /// Bool used to check if the player is grounded
+    /// </summary>
     private bool isGrounded;
 
-    // Coyote time variables
+    /// <summary>
+    /// Coyote time variables
+    /// </summary>
     [SerializeField] private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
 
-    // Jump buffer variable
+    /// <summary>
+    /// Jump buffer variable
+    /// </summary>
     [SerializeField] private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
-    // Player animator
+    /// <summary>
+    /// Player animator
+    /// </summary>
     private Animator animator;
 
-    // Enable debugging features
+    /// <summary>
+    /// Enable debugging features
+    /// </summary>
     public bool enableDebug;
+
+    /// <summary>
+    /// Enable console log of the colliders being hit with the ground check function
+    /// </summary>
     public bool castHitLog;
 
-    // Float used as a timer for the CastHit function
+    /// <summary>
+    /// Float used as a timer for the CastHit function
+    /// </summary>
     private float timer;
 
-    // Vector3 used to hold the last grounded position
+    /// <summary>
+    /// Vector3 used to hold the last grounded position
+    /// </summary>
     public Vector3 lastPosition;
 
-    // Initialize variables
+    /// <summary>
+    /// Initialize variables
+    /// </summary>
     void Start()
     {
         rigidBody2d = GetComponent<Rigidbody2D>();
@@ -61,20 +124,26 @@ public class Platform_Movement : MonoBehaviour {
         animator = GetComponent<Animator>();
     }
 
-    // Inputs here
+    /// <summary>
+    /// Check if the player is grounded / player inputs
+    /// </summary>
     void Update()
     {
         GroundCheck(WhichCastToUse);
         CheckInputs();
     }
 
-    // Physics here
+    /// <summary>
+    /// Physics calculations
+    /// </summary>
     private void FixedUpdate()
     {
         CalculatePhysics();
     }
 
-    // Function that checks all inputs, used in the Update event
+    /// <summary>
+    /// Function that checks all inputs, used in the Update event
+    /// </summary>
     private void CheckInputs()
     {
         // Refactoring following the best practices, as seen on the movement script provided by Master D
@@ -114,7 +183,9 @@ public class Platform_Movement : MonoBehaviour {
         //transform.Translate(new Vector2(horizontalSpeed * Time.deltaTime, 0));
     }
 
-    // Function that flips the character sprite, simulating moving to the left / right
+    /// <summary>
+    /// Function that flips the character sprite, simulating moving to the left / right
+    /// </summary>
     private void Flip()
     {
         if (xInput > 0)
@@ -126,7 +197,9 @@ public class Platform_Movement : MonoBehaviour {
         }
     }
 
-    // Function that controls all physics calculations, used in the FixedUpdate event
+    /// <summary>
+    /// Function that controls all physics calculations, used in the FixedUpdate event
+    /// </summary>
     private void CalculatePhysics()
     {
         // Refactoring following the best practices, as seen on the movement script provided by Master D
@@ -143,6 +216,7 @@ public class Platform_Movement : MonoBehaviour {
             AudioManager.instance.PlaySound("Jump", gameObject.transform.position);
         }
 
+        // Reset the coyote timer when the spacebar is released
         if (Input.GetKeyUp(KeyCode.Space))
             coyoteTimeCounter = 0f;
 
@@ -153,19 +227,19 @@ public class Platform_Movement : MonoBehaviour {
         // Movement using physics (needed to determine the character animation)
         rigidBody2d.velocity = new Vector2(horizontalSpeed, verticalSpeed);
 
-        // Trying to use this in FixedUpdate caused some problems
-        // Not every space key press was being detected (FixedUpdate has a slower pace in comparison to Update, i think)
-        // Thus, making the jumping to fail sometimes
-        // If the character is on the ground and space is pressed
-        //if (isGrounded && Input.GetKeyDown(KeyCode.Space))
-        //{
-        // Two ways for simulate a jump, i guess?
-        //rigidBody2d.velocity = Vector2.up * jumpSpeed;
-        //rigidBody2d.AddForce(new Vector2(rigidBody2d.velocity.x, jumpSpeed), ForceMode2D.Impulse);
+        /*Trying to use this in FixedUpdate caused some problems
+        Not every space key press was being detected (FixedUpdate has a slower pace in comparison to Update, i think)
+        Thus, making the jumping to fail sometimes
+        If the character is on the ground and space is pressed
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+         Two ways for simulate a jump, i guess?
+        rigidBody2d.velocity = Vector2.up * jumpSpeed;
+        rigidBody2d.AddForce(new Vector2(rigidBody2d.velocity.x, jumpSpeed), ForceMode2D.Impulse);
 
-        // Play the jumping sound
-        //AudioManager.instance.PlayAudio(jumpSound);
-        //}
+        Play the jumping sound
+        AudioManager.instance.PlayAudio(jumpSound);
+        }*/
 
         // Set the animator yVelocity Float where:
         // > 0 = jumping
@@ -175,16 +249,20 @@ public class Platform_Movement : MonoBehaviour {
         // Ternary that set the xVelocity to the desired ammount, to trigger the corresponding animation
         // 1 means moving animation
         // 0 means iddle animation
-        // Using the rigid body y velocity so that the moving animations is only played if the character is "not in the air", aka jumping or falling
-        animator.SetFloat("xVelocity", rigidBody2d.velocity.x != 0 && rigidBody2d.velocity.y == 0 ? 1f : 0f);
+        // Using the isGrounded bool so that the moving animations is only played if the character is "not in the air", aka jumping or falling
+        animator.SetFloat("xVelocity", rigidBody2d.velocity.x != 0 && isGrounded ? 1f : 0f);
 
         // Little animation to crouch, just for the giggles
-        animator.SetBool("Crouch", Input.GetKey(KeyCode.S) && rigidBody2d.velocity.x == 0);
+        animator.SetBool("Crouch", Input.GetKey(KeyCode.S) && rigidBody2d.velocity.x == 0);        
 }
 
-    // Function using the selected cast to detect if the character is in touch with the ground
-    // or if it is jumping through a platform effector with one way property enabled
-    // Has built-in debug features
+    /// <summary>
+    /// Function using the selected cast to detect if the character is in touch with the ground
+    /// or if it is jumping through a platform effector with one way property enabled
+    /// Has built-in debug features
+    /// Using parenting (having two game objects, one at the player head, other at the foot) to check collisions or not (manually calculating the cast position / distance)
+    /// </summary>
+    /// <param name="WhichCastType">Cast type being used (raycast, circlecast or boxcast)</param>
     private void GroundCheck(CastType WhichCastType)
     {
         isGrounded = false;
@@ -208,16 +286,16 @@ public class Platform_Movement : MonoBehaviour {
                 if (enableDebug)
                 {
                     // Ground check debug not using parenting
-                    //Debug.DrawRay(circleCollider2d.bounds.center, Vector2.down * (circleCollider2d.bounds.extents.y + rayCastOffSet), CastHit(raycastHitDown, true));
+                    //Debug.DrawRay(circleCollider2d.bounds.center, Vector2.down * (circleCollider2d.bounds.extents.y + rayCastOffSet), CastHit(raycastHitDown));
 
                     // Ground check debug using parenting
-                    Debug.DrawRay(playerFootPosition.transform.position, Vector2.down * rayCastOffSet, CastHit(raycastHitDown, true));
+                    Debug.DrawRay(playerFootPosition.transform.position, Vector2.down * rayCastOffSet, CastHit(raycastHitDown));
 
                     // Platform effector check debug not using parenting
-                    //Debug.DrawRay(circleCollider2d.bounds.center, Vector2.up * (circleCollider2d.bounds.extents.y + rayCastOffSet), CastHit(raycastHitUp, false));
+                    //Debug.DrawRay(circleCollider2d.bounds.center, Vector2.up * (circleCollider2d.bounds.extents.y + rayCastOffSet), CastHit(raycastHitUp));
 
                     // Platform effector check debug using parenting
-                    Debug.DrawRay(playerHeadPosition.transform.position, Vector2.up * rayCastOffSet, CastHit(raycastHitUp, false));
+                    Debug.DrawRay(playerHeadPosition.transform.position, Vector2.up * rayCastOffSet, CastHit(raycastHitUp));
                 }
                 break;
             // Box cast
@@ -242,9 +320,9 @@ public class Platform_Movement : MonoBehaviour {
                     Debug.DrawRay(circleCollider2d.bounds.center - new Vector3(circleCollider2d.bounds.extents.x, circleCollider2d.bounds.extents.y + rayCastOffSet), Vector2.right * (circleCollider2d.bounds.size), CastHit(raycastHitDown, true));*/
 
                     // Ground check debug using parenting
-                    Debug.DrawRay(playerFootPosition.transform.position + new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.down * rayCastOffSet, CastHit(raycastHitDown, true));
-                    Debug.DrawRay(playerFootPosition.transform.position - new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.down * rayCastOffSet, CastHit(raycastHitDown, true));
-                    Debug.DrawRay(playerFootPosition.transform.position - new Vector3(circleCollider2d.bounds.extents.x, rayCastOffSet), Vector2.right * (circleCollider2d.bounds.size), CastHit(raycastHitDown, true));
+                    Debug.DrawRay(playerFootPosition.transform.position + new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.down * rayCastOffSet, CastHit(raycastHitDown   ));
+                    Debug.DrawRay(playerFootPosition.transform.position - new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.down * rayCastOffSet, CastHit(raycastHitDown));
+                    Debug.DrawRay(playerFootPosition.transform.position - new Vector3(circleCollider2d.bounds.extents.x, rayCastOffSet), Vector2.right * (circleCollider2d.bounds.size), CastHit(raycastHitDown));
 
                     // Platform effector check debug not using parenting
                     /*Debug.DrawRay(circleCollider2d.bounds.center - new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.up * (circleCollider2d.bounds.extents.y + rayCastOffSet), CastHit(raycastHitUp, false));
@@ -252,9 +330,9 @@ public class Platform_Movement : MonoBehaviour {
                     Debug.DrawRay(circleCollider2d.bounds.center + new Vector3(circleCollider2d.bounds.extents.x, circleCollider2d.bounds.extents.y + rayCastOffSet), Vector2.left * (circleCollider2d.bounds.size), CastHit(raycastHitUp, false));*/
 
                     // Platfrom effector check debug using parenting
-                    Debug.DrawRay(playerHeadPosition.transform.position - new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.up * rayCastOffSet, CastHit(raycastHitUp, false));
-                    Debug.DrawRay(playerHeadPosition.transform.position + new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.up * rayCastOffSet, CastHit(raycastHitUp, false));
-                    Debug.DrawRay(playerHeadPosition.transform.position + new Vector3(circleCollider2d.bounds.extents.x, rayCastOffSet), Vector2.left * (circleCollider2d.bounds.size), CastHit(raycastHitUp, false));
+                    Debug.DrawRay(playerHeadPosition.transform.position - new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.up * rayCastOffSet, CastHit(raycastHitUp));
+                    Debug.DrawRay(playerHeadPosition.transform.position + new Vector3(circleCollider2d.bounds.extents.x, 0), Vector3.up * rayCastOffSet, CastHit(raycastHitUp));
+                    Debug.DrawRay(playerHeadPosition.transform.position + new Vector3(circleCollider2d.bounds.extents.x, rayCastOffSet), Vector2.left * (circleCollider2d.bounds.size), CastHit(raycastHitUp));
                 }
                 break;
             // Circle cast
@@ -307,9 +385,13 @@ public class Platform_Movement : MonoBehaviour {
 
     }
 
-    // Function used for debugging
-    // The bool is just used for the Debug.Log part, for printing into the console which collider the cast hit
-    private Color CastHit(RaycastHit2D castHit, bool castDown)
+    /// <summary>
+    /// Function used for debugging
+    /// The bool is just used for the Debug.Log part, for printing into the console which collider the cast hit
+    /// </summary>
+    /// <param name="castHit"></param>
+    /// <returns></returns>
+    private Color CastHit(RaycastHit2D castHit)
     {
         // Green for hitting any collider, red for no collider hit
         Color rayColor;
@@ -321,13 +403,14 @@ public class Platform_Movement : MonoBehaviour {
         {
             rayColor = Color.red;
         }
-
         return rayColor;
     }
 
+    /// <summary>
+    /// Function that check which collider is being hit and print it in the console (time based)
+    /// </summary>
     private void CastHitLog()
     {
-        // Check which collider is being hit and print in the console (time based)
         timer = timer <= 0 ? 2f : timer;
         timer -= Time.deltaTime;
         if (timer <= 0)
@@ -337,22 +420,25 @@ public class Platform_Movement : MonoBehaviour {
         }
     }
 
-    // ENUM that store the cast types
-    // Can be used to implement the other ones (Line, Capsule and Overlap variants)
+    /// <summary>
+    /// ENUM that store the cast types
+    /// Can be used to implement the other ones (Line, Capsule and Overlap variants)
+    /// </summary>
     public enum CastType {
         RAY,
         BOX,
         CIRCLE
     }
 
-    // Since i didnt found a solution to debug the circle cast, thats the best i could do. Using Gizmos.DrawSphere to have a visual represetation
-    // of the circle cast. With or without the use of object parenting
+    /// <summary>
+    /// Function that create a visual represetation of the circle cast. With or without the use of object parenting
+    /// </summary>
     void OnDrawGizmosSelected()
     {
         if (enableDebug && WhichCastToUse == CastType.CIRCLE)
         {
             // Ground check color
-            Gizmos.color = CastHit(raycastHitDown, true);
+            Gizmos.color = CastHit(raycastHitDown);
 
             // Ground check debug not using parenting
             //Gizmos.DrawWireSphere(new Vector3(circleCollider2d.transform.position.x, circleCollider2d.bounds.min.y) , rayCastOffSet);
@@ -361,7 +447,7 @@ public class Platform_Movement : MonoBehaviour {
             Gizmos.DrawWireSphere(playerFootPosition.transform.position, rayCastOffSet);
 
             // Platform effector check color
-            Gizmos.color = CastHit(raycastHitUp, false);
+            Gizmos.color = CastHit(raycastHitUp);
 
             // Platform effector check debug not using parenting
             //Gizmos.DrawWireSphere(new Vector3(circleCollider2d.transform.position.x, circleCollider2d.bounds.max.y), rayCastOffSet);

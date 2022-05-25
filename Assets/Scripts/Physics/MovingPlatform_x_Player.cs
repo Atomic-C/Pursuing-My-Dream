@@ -1,19 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class responsible to control the player movement when on top of a moving platform
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
 public class MovingPlatform_x_Player : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    /// <summary>
+    /// The platform rigi body 2d
+    /// </summary>
+    private Rigidbody2D platformRB;
 
+    /// <summary>
+    /// Initialize the platform rigidbody 2d variable
+    /// </summary>
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        platformRB = GetComponent<Rigidbody2D>();
     }
 
-    void OnTriggerStay(Collider other)
+    /// <summary>
+    /// On trigger stay with the player, moves its position alongside the platform's
+    /// </summary>
+    /// <param name="collision">The other object collider</param>
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!other.attachedRigidbody) return;
-        other.attachedRigidbody.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.position += new Vector3(platformRB.velocity.x, platformRB.velocity.y, 0f) * Time.deltaTime;
+        }
     }
 }

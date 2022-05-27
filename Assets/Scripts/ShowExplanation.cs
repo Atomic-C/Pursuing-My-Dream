@@ -10,6 +10,19 @@ public class ShowExplanation : MonoBehaviour
     /// </summary>
     public GameObject effectorExplanation;
 
+    private Camera mainCamera;
+
+    public Transform exclamationSignPosition;
+
+    private Transform cameraTargetPosition;
+
+    private void Start()
+    {
+        effectorExplanation.SetActive(false);
+        mainCamera = Camera.main;
+        cameraTargetPosition = GameObject.Find("CameraTarget").transform;
+    }
+
     // The initial idea was to deactivate everything related to the UI explanation that was connected to this script
     // But since all those objects are "children" of the main one (effectorExplanation), by just deactivating / activating it
     // will affect all the others
@@ -25,6 +38,7 @@ public class ShowExplanation : MonoBehaviour
         {
             SetVisibility();
             AudioManager.instance.PlaySound("ShowExplanation", gameObject.transform.position);
+            mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = exclamationSignPosition;
         }
     }
 
@@ -37,6 +51,7 @@ public class ShowExplanation : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             SetVisibility();
+            mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = cameraTargetPosition;
         }
     }
 

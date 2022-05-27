@@ -13,11 +13,6 @@ public class Fixed_Y_Position : MonoBehaviour
     public float yPosition;
 
     /// <summary>
-    /// The camera position
-    /// </summary>
-    public Transform cameraPosition;
-
-    /// <summary>
     /// Initialize the game object position 
     /// </summary>
     void Start()

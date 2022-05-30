@@ -27,11 +27,6 @@ public class MoveJoint : MonoBehaviour
     public JointType whichJoint;
 
     /// <summary>
-    /// The platform rigidbody 2d
-    /// </summary>
-    private Rigidbody2D platformRB;
-
-    /// <summary>
     /// Float used as positive speed for the motor
     /// </summary>
     public float PositiveSpeed = 1f;
@@ -57,7 +52,6 @@ public class MoveJoint : MonoBehaviour
                 auxiliarymotor = hinge.motor;
                 break;
         }
-        platformRB = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -116,18 +110,6 @@ public class MoveJoint : MonoBehaviour
             collision.transform.SetParent(null);
         }
     }*/
-
-    /// <summary>
-    /// Solution that works while still using the slider joint motor, for making the player position follow the platform position
-    /// </summary>
-    /// <param name="collision">The other object collider 2d</param>
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            collision.transform.localPosition += new Vector3(platformRB.velocity.x, platformRB.velocity.y, 0f) * Time.deltaTime;
-        }
-    }
 
     /// <summary>
     /// Enum used to determine which joint is being used

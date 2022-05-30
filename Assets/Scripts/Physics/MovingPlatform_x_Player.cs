@@ -27,7 +27,7 @@ public class MovingPlatform_x_Player : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.transform.position += new Vector3(platformRB.velocity.x, platformRB.velocity.y, 0f) * Time.deltaTime;
+            collision.transform.position += new Vector3(platformRB.velocity.x, 0f, 0f) * Time.deltaTime;
         }
     }
 }

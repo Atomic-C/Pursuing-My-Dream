@@ -1359,7 +1359,7 @@
   <TypeDate>
     <guid>89c13205c4f326a44b66572fb266df90</guid>
     <fileName>Assets/Scripts/AutoRenderer.cs</fileName>
-    <timeStamp>2022-04-10T13:29:35.0181265+00:00</timeStamp>
+    <timeStamp>2022-04-10T13:29:35+00:00</timeStamp>
     <typeFullName>
       <string>AutoRenderer</string>
     </typeFullName>
@@ -1368,7 +1368,7 @@
   <TypeDate>
     <guid>7a98e9c9eac705043924b88f0844481e</guid>
     <fileName>Assets/Scripts/CreateBullet.cs</fileName>
-    <timeStamp>2021-12-08T21:21:19.5274087-01:00</timeStamp>
+    <timeStamp>2021-12-08T21:21:19-01:00</timeStamp>
     <typeFullName>
       <string>CreateBullet</string>
     </typeFullName>
@@ -1377,7 +1377,7 @@
   <TypeDate>
     <guid>87c7394391d54fd4f9afbb472f682d7b</guid>
     <fileName>Assets/Scripts/MoveBullet.cs</fileName>
-    <timeStamp>2021-12-08T21:06:43.4628202-01:00</timeStamp>
+    <timeStamp>2021-12-08T21:06:43-01:00</timeStamp>
     <typeFullName>
       <string>MoveBullet</string>
     </typeFullName>
@@ -1386,7 +1386,7 @@
   <TypeDate>
     <guid>17772c2ed34b0914f88bf7de5f81a340</guid>
     <fileName>Assets/Scripts/ShowExplanation.cs</fileName>
-    <timeStamp>2022-05-18T20:29:59.1861476+00:00</timeStamp>
+    <timeStamp>2022-05-27T20:32:44.7727646+00:00</timeStamp>
     <typeFullName>
       <string>ShowExplanation</string>
     </typeFullName>
@@ -1452,7 +1452,7 @@
   <TypeDate>
     <guid>c5177aa6f11b4d549ac83ba1fb4bc8bb</guid>
     <fileName>Assets/Scripts/Audio_Management/SlowlyCutOffSound.cs</fileName>
-    <timeStamp>2022-05-17T18:43:05.4569689+00:00</timeStamp>
+    <timeStamp>2022-05-25T23:26:02.8985657+00:00</timeStamp>
     <typeFullName>
       <string>SlowlyCutOffSound</string>
       <string>SlowlyCutOffSound+WhichFilter</string>
@@ -1471,7 +1471,7 @@
   <TypeDate>
     <guid>7b1db87801654c84eb1e3f942315b04a</guid>
     <fileName>Assets/Scripts/Physics/Fixed_Y_Position.cs</fileName>
-    <timeStamp>2022-05-18T20:42:29.1240103+00:00</timeStamp>
+    <timeStamp>2022-05-26T21:19:47.3319863+00:00</timeStamp>
     <typeFullName>
       <string>Fixed_Y_Position</string>
     </typeFullName>
@@ -1480,7 +1480,7 @@
   <TypeDate>
     <guid>1a862ac48b0ce5b4bbb12ac8b62e0364</guid>
     <fileName>Assets/Scripts/Physics/MoveJoint.cs</fileName>
-    <timeStamp>2022-05-19T20:49:46.795269+00:00</timeStamp>
+    <timeStamp>2022-05-30T15:30:29.7927187+00:00</timeStamp>
     <typeFullName>
       <string>MoveJoint</string>
       <string>MoveJoint+JointType</string>
@@ -1490,7 +1490,7 @@
   <TypeDate>
     <guid>4eabcb5bed031f8408ff8b0c49eac108</guid>
     <fileName>Assets/Scripts/Physics/MovingPlatform_x_Player.cs</fileName>
-    <timeStamp>2022-05-24T18:32:58.1404974+00:00</timeStamp>
+    <timeStamp>2022-05-30T16:58:54.4571667+00:00</timeStamp>
     <typeFullName>
       <string>MovingPlatform_x_Player</string>
     </typeFullName>
@@ -1499,7 +1499,7 @@
   <TypeDate>
     <guid>2ae8d635efce3674584963c56a011d14</guid>
     <fileName>Assets/Scripts/Physics/PendulumMotion.cs</fileName>
-    <timeStamp>2022-05-24T18:39:40.4332917+00:00</timeStamp>
+    <timeStamp>2022-05-24T18:39:40+00:00</timeStamp>
     <typeFullName>
       <string>PendulumMotion</string>
     </typeFullName>
@@ -1508,7 +1508,7 @@
   <TypeDate>
     <guid>2f0a7764b0cf8a9429e2cdd20dfff7ab</guid>
     <fileName>Assets/Scripts/Physics/ResetPlayerPosition.cs</fileName>
-    <timeStamp>2022-05-18T20:33:03.9168917+00:00</timeStamp>
+    <timeStamp>2022-05-30T13:05:43.1868388+00:00</timeStamp>
     <typeFullName>
       <string>ResetPlayerPosition</string>
     </typeFullName>
@@ -1526,7 +1526,7 @@
   <TypeDate>
     <guid>8c5736c2f3c8f824985412628e916cac</guid>
     <fileName>Assets/Scripts/Player_Movement/BetterPlatformMovement.cs</fileName>
-    <timeStamp>2022-01-28T23:18:47.4893253-01:00</timeStamp>
+    <timeStamp>2022-05-25T21:56:21.2441249+00:00</timeStamp>
     <typeFullName>
       <string>BetterPlatformMovement</string>
     </typeFullName>
@@ -1562,7 +1562,7 @@
   <TypeDate>
     <guid>969eae62339b9dc4fb1e619f21f9cb1d</guid>
     <fileName>Assets/Scripts/Player_Movement/Platform_Movement.cs</fileName>
-    <timeStamp>2022-05-25T17:46:49.3545762+00:00</timeStamp>
+    <timeStamp>2022-05-25T21:14:03.7166511+00:00</timeStamp>
     <typeFullName>
       <string>Platform_Movement</string>
       <string>Platform_Movement+CastType</string>
@@ -1581,7 +1581,7 @@
   <TypeDate>
     <guid>f637961b94dfd0b4196da53cd2276537</guid>
     <fileName>Assets/Scripts/Player_Movement/X_Y_Axis_Movement.cs</fileName>
-    <timeStamp>2022-05-24T18:46:48.2950827+00:00</timeStamp>
+    <timeStamp>2022-05-24T18:46:48+00:00</timeStamp>
     <typeFullName>
       <string>X_Y_Axis_Movement</string>
     </typeFullName>
@@ -1590,7 +1590,7 @@
   <TypeDate>
     <guid>13d2240a02afea7498c733b4ddf9557e</guid>
     <fileName>Assets/Scripts/RandomLevelGenerator/AddRoom.cs</fileName>
-    <timeStamp>2022-04-10T23:00:16.6754228+00:00</timeStamp>
+    <timeStamp>2022-04-10T23:00:16+00:00</timeStamp>
     <typeFullName>
       <string>AddRoom</string>
     </typeFullName>
@@ -1599,7 +1599,7 @@
   <TypeDate>
     <guid>02d65cfa94d922e4696566cbac0a91ca</guid>
     <fileName>Assets/Scripts/RandomLevelGenerator/RoomSpawner.cs</fileName>
-    <timeStamp>2022-04-10T22:47:42.7919058+00:00</timeStamp>
+    <timeStamp>2022-04-10T22:47:42+00:00</timeStamp>
     <typeFullName>
       <string>RoomSpawner</string>
       <string>RoomSpawner+OpeningDirection</string>
@@ -1609,7 +1609,7 @@
   <TypeDate>
     <guid>13b987c2d05d2904ca882000a78e2622</guid>
     <fileName>Assets/Scripts/RandomLevelGenerator/RoomTemplates.cs</fileName>
-    <timeStamp>2022-04-10T22:35:41.5880316+00:00</timeStamp>
+    <timeStamp>2022-04-10T22:35:41+00:00</timeStamp>
     <typeFullName>
       <string>RoomTemplates</string>
     </typeFullName>
@@ -1645,7 +1645,7 @@
   <TypeDate>
     <guid>adccd12c93dd87d4cacb0bb33fea5ca9</guid>
     <fileName>Assets/Scripts/TimeBased/ExplosionEffect.cs</fileName>
-    <timeStamp>2022-05-24T18:49:45.9373163+00:00</timeStamp>
+    <timeStamp>2022-05-25T23:31:47.3905052+00:00</timeStamp>
     <typeFullName>
       <string>ExplosionEffect</string>
     </typeFullName>
@@ -3521,6 +3521,34 @@
     <typeFullName>
       <string>SoftNormalsToVertexColor</string>
       <string>SoftNormalsToVertexColor+Method</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>3343129464b77834fac71548e803498e</guid>
+    <fileName>Assets/Scripts/Physics/BlackHoleDistortion.cs</fileName>
+    <timeStamp>2022-05-25T23:08:53.0447249+00:00</timeStamp>
+    <typeFullName>
+      <string>BlackHoleDistortion</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>b6d0f228126775c4b978e37e52d4d8c8</guid>
+    <fileName>Assets/Scripts/Physics/FollowObject.cs</fileName>
+    <timeStamp>2022-05-26T12:33:44.4096673+00:00</timeStamp>
+    <typeFullName>
+      <string>FollowObject</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>2fd94bf92ed3b83409f5ee6985e65d59</guid>
+    <fileName>Assets/Scripts/Physics/Rope.cs</fileName>
+    <timeStamp>2022-05-30T17:18:53.2410709+00:00</timeStamp>
+    <typeFullName>
+      <string>Rope</string>
+      <string>Rope+RopeSegment</string>
     </typeFullName>
     <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
   </TypeDate>

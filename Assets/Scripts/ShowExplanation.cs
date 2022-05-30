@@ -2,6 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Simple logic to hide and show the UI explanation on contact with the player
+/// Also, makes the camera focus on an object position (sign pointing to the explained object)
 /// </summary>
 public class ShowExplanation : MonoBehaviour
 {
@@ -10,12 +11,29 @@ public class ShowExplanation : MonoBehaviour
     /// </summary>
     public GameObject effectorExplanation;
 
+    /// <summary>
+    /// The main camera, used to be able to get the camera position (did this way because this script is attached to a prefab)
+    /// </summary>
     private Camera mainCamera;
 
+    /// <summary>
+    /// The position of the sign pointing to the explained object 
+    /// </summary>
     public Transform exclamationSignPosition;
 
+    /// <summary>
+    /// The position of the camera target object (above the player head)
+    /// </summary>
     private Transform cameraTargetPosition;
 
+    /// <summary>
+    /// Bool used to use the camera focus or not
+    /// </summary>
+    public bool setCameraFocus;
+
+    /// <summary>
+    /// Cache the necessary variables
+    /// </summary>
     private void Start()
     {
         effectorExplanation.SetActive(false);
@@ -29,7 +47,7 @@ public class ShowExplanation : MonoBehaviour
     //public GameObject[] pointingSigns;
 
     /// <summary>
-    /// On trigger with the player, activate the parent object
+    /// On trigger with the player, activate the parent object and set the camera focus into the exclamation sign object
     /// </summary>
     /// <param name="collision">The other object collider 2d</param>
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,12 +56,13 @@ public class ShowExplanation : MonoBehaviour
         {
             SetVisibility();
             AudioManager.instance.PlaySound("ShowExplanation", gameObject.transform.position);
+            if(setCameraFocus)
             mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = exclamationSignPosition;
         }
     }
 
     /// <summary>
-    /// On trigger exit with the player, deactivate the parent object
+    /// On trigger exit with the player, deactivate the parent object and return the camera focus to its initial position
     /// </summary>
     /// <param name="collision">The other object collider 2d</param>
     private void OnTriggerExit2D(Collider2D collision)
@@ -51,6 +70,7 @@ public class ShowExplanation : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             SetVisibility();
+            if(setCameraFocus)
             mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = cameraTargetPosition;
         }
     }

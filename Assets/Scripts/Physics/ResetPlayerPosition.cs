@@ -23,6 +23,15 @@ public class ResetPlayerPosition : MonoBehaviour
     private bool playerFell;
 
     /// <summary>
+    /// The fade in / out object that is responsible for this effect begins deactivated (to be able to see everything in the editor). So, this guarantees that the object is only active
+    /// when starting the game
+    /// </summary>
+    private void Start()
+    {
+        cameraFade.gameObject.SetActive(true);
+    }
+
+    /// <summary>
     /// If the player fell, call the fade out function and reset the bool
     /// </summary>
     void Update()

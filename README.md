@@ -23,5 +23,7 @@ Next steps:
 Lil demo: https://itsamewill.github.io/PursuingMyDream-Demo/
 <br>
 Controls:
+<br>
 WASD movement
+<br>
 Spacebar to jump

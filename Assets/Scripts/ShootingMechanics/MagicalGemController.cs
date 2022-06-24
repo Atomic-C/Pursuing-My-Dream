@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.U2D.Animation;
+using UnityEngine.U2D;
 
 /// <summary>
 /// Class responsible for controlling the shooting magical gem / shooting mechanic
@@ -63,7 +63,7 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// Array of library assets available to the magical gem (several sprites sharing the same animation)
     /// </summary>
-    public SpriteLibraryAsset[] spriteLibraries;
+    public UnityEngine.U2D.Animation.SpriteLibraryAsset[] spriteLibraries;
 
     /// <summary>
     /// Reference to the player movement script
@@ -120,7 +120,7 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// The sprite library being used by the active magical gem
     /// </summary>
-    private SpriteLibrary gemSpriteLibrary;
+    private UnityEngine.U2D.Animation.SpriteLibrary gemSpriteLibrary;
 
     // Automated Setup
     
@@ -352,7 +352,7 @@ public class MagicalGemController : MonoBehaviour
         }
 
         // Get the gem animator and set it to the respective bullet color
-        gemSpriteLibrary = activeMagicalGem.GetComponent<SpriteLibrary>();
+        gemSpriteLibrary = activeMagicalGem.GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>();
         gemAnimator = activeMagicalGem.GetComponent<Animator>();
 
         rangeArea = activeMagicalGem.GetComponentInChildren<CircleCollider2D>();
@@ -414,28 +414,32 @@ public class MagicalGemController : MonoBehaviour
     /// <param name="bulletChoosen"></param>
     private void SetupCurrentBullet(int bulletChoosen)
     {
-        // Deactivate the current energy bar being used
-        energyBars[currentBullet].SetActive(false);
-        // Set the currentBullet int by the keypad pressed by the player
-        currentBullet = bulletChoosen;
-        // Activate the energy bar of the new current bullet
-        energyBars[currentBullet].SetActive(true);
-        // Cache the scale of this energy bar
-        energyBarScale = energyBars[currentBullet].transform.localScale;
-        // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
-        fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
-        // Change the current crosshair by the one corresponding with the current bullet
-        activeCrosshairSprite.sprite = crosshairColors[currentBullet];
-        // Change the sprite library asset in use by the one correspoding with the current bullet
-        gemSpriteLibrary.spriteLibraryAsset = spriteLibraries[currentBullet];
-        // Set the new range limit
-        rangeArea.radius = shootRange + bullets[currentBullet].range;
-
-        if (usePool)
+        // Do not allow changing to another bullet while the not enough energy coroutine is running. This is to avoid a bug in the bar sprite
+        if (!noEnergyRoutineIsRunning)
         {
-            // Single object pool, so clear all of the previsouly used bullets
-            bulletPool.Clear();
-            InitializeBulletPool();
+            // Deactivate the current energy bar being used
+            energyBars[currentBullet].SetActive(false);
+            // Set the currentBullet int by the keypad pressed by the player
+            currentBullet = bulletChoosen;
+            // Activate the energy bar of the new current bullet
+            energyBars[currentBullet].SetActive(true);
+            // Cache the scale of this energy bar
+            energyBarScale = energyBars[currentBullet].transform.localScale;
+            // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
+            fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
+            // Change the current crosshair by the one corresponding with the current bullet
+            activeCrosshairSprite.sprite = crosshairColors[currentBullet];
+            // Change the sprite library asset in use by the one correspoding with the current bullet
+            gemSpriteLibrary.spriteLibraryAsset = spriteLibraries[currentBullet];
+            // Set the new range limit
+            rangeArea.radius = shootRange + bullets[currentBullet].range;
+
+            if (usePool)
+            {
+                // Single object pool, so clear all of the previsouly used bullets
+                bulletPool.Clear();
+                InitializeBulletPool();
+            }
         }
     }
 
@@ -506,7 +510,8 @@ public class MagicalGemController : MonoBehaviour
             if (energy < maxEnergy)
             {
                 energy += energyRegen * Time.deltaTime;
-                energyBars[currentBullet].transform.localScale = new Vector3(energy, energyBarScale.y, energyBarScale.z);
+                foreach(GameObject bar in energyBars)
+                    bar.transform.localScale = new Vector3(energy, energyBarScale.y, energyBarScale.z);
             }
         }  
     }

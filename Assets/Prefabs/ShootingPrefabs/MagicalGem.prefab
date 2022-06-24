@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3946747252279223153}
   - component: {fileID: 3946747252279223152}
   - component: {fileID: 6193005840407841225}
-  - component: {fileID: 6366205741651254}
+  - component: {fileID: 6092179883733446710}
   m_Layer: 0
   m_Name: MagicalGem
   m_TagString: MagicalGem
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 471651161
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5668478797725304536, guid: fa4338c93588ab041b837b5eb78be555, type: 3}
+  m_Sprite: {fileID: 2686320939950094005, guid: fa4338c93588ab041b837b5eb78be555, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 59702d43cee72144ca95a7f10a2ffab1, type: 3}
---- !u!114 &6366205741651254
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 739bc328c451a124b9af7c37cc68dfea, type: 3}
+--- !u!114 &6092179883733446710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,8 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CategoryHash: 0
   m_labelHash: 0
-  m_SpriteKey: 0
-  m_SpriteHash: 0
+  m_SpriteKey: 3.8738668e-31
 --- !u!1 &5289361440717423157
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +167,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3946747252279223154}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &3363107830162287795
 CircleCollider2D:

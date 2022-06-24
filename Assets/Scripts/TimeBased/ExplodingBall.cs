@@ -18,31 +18,25 @@ public class ExplodingBall : MonoBehaviour
     public float lifeSpan;
 
     /// <summary>
-    /// Bool to detect the player collision
-    /// </summary>
-    private bool collidedWithPlayer = false;
-
-    /// <summary>
-    /// On collision, the ball explodes and the bool is set to true
+    /// On collision with the player or its shoots, the ball explodes and its life span is set to 0
     /// </summary>
     /// <param name="collision">The other object collision 2d</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Bullet"))
         {
-            DestroyBall();
-            collidedWithPlayer = true;
+            lifeSpan = 0f;
         }
     }
 
     /// <summary>
-    /// Timer is decremented as time passes and the ball explodes after it is depleted, without colliding with the player
+    /// Timer is decremented as time passes and the ball explodes after it is depleted
     /// The ball is destroyed after the collision 
     /// </summary>
     void Update()
     {
         lifeSpan -= Time.deltaTime;
-        if(lifeSpan <= 0 && collidedWithPlayer == false)
+        if(lifeSpan <= 0)
         {
             DestroyBall();
         }

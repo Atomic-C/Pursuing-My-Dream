@@ -26,6 +26,15 @@ TagManager:
   - CameraBound
   - Trigger
   - CameraTarget
+  - TopEdge
+  - Edge
+  - Crosshair
+  - MagicalGem
+  - Bullet
+  - RangeLimit
+  - DestroyBullet
+  - Enemy
+  - DestroyObject
   layers:
   - Default
   - TransparentFX
@@ -39,12 +48,12 @@ TagManager:
   - Player
   - Collectable
   - DistortionEffect
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - CameraCollider
+  - CrossHair
+  - Enemy
+  - Bullet
+  - RangeLimit
+  - MainCamera
   - 
   - 
   - 
@@ -60,9 +69,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2563424189
+    locked: 0
+  - name: BehindPlayer
+    uniqueID: 471651161
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: HighestLayerForDistortionEffect
+  - name: Foreground
     uniqueID: 685346543
     locked: 0

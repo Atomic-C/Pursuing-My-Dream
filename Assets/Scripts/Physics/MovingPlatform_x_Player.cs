@@ -7,7 +7,7 @@ using UnityEngine;
 public class MovingPlatform_x_Player : MonoBehaviour
 {
     /// <summary>
-    /// The platform rigi body 2d
+    /// The platform rigid body 2d
     /// </summary>
     private Rigidbody2D platformRB;
 

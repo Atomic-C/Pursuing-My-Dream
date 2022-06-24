@@ -800,7 +800,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Damage2: 1285937184951978474
+      Impact3: -8037494386103474699
       Falling1: -6191991636534525690
       Death4: -9214401241830318751
       Impact1: -2080827987338687575
@@ -822,9 +822,9 @@ TextureImporter:
       Damage1: 7201364350621711633
       Crouch1: 2516805082475195109
       Iddle1: -2043167824384449797
+      Damage2: 1285937184951978474
       Crouch3: -1262105974839775541
       Falling2: -8334347949024425324
-      Impact3: -8037494386103474699
       MovingRight1: 4115568304093609634
   spritePackingTag: 
   pSDRemoveMatte: 0

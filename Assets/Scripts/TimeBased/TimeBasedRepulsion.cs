@@ -15,6 +15,19 @@ public class TimeBasedRepulsion : MonoBehaviour
     /// </summary>
     public float activateTimerSet = 2f;
 
+    private CircleCollider2D circleCollider2D;
+
+    private PointEffector2D pointEffector2D;
+
+    private Animator animator;
+
+    private void Awake()
+    {
+        circleCollider2D = gameObject.GetComponent<CircleCollider2D>();
+        pointEffector2D = gameObject.GetComponent<PointEffector2D>();
+        animator = gameObject.GetComponent<Animator>();
+    }
+
     /// <summary>
     /// Initialize activateTimer variable
     /// </summary>
@@ -36,7 +49,7 @@ public class TimeBasedRepulsion : MonoBehaviour
         {
             Activate();
             AudioManager.instance.PlaySound("Explosion", gameObject.transform.position);
-            Invoke("Deactivate", this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+            Invoke("Deactivate", animator.GetCurrentAnimatorStateInfo(0).length);
             activateTimer = activateTimerSet;
         } 
     }
@@ -46,8 +59,9 @@ public class TimeBasedRepulsion : MonoBehaviour
     /// </summary>
     void Activate()
     {
-        this.gameObject.GetComponent<Animator>().SetBool("Activate", true);
-        this.gameObject.GetComponent<PointEffector2D>().enabled = true;
+        animator.SetBool("Activate", true);
+        circleCollider2D.enabled = true;
+        pointEffector2D.enabled = true;
     }
 
     /// <summary>
@@ -55,8 +69,9 @@ public class TimeBasedRepulsion : MonoBehaviour
     /// </summary>
     void Deactivate()
     {
-        this.gameObject.GetComponent<Animator>().SetBool("Activate", false);
-        this.gameObject.GetComponent<PointEffector2D>().enabled = false;
+        animator.SetBool("Activate", false);
+        circleCollider2D.enabled = false;
+        pointEffector2D.enabled = false;
     }
 }
 

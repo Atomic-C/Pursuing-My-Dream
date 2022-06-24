@@ -1,0 +1,1105 @@
+fileFormatVersion: 2
+guid: fbe4fc401d30f104dbd99d3f3c35c797
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8848993070067138329
+    second: yellow1
+  - first:
+      213: 1115682805434658061
+    second: blueContinuous1
+  - first:
+      213: 5056628667063805970
+    second: blueCut1
+  - first:
+      213: -7243563388056777162
+    second: blueCut2
+  - first:
+      213: -2014131868727140717
+    second: blueContinuous2
+  - first:
+      213: -3500076459514152108
+    second: blueContinuous3
+  - first:
+      213: 6099260101181312286
+    second: blueCut3
+  - first:
+      213: 1663659671258945594
+    second: blueContinuous4
+  - first:
+      213: 5895032775111214156
+    second: blueCut4
+  - first:
+      213: 592955695280212857
+    second: lightning3
+  - first:
+      213: -3187845154016545519
+    second: lightning4
+  - first:
+      213: -1829972567977851800
+    second: brightLightning3
+  - first:
+      213: -3617592842788458299
+    second: brightLightning4
+  - first:
+      213: 8402110963858618648
+    second: yellowColl3
+  - first:
+      213: -7295041181581704347
+    second: lightning1
+  - first:
+      213: -3807375907713261857
+    second: lightning2
+  - first:
+      213: 7056058655592172511
+    second: brightLightning1
+  - first:
+      213: -3087948670725542470
+    second: brightLightning2
+  - first:
+      213: -3247423240367016429
+    second: yellowColl2
+  - first:
+      213: 8310713079796583774
+    second: yellowColl1
+  - first:
+      213: -4301328461183082428
+    second: red4
+  - first:
+      213: 5037496975944284669
+    second: red3
+  - first:
+      213: 6322154410760874147
+    second: red2
+  - first:
+      213: -3445168788254099474
+    second: red1
+  - first:
+      213: 6149249815088398217
+    second: purple4
+  - first:
+      213: 355699773836598282
+    second: purple3
+  - first:
+      213: 1991018248809488785
+    second: purple2
+  - first:
+      213: 8595251430488543279
+    second: purple1
+  - first:
+      213: -5251920647819144080
+    second: purpleColl3
+  - first:
+      213: 7510961394910873037
+    second: purpleColl1
+  - first:
+      213: 159473955366450277
+    second: redBall
+  - first:
+      213: 5515354716254508465
+    second: purpleColl2
+  - first:
+      213: -963982025516991787
+    second: red_alternate
+  - first:
+      213: 2163253345535544512
+    second: red_alternate2
+  - first:
+      213: 7897149418561299012
+    second: redMini1
+  - first:
+      213: 2448633445859784539
+    second: redMini2
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Lumin
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: tvOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: yellow1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 259
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91fbe313050fdca70800000000000000
+      internalID: 8848993070067138329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueContinuous1
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 20
+        width: 8
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0da1f3b993bb7f00800000000000000
+      internalID: 1115682805434658061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueCut1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 20
+        width: 8
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21825654bf0cc2640800000000000000
+      internalID: 5056628667063805970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueCut2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 20
+        width: 8
+        height: 245
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63ec9d20a71b97b90800000000000000
+      internalID: -7243563388056777162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueContinuous2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 20
+        width: 8
+        height: 245
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39e99b99cbd5c04e0800000000000000
+      internalID: -2014131868727140717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueContinuous3
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 21
+        width: 11
+        height: 242
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45bb3f7110b3d6fc0800000000000000
+      internalID: -3500076459514152108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueCut3
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 21
+        width: 11
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1d00ab2fbce4a450800000000000000
+      internalID: 6099260101181312286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueContinuous4
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 22
+        width: 13
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a38588418a1861710800000000000000
+      internalID: 1663659671258945594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blueCut4
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 22
+        width: 13
+        height: 238
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c440ac3631d5fc150800000000000000
+      internalID: 5895032775111214156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lightning3
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 10
+        width: 32
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97bc8b0301a9a3800800000000000000
+      internalID: 592955695280212857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lightning4
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 10
+        width: 31
+        height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 115b4ebe8bf72c3d0800000000000000
+      internalID: -3187845154016545519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: brightLightning3
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 10
+        width: 32
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86488f025a1aa96e0800000000000000
+      internalID: -1829972567977851800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: brightLightning4
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 10
+        width: 31
+        height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c0399fe97abbcdc0800000000000000
+      internalID: -3617592842788458299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: yellowColl3
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 237
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8193534c76b4a9470800000000000000
+      internalID: 8402110963858618648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lightning1
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 14
+        width: 30
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5630af532bec2ca90800000000000000
+      internalID: -7295041181581704347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lightning2
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 10
+        width: 29
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdede56c8cb792bc0800000000000000
+      internalID: -3807375907713261857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: brightLightning1
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 14
+        width: 30
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdb44e076f72ce160800000000000000
+      internalID: 7056058655592172511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: brightLightning2
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 10
+        width: 29
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abda3cc6b076525d0800000000000000
+      internalID: -3087948670725542470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: yellowColl2
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 215
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 316739ab4c5dee2d0800000000000000
+      internalID: -3247423240367016429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: yellowColl1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 194
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5dc7779385955370800000000000000
+      internalID: 8310713079796583774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red4
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 176
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 440a7e0dd8c9e44c0800000000000000
+      internalID: -4301328461183082428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red3
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 157
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df973405fc8c8e540800000000000000
+      internalID: 5037496975944284669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red2
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a8229cb0fdccb750800000000000000
+      internalID: 6322154410760874147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 113
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee7f9d88d3d4030d0800000000000000
+      internalID: -3445168788254099474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purple4
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 98
+        width: 10
+        height: 6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98ffa7f6026865550800000000000000
+      internalID: 6149249815088398217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purple3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 86
+        width: 6
+        height: 10
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0c973a4f03bfe400800000000000000
+      internalID: 355699773836598282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purple2
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 75
+        width: 9
+        height: 9
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1912c956c8481ab10800000000000000
+      internalID: 1991018248809488785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purple1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 64
+        width: 9
+        height: 9
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f20107de2a7784770800000000000000
+      internalID: 8595251430488543279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purpleColl3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 54
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07453362ffd6d17b0800000000000000
+      internalID: -5251920647819144080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purpleColl1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 29
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc5c559089b4c3860800000000000000
+      internalID: 7510961394910873037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redBall
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 11
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5643b8ca7b0963200800000000000000
+      internalID: 159473955366450277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purpleColl2
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 42
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b510a094e97a8c40800000000000000
+      internalID: 5515354716254508465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red_alternate
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 113
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dab237847f3f92f0800000000000000
+      internalID: -963982025516991787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red_alternate2
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 136
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cc42d3d47b650e10800000000000000
+      internalID: 2163253345535544512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redMini1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 158
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44267872e8f489d60800000000000000
+      internalID: 7897149418561299012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redMini2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 177
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b57fc95452b4bf120800000000000000
+      internalID: 2448633445859784539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purple_alternate
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 88
+        width: 7
+        height: 17
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75f504ff4e452f74398e5de0a40fc1b5
+      internalID: 66435802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      purple3: 355699773836598282
+      blueContinuous1: 1115682805434658061
+      red_alternate: -963982025516991787
+      brightLightning2: -3087948670725542470
+      redMini2: 2448633445859784539
+      purpleColl1: 7510961394910873037
+      red2: 6322154410760874147
+      blueContinuous2: -2014131868727140717
+      red4: -4301328461183082428
+      brightLightning4: -3617592842788458299
+      red3: 5037496975944284669
+      lightning3: 592955695280212857
+      lightning2: -3807375907713261857
+      brightLightning3: -1829972567977851800
+      purple1: 8595251430488543279
+      lightning4: -3187845154016545519
+      yellowColl3: 8402110963858618648
+      red1: -3445168788254099474
+      redBall: 159473955366450277
+      brightLightning1: 7056058655592172511
+      purple2: 1991018248809488785
+      blueCut1: 5056628667063805970
+      yellow1: 8848993070067138329
+      purple4: 6149249815088398217
+      yellowColl1: 8310713079796583774
+      purple_alternate: 66435802
+      blueCut2: -7243563388056777162
+      blueCut4: 5895032775111214156
+      purpleColl2: 5515354716254508465
+      redMini1: 7897149418561299012
+      red_alternate2: 2163253345535544512
+      lightning1: -7295041181581704347
+      yellowColl2: -3247423240367016429
+      purpleColl3: -5251920647819144080
+      blueContinuous3: -3500076459514152108
+      blueContinuous4: 1663659671258945594
+      blueCut3: 6099260101181312286
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

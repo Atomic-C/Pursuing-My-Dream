@@ -75,7 +75,7 @@ public class Platform_Movement : MonoBehaviour {
     /// <summary>
     /// Bool used to check if the player is grounded
     /// </summary>
-    private bool isGrounded;
+    public bool isGrounded;
 
     /// <summary>
     /// Coyote time variables

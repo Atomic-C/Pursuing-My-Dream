@@ -128,6 +128,12 @@ public class Sound
     public bool loop, isMusic, isPlaying;
 
     /// <summary>
+    /// Bool used to determine if this sound is emitted by the player, directly or on touch
+    /// If it is, there's no need to used the AudioSource.PlayClipAtPoint function
+    /// </summary>
+    public bool fromPlayer;
+
+    /// <summary>
     /// The sound audio clip
     /// </summary>
     public AudioClip clip;
@@ -152,6 +158,8 @@ public class Sound
     /// Function used to play the audio clip
     /// If it is a music (isMusic bool), call the Play function
     /// If its not a music (SFX), call the PlayClipAtPoint function
+    /// If the sound comes from the player, uses the PlayOneShot function since there is no need to play the sound at a determined location
+    /// A simple fix to some sound bugs when the camera is focused distant from the player
     /// </summary>
     /// <param name="positionToPlay">Position that will be used in the PlayClipAtPoint function (SFX only)</param>
     public void Play(Vector3 positionToPlay)
@@ -164,6 +172,9 @@ public class Sound
         else
              if (!isPlaying)
         {
+            if(fromPlayer)
+                source.PlayOneShot(clip);
+            else
             AudioSource.PlayClipAtPoint(clip, positionToPlay);
 
             // Jump sound needs the delay to avoid the sound bug

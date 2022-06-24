@@ -41,12 +41,18 @@ public class ExplosionEffect : MonoBehaviour
     private ParticleSystem thisParticleSystem;
 
     /// <summary>
+    /// This object point effector 2D, if applicable
+    /// </summary>
+    private PointEffector2D thisPointEffector2D;
+
+    /// <summary>
     /// Cache the necessary variables
     /// </summary>
     private void Awake()
     {
         thisParticleSystem = gameObject.GetComponent<ParticleSystem>();
         aoeRange = gameObject.GetComponent<CircleCollider2D>();
+        thisPointEffector2D = gameObject.TryGetComponent<PointEffector2D>(out PointEffector2D pointEffector2D) ? pointEffector2D : null;
     }
 
     // Start is called before the first frame update
@@ -67,7 +73,10 @@ public class ExplosionEffect : MonoBehaviour
     {
         // This script is used for both the guided as its alternate projectiles, so the ternary is to differentiate which sound will play based on that
         AudioManager.instance.PlaySound(alternateShoot ? "GuidedMiniExplosion" : "GuidedExplosion", transform.position);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(.2f);
+        if(thisPointEffector2D != null)
+            thisPointEffector2D.enabled = false;
+        yield return new WaitForSeconds(thisParticleSystem.main.duration);
         Destroy(gameObject);
     }
 

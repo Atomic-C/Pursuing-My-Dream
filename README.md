@@ -41,3 +41,7 @@ Keypad 2: spread shoot, faster rate of fire but less accurate. Alternate version
 Keypad 3: guided shoot, tracks the closest target from the player. Alternate version: projectile cluster, spawns several mini versions of itself.
 <br>
 Press M to mute / unmute the music
+<br>
+Press E to activate visual effects
+<br>
+Press R to activate object pooling (to test performance in mobile devices)

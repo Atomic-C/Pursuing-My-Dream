@@ -20,7 +20,7 @@ public class ResetPlayerPosition : MonoBehaviour
     /// <summary>
     /// Bool used to determine if the player fell to their doom
     /// </summary>
-    private bool playerFell;
+    private bool _playerFell;
 
     /// <summary>
     /// The fade in / out object that is responsible for this effect begins deactivated (to be able to see everything in the editor). So, this guarantees that the object is only active
@@ -36,10 +36,10 @@ public class ResetPlayerPosition : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (playerFell)
+        if (_playerFell)
         {
             CameraFadeOut();
-            playerFell = false;
+            _playerFell = false;
         }
     }
 
@@ -51,7 +51,7 @@ public class ResetPlayerPosition : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            playerFell = true;
+            _playerFell = true;
         }
     }
 

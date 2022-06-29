@@ -47,14 +47,14 @@ TagManager:
   - Platform
   - Player
   - Collectable
-  - DistortionEffect
-  - CameraCollider
+  - Distortion Effect
+  - Camera Collider
   - CrossHair
   - Enemy
   - Bullet
-  - RangeLimit
-  - MainCamera
-  - 
+  - Range Limit
+  - Main Camera
+  - Post Processing
   - 
   - 
   - 

@@ -12,9 +12,9 @@ public class ShowExplanation : MonoBehaviour
     public GameObject effectorExplanation;
 
     /// <summary>
-    /// The main camera, used to be able to get the camera position (did this way because this script is attached to a prefab)
+    /// Bool used to use the camera focus or not
     /// </summary>
-    private Camera mainCamera;
+    public bool setCameraFocus;
 
     /// <summary>
     /// The position of the sign pointing to the explained object 
@@ -22,14 +22,14 @@ public class ShowExplanation : MonoBehaviour
     public Transform exclamationSignPosition;
 
     /// <summary>
-    /// The position of the camera target object (above the player head)
+    /// The main camera, used to be able to get the camera position (did this way because this script is attached to a prefab)
     /// </summary>
-    private Transform cameraTargetPosition;
+    private Camera _mainCamera;
 
     /// <summary>
-    /// Bool used to use the camera focus or not
+    /// The position of the camera target object (above the player head)
     /// </summary>
-    public bool setCameraFocus;
+    private Transform _cameraTargetPosition;
 
     /// <summary>
     /// Cache the necessary variables
@@ -37,8 +37,8 @@ public class ShowExplanation : MonoBehaviour
     private void Start()
     {
         effectorExplanation.SetActive(false);
-        mainCamera = Camera.main;
-        cameraTargetPosition = GameObject.Find("CameraTarget").transform;
+        _mainCamera = Camera.main;
+        _cameraTargetPosition = GameObject.Find("CameraTarget").transform;
     }
 
     // The initial idea was to deactivate everything related to the UI explanation that was connected to this script
@@ -57,7 +57,7 @@ public class ShowExplanation : MonoBehaviour
             SetVisibility();
             AudioManager.instance.PlaySound("ShowExplanation", gameObject.transform.position);
             if(setCameraFocus)
-            mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = exclamationSignPosition;
+            _mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = exclamationSignPosition;
         }
     }
 
@@ -71,7 +71,7 @@ public class ShowExplanation : MonoBehaviour
         {
             SetVisibility();
             if(setCameraFocus)
-            mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = cameraTargetPosition;
+            _mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = _cameraTargetPosition;
         }
     }
 

@@ -7,21 +7,6 @@ using UnityEngine;
 public class MoveJoint : MonoBehaviour
 {
     /// <summary>
-    /// The object slider joint 2d
-    /// </summary>
-    private SliderJoint2D slider;
-
-    /// <summary>
-    /// The object hinge joint 2d
-    /// </summary>
-    private HingeJoint2D hinge;
-
-    /// <summary>
-    /// The slider joint 2d motor
-    /// </summary>
-    private JointMotor2D auxiliarymotor;
-
-    /// <summary>
     /// Which joint 2d is being used by this object
     /// </summary>
     public JointType whichJoint;
@@ -37,6 +22,21 @@ public class MoveJoint : MonoBehaviour
     public float NegativeSpeed = -1f;
 
     /// <summary>
+    /// The object slider joint 2d
+    /// </summary>
+    private SliderJoint2D _slider;
+
+    /// <summary>
+    /// The object hinge joint 2d
+    /// </summary>
+    private HingeJoint2D _hinge;
+
+    /// <summary>
+    /// The slider joint 2d motor
+    /// </summary>
+    private JointMotor2D _auxiliarymotor;
+
+    /// <summary>
     /// Initialize the variables
     /// </summary>
     void Start()
@@ -44,12 +44,12 @@ public class MoveJoint : MonoBehaviour
         switch (whichJoint)
         {
             case JointType.SLIDER:
-                slider = GetComponent<SliderJoint2D>();
-                auxiliarymotor = slider.motor;
+                _slider = GetComponent<SliderJoint2D>();
+                _auxiliarymotor = _slider.motor;
                 break;
             case JointType.HINGE:
-                hinge = GetComponent<HingeJoint2D>();
-                auxiliarymotor = hinge.motor;
+                _hinge = GetComponent<HingeJoint2D>();
+                _auxiliarymotor = _hinge.motor;
                 break;
         }
     }
@@ -63,29 +63,29 @@ public class MoveJoint : MonoBehaviour
         switch (whichJoint)
         {
             case JointType.SLIDER:
-                if (slider.limitState == JointLimitState2D.LowerLimit)
+                if (_slider.limitState == JointLimitState2D.LowerLimit)
                 {
-                    auxiliarymotor.motorSpeed = PositiveSpeed;
-                    slider.motor = auxiliarymotor;
+                    _auxiliarymotor.motorSpeed = PositiveSpeed;
+                    _slider.motor = _auxiliarymotor;
                 }
 
-                if (slider.limitState == JointLimitState2D.UpperLimit)
+                if (_slider.limitState == JointLimitState2D.UpperLimit)
                 {
-                    auxiliarymotor.motorSpeed = NegativeSpeed;
-                    slider.motor = auxiliarymotor;
+                    _auxiliarymotor.motorSpeed = NegativeSpeed;
+                    _slider.motor = _auxiliarymotor;
                 }
                 break;
             case JointType.HINGE:
-                if (hinge.limitState == JointLimitState2D.LowerLimit)
+                if (_hinge.limitState == JointLimitState2D.LowerLimit)
                 {
-                    auxiliarymotor.motorSpeed = PositiveSpeed;
-                    hinge.motor = auxiliarymotor;
+                    _auxiliarymotor.motorSpeed = PositiveSpeed;
+                    _hinge.motor = _auxiliarymotor;
                 }
 
-                if (hinge.limitState == JointLimitState2D.UpperLimit)
+                if (_hinge.limitState == JointLimitState2D.UpperLimit)
                 {
-                    auxiliarymotor.motorSpeed = NegativeSpeed;
-                    hinge.motor = auxiliarymotor;
+                    _auxiliarymotor.motorSpeed = NegativeSpeed;
+                    _hinge.motor = _auxiliarymotor;
                 }
                 break;
         }

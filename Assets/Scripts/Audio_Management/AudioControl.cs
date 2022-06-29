@@ -9,7 +9,7 @@ public class AudioControl : MonoBehaviour
     /// <summary>
     /// Bool that define if the music is muted or not
     /// </summary>
-    private bool muted;
+    private bool _muted;
 
     /// <summary>
     /// Mute / unmute the music with the "M" Key press
@@ -18,15 +18,15 @@ public class AudioControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (muted)
+            if (_muted)
             {
                 AudioManager.instance.PlaySound("Music", Vector3.zero);
-                muted = false;
+               _muted = false;
             }
             else
             {
                 AudioManager.instance.StopSound("Music");
-                muted = true;
+                _muted = true;
             }
         }
     }

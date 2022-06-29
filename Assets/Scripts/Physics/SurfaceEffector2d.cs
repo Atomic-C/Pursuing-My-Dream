@@ -10,19 +10,19 @@ public class SurfaceEffector2d : MonoBehaviour
     /// <summary>
     /// This game object surface effector 2d 
     /// </summary>
-    private SurfaceEffector2D surfaceEffector2d;
+    private SurfaceEffector2D _surfaceEffector2d;
 
     /// <summary>
     /// The player rigidbody 2d
     /// </summary>
-    private Rigidbody2D playerRB;
+    private Rigidbody2D _playerRB;
 
     /// <summary>
     /// Initialize the surface effector 2d variable
     /// </summary>
     void Start()
     {
-        surfaceEffector2d = GetComponent<SurfaceEffector2D>();
+        _surfaceEffector2d = GetComponent<SurfaceEffector2D>();
     }
     
     /// <summary>
@@ -30,8 +30,8 @@ public class SurfaceEffector2d : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        if (playerRB != null)
-            playerRB.transform.position += new Vector3(surfaceEffector2d.speed, 0f, 0f) * Time.deltaTime;
+        if (_playerRB != null)
+            _playerRB.transform.position += new Vector3(_surfaceEffector2d.speed, 0f, 0f) * Time.deltaTime;
             //playerRB.AddForce(new Vector2(surfaceEffector2d.speed * Time.deltaTime, 0f), ForceMode2D.Impulse);
     }
 
@@ -42,7 +42,7 @@ public class SurfaceEffector2d : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            playerRB = collision.GetComponent<Rigidbody2D>();            
+            _playerRB = collision.GetComponent<Rigidbody2D>();            
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class SurfaceEffector2d : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            playerRB = null;
+            _playerRB = null;
     }
 
     // Affects the player collider transform when in contact to the surface effector 2d, changing its x position depending on the effector speed property

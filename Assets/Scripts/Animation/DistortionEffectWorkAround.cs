@@ -11,14 +11,14 @@ public class DistortionEffectWorkAround : MonoBehaviour
     /// <summary>
     /// This game object mesh renderer
     /// </summary>
-    private MeshRenderer distortionEffect;
+    private MeshRenderer _distortionEffect;
 
     /// <summary>
     /// Initialize the distortionEffect variable
     /// </summary>
     void Start()
     {
-        distortionEffect = gameObject.GetComponent<MeshRenderer>();
+        _distortionEffect = gameObject.GetComponent<MeshRenderer>();
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class DistortionEffectWorkAround : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            distortionEffect.enabled = true;
+            _distortionEffect.enabled = true;
     }
 
     /// <summary>
@@ -38,6 +38,6 @@ public class DistortionEffectWorkAround : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-            distortionEffect.enabled = false;
+            _distortionEffect.enabled = false;
     }
 }

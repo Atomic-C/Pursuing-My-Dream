@@ -9,14 +9,14 @@ public class MovingPlatform_x_Player : MonoBehaviour
     /// <summary>
     /// The platform rigid body 2d
     /// </summary>
-    private Rigidbody2D platformRB;
+    private Rigidbody2D _platformRB;
 
     /// <summary>
     /// Initialize the platform rigidbody 2d variable
     /// </summary>
     private void Start()
     {
-        platformRB = GetComponent<Rigidbody2D>();
+        _platformRB = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public class MovingPlatform_x_Player : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.transform.position += new Vector3(platformRB.velocity.x, 0f, 0f) * Time.deltaTime;
+            collision.transform.position += new Vector3(_platformRB.velocity.x, 0f, 0f) * Time.deltaTime;
         }
     }
 }

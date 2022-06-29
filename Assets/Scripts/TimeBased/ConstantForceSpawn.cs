@@ -27,21 +27,21 @@ public class ConstantForceSpawn : MonoBehaviour
     public bool showTimer;
 
     /// <summary>
-    /// Float used as an actual timer (will be manipulated as times passes)
-    /// </summary>
-    private float timer;
-
-    /// <summary>
     /// The explanation game object
     /// </summary>
     public GameObject constantForceExplanation;
+
+    /// <summary>
+    /// Float used as an actual timer (will be manipulated as times passes)
+    /// </summary>
+    private float _timer;
 
     /// <summary>
     /// Set the current timer / UI timer at start
     /// </summary>
     private void Start()
     {
-        timer = spawnTimer;
+        _timer = spawnTimer;
         ShowHideUITimer();
     }
 
@@ -51,14 +51,14 @@ public class ConstantForceSpawn : MonoBehaviour
     /// </summary>
     void Update()
     {
-        timer -= Time.deltaTime;
+        _timer -= Time.deltaTime;
 
         // Show the UI timer when the explanation object is active
         ShowHideUITimer();
-        if (timer <= 0)
+        if (_timer <= 0)
         {
             Instantiate(objToSpawn, transform.position, Quaternion.identity);
-            timer = spawnTimer;
+            _timer = spawnTimer;
         }
     }
 
@@ -71,7 +71,7 @@ public class ConstantForceSpawn : MonoBehaviour
         uiTimer.gameObject.SetActive(showTimer);
 
         if (showTimer) {
-            int integerTimer = (int)timer + 1;
+            int integerTimer = (int)_timer + 1;
             uiTimer.text = integerTimer.ToString();
         }
     }

@@ -10,12 +10,44 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// The position of the target of the shoot 
     /// </summary>
-    private Vector2 target;
+    private Vector2 _target;
 
     /// <summary>
     /// Rigidbody 2D attached to this object
     /// </summary>
-    private Rigidbody2D thisRigidbody2D;
+    private Rigidbody2D _thisRigidbody2D;
+
+    [Header("Shader Glow")]
+    /// <summary>
+    /// Color used in the glow effect
+    /// </summary>
+    public Color glowColor;
+
+    /// <summary>
+    /// The intensity of the glow effect
+    /// </summary>
+    public float glowIntensity;
+
+    /// <summary>
+    /// Property that acts as an "on change" listener, where it automatically activate / deactivate the glow effect (through the calling of the SetGlowEffect function)
+    /// </summary>
+    public bool UseEmission
+    {
+        get
+        {
+            return _useEmission;
+        }
+        set
+        {
+            _useEmission = value;
+            SetGlowEffect();
+        }
+    }
+
+    /// <summary>
+    /// Make use or not of the glow effect
+    /// </summary>
+    private bool _useEmission;
 
     [Header("Objects Setup")]
     /// <summary>
@@ -26,7 +58,7 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// Variable that will hold the instantiated collision effect prefab
     /// </summary>
-    private BulletCollisionEffect collisionEffect;
+    private BulletCollisionEffect _collisionEffect;
 
     [Header("Variables Setup")]
     /// <summary>
@@ -88,12 +120,12 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// The game object sprite renderer
     /// </summary>
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
 
     /// <summary>
     /// The game object initial sprite
     /// </summary>
-    private Sprite originalSprite;
+    private Sprite _originalSprite;
 
     [HideInInspector]
     /// <summary>
@@ -106,7 +138,7 @@ public class Bullet : MonoBehaviour
     /// Using object pooling: calls the Release function from the pool, deactivating this game object to be reused later
     /// Not using object pooling: destroy this game object
     /// </summary>
-    private Action<Bullet> killAction;
+    private Action<Bullet> _killAction;
 
     [Header("Guided shoot only")]
     /// <summary>
@@ -128,8 +160,8 @@ public class Bullet : MonoBehaviour
     /// Array of mini guided bullet that will hold the ammount dictated by the miniGuidedAmmount variable
     /// Usable only if this bullet is of guided type, for its alternate shoot version
     /// </summary>
-    private MiniGuidedBullet[] pooledMiniGuidedBullet;
-
+    private MiniGuidedBullet[] _pooledMiniGuidedBullet;
+    
     /// <summary>
     /// Ammount of guided mini bullet to be instantiated as the main bullet is destroyed
     /// </summary>
@@ -143,22 +175,22 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// Variable that will hold the instantiated explosion effect prefab
     /// </summary>
-    private ExplosionEffect explosionEffect;
+    private ExplosionEffect _explosionEffect;
 
     /// <summary>
     /// The game object echo effect script (used in guided shoot type)
     /// </summary>
-    private EchoEffect echoEffect;
+    private EchoEffect _echoEffect;
 
     /// <summary>
     /// The game object trail renderer (used in guided shoot type)
     /// </summary>
-    private TrailRenderer trailRenderer;
+    private TrailRenderer _trailRenderer;
 
     /// <summary>
     /// The axis rotation script being used by this bullet (guided only)
     /// </summary>
-    private Axis_Rotation axis_Rotation;
+    private Axis_Rotation _axis_Rotation;
 
     [Header("Echo effect is not perfomance friendly")]
     /// <summary>
@@ -169,17 +201,17 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// Actual timer used in the tracking process (affected by Time.deltaTime)
     /// </summary>
-    private float actualTrackingTimer;
+    private float _actualTrackingTimer;
 
     /// <summary>
     /// Bool used to affect the behavior of the guided shoot variant 
     /// </summary>
-    private bool foundTarget;
+    private bool _foundTarget;
 
     /// <summary>
     /// Float that will be affected by the passing of time
     /// </summary>
-    private float actualShootTimer;
+    private float _actualShootTimer;
 
     [Header("Spread shoot only")]
     /// <summary>
@@ -198,26 +230,15 @@ public class Bullet : MonoBehaviour
     public float chainSpread;
 
     /// <summary>
-    /// Variables that will reflect the changes on its attributes (necessity because of the spread shoot alternate version)
-    /// </summary>
-    private float actualSpeed, actualSpreadOffSet;
-
-    /// <summary>
     /// The bullet animator, used only in the spread shoot type
     /// Must be deactivated to use the alternate shoot sprite
     /// </summary>
     public Animator animator;
 
     /// <summary>
-    /// Call the SetupCollisionEffect function if this is an pooled object
+    /// Variables that will reflect the changes on its attributes (necessity because of the spread shoot alternate version)
     /// </summary>
-    private void Start()
-    {
-        if (pooledObject)
-        {
-            SetupCollisionEffect();
-        }
-    }
+    private float _actualSpeed, _actualSpreadOffSet;
 
     /// <summary>
     /// Cache the necessary variables
@@ -226,21 +247,23 @@ public class Bullet : MonoBehaviour
     {
         if (shootType == ShootType.GUIDED)
         {
-            InitializePooledMiniGuidedBullets();
-
-            axis_Rotation = gameObject.GetComponent<Axis_Rotation>();
-            echoEffect = gameObject.GetComponent<EchoEffect>();
-            echoEffect.enabled = false;
-            trailRenderer = gameObject.GetComponent<TrailRenderer>();
-            trailRenderer.enabled = false;
-            actualShootTimer = shootTimer;
-            actualTrackingTimer = trackingTimer;
+            _axis_Rotation = gameObject.GetComponent<Axis_Rotation>();
+            _echoEffect = gameObject.GetComponent<EchoEffect>();
+            _echoEffect.enabled = false;
+            _trailRenderer = gameObject.GetComponent<TrailRenderer>();
+            _trailRenderer.enabled = false;
+            _actualShootTimer = shootTimer;
+            _actualTrackingTimer = trackingTimer;
         }
-        thisRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        originalSprite = spriteRenderer.sprite;
-        actualSpeed = speed;
-        actualSpreadOffSet = spreadOffSet;
+        _thisRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _originalSprite = _spriteRenderer.sprite;
+        _actualSpeed = speed;
+        _actualSpreadOffSet = spreadOffSet;
+
+        // Set the material glow color and intensity at start
+        _spriteRenderer.material.SetColor("_GlowColor", glowColor);
+        _spriteRenderer.material.SetFloat("_EmissionIntensity", glowIntensity);
     }
 
     /// <summary>
@@ -307,21 +330,21 @@ public class Bullet : MonoBehaviour
             {
                 if (shootType == ShootType.GUIDED)
                 {
-                    explosionEffect.Activate(transform.position);
-                    explosionEffect.AoEDamage();
-                    actualShootTimer = shootTimer;
-                    actualTrackingTimer = trackingTimer;
-                    foundTarget = false;
+                    _explosionEffect.Activate(transform.position);
+                    _explosionEffect.AoEDamage();
+                    _actualShootTimer = shootTimer;
+                    _actualTrackingTimer = trackingTimer;
+                    _foundTarget = false;
 
                     // Spawns the guided shoot alternate version if applicable
                     SpawnMiniGuidedShoot();
                 }
                 else
-                    collisionEffect.Activate(transform.position);
+                    _collisionEffect.Activate(transform.position);
             }
             // Make sure the trail effect is disabled to prevent visual bugs when an object with its trail enabled is deactivated / activated in quick succession
             SetTrailEffect(false);
-            killAction(this);
+            _killAction(this);
         }  
     }
 
@@ -333,7 +356,7 @@ public class Bullet : MonoBehaviour
     /// <param name="killAction">Function received from the magical gem controller script</param>
     public void Init(Action<Bullet> killAction)
     {
-        this.killAction = killAction;
+        _killAction = killAction;
     }
 
     /// <summary>
@@ -362,16 +385,16 @@ public class Bullet : MonoBehaviour
     {
         if (shootType == ShootType.GUIDED)
         {
-            if (explosionEffect != null)
-                Destroy(explosionEffect.gameObject);
-            for (int i = 0; i < pooledMiniGuidedBullet.Length; i++)
+            if (_explosionEffect != null)
+                Destroy(_explosionEffect.gameObject);
+            for (int i = 0; i < _pooledMiniGuidedBullet.Length; i++)
             {
-                Destroy(pooledMiniGuidedBullet[i].gameObject);
+                Destroy(_pooledMiniGuidedBullet[i].gameObject);
             }
         }
             
-        else if(collisionEffect != null)
-            Destroy(collisionEffect.gameObject);
+        else if(_collisionEffect != null)
+            Destroy(_collisionEffect.gameObject);
     }
 
     /// <summary>
@@ -385,15 +408,17 @@ public class Bullet : MonoBehaviour
             // Create the necessary reference
             ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
             explosionEffect.SetupReferences(pooledObject, alternateShoot, strenght, transform);
+            explosionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
             explosionEffect.AoEDamage();
-            this.explosionEffect = explosionEffect;
+            _explosionEffect = explosionEffect;
         }
         else
         {
             // Create the necessary reference
             BulletCollisionEffect collisionEffect = Instantiate(collisionEffectPrefab, transform.position, Quaternion.identity);
             collisionEffect.fromPooledObject = false;
-            this.collisionEffect = collisionEffect;
+            collisionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
+            _collisionEffect = collisionEffect;
         }   
 
         SpawnMiniGuidedShoot();
@@ -411,11 +436,11 @@ public class Bullet : MonoBehaviour
             if (pooledObject)
             {
                 // Reset / set the necessary variables and activate each of this guided bullet alternate projectiles
-                for (int i = 0; i < pooledMiniGuidedBullet.Length; i++)
+                for (int i = 0; i < _pooledMiniGuidedBullet.Length; i++)
                 {
-                    pooledMiniGuidedBullet[i].ResetMiniBullet();
-                    pooledMiniGuidedBullet[i].SetupMiniBullet(target, speed, strenght, pooledObject);
-                    pooledMiniGuidedBullet[i].Activate(transform.position, spreadOffSet);
+                    _pooledMiniGuidedBullet[i].ResetMiniBullet();
+                    _pooledMiniGuidedBullet[i].SetupMiniBullet(_target, speed, strenght, pooledObject);
+                    _pooledMiniGuidedBullet[i].Activate(transform.position, spreadOffSet);
                 }
               // Not using object pooling
             } else
@@ -426,7 +451,10 @@ public class Bullet : MonoBehaviour
                     MiniGuidedBullet miniBullet = Instantiate(guidedMiniBullet, new Vector2(Random.Range(transform.position.x - spreadOffSet, transform.position.x + spreadOffSet),
                                                               Random.Range(transform.position.y - spreadOffSet, transform.position.y + spreadOffSet)), Quaternion.identity);
                     // Function that setups these projectiles, by basically using the same stats as the main projectile
-                    miniBullet.SetupMiniBullet(target, speed, strenght, pooledObject);
+                    miniBullet.SetupMiniBullet(_target, speed, strenght, pooledObject);
+
+                    // Activate / deactivate the mini bullet glow effect
+                    miniBullet.SetGlowEffect(_useEmission, glowColor, glowIntensity);
                 }
         }
 
@@ -438,37 +466,40 @@ public class Bullet : MonoBehaviour
     public void InitializePooledMiniGuidedBullets()
     {
         // Double check to avoid instantiating more than necessary
-        if (pooledObject && pooledMiniGuidedBullet == null)
+        if (pooledObject && _pooledMiniGuidedBullet == null)
         {
-            pooledMiniGuidedBullet = new MiniGuidedBullet[miniGuidedAmmount];
+            _pooledMiniGuidedBullet = new MiniGuidedBullet[miniGuidedAmmount];
 
-            for (int i = 0; i < pooledMiniGuidedBullet.Length; i++)
+            for (int i = 0; i < _pooledMiniGuidedBullet.Length; i++)
             {
                 MiniGuidedBullet miniGuidedBullet = Instantiate(guidedMiniBullet);
                 miniGuidedBullet.fromPooledObject = true;
                 miniGuidedBullet.gameObject.SetActive(false);
-                pooledMiniGuidedBullet[i] = miniGuidedBullet;
+                _pooledMiniGuidedBullet[i] = miniGuidedBullet;
             }     
         }
     }
 
     /// <summary>
     /// This object belong to a pool so its collision / explosion effect must be instantiate beforehand and deactivated in order to be reused
+    /// Also make sure to setup all the necessary info for it to work
     /// </summary>
     private void SetupCollisionEffect()
     {
-        if(shootType == ShootType.GUIDED)
+        if(shootType == ShootType.GUIDED && _explosionEffect == null)
         {
             ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab);
             explosionEffect.SetupReferences(pooledObject, alternateShoot, strenght, transform);
-            this.explosionEffect = explosionEffect;
-            this.explosionEffect.gameObject.SetActive(false);
-        } else
+            explosionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
+            _explosionEffect = explosionEffect;
+            _explosionEffect.gameObject.SetActive(false);
+        } else if(shootType != ShootType.GUIDED && _collisionEffect == null)
         {
             BulletCollisionEffect collisionEffect = Instantiate(collisionEffectPrefab);
             collisionEffect.fromPooledObject = true;
-            this.collisionEffect = collisionEffect;
-            this.collisionEffect.gameObject.SetActive(false);
+            collisionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
+            _collisionEffect = collisionEffect;
+            _collisionEffect.gameObject.SetActive(false);
         } 
     }
 
@@ -478,48 +509,51 @@ public class Bullet : MonoBehaviour
     /// <param name="target">The mouse position</param>
     /// <param name="speed">The speed of the player shoot (rank at the moment of the shoot)</param>
     /// <param name="alternateShoot">Bool that dictate if an alternate shoot was used (right click)</param>
-    public void Shoot(Vector3 target, float speed, bool alternateShoot)
+    public void Shoot(Vector3 target, float speed, bool alternateShoot, float range)
     {
+        // Get the maximum range (bullet + player) for the instant bullet type
+        this.range = range;
+
         // Cache the alternate shoot bool, since there are behaviors that happens outside this function
         this.alternateShoot = alternateShoot;
 
         // If the current bullet has an alternate shoot and it was used, change the sprite to have a different look
         if (this.alternateShoot && hasAlternateShoot)
         {
-            spriteRenderer.sprite = alternateSprite;
+            _spriteRenderer.sprite = alternateSprite;
 
             // Also changes the echo effect sprite, when applicable
             if (trailType == TrailType.ECHOEFFECT)
-                echoEffect.alternateShoot = alternateShoot;
+                _echoEffect.alternateShoot = alternateShoot;
         }
         // Not using alternate shoot, so use its original sprite (in case the player already used the alternate shoot, revert the sprite back to its original)
         else
-            spriteRenderer.sprite = originalSprite;
+            _spriteRenderer.sprite = _originalSprite;
 
         // Cache the target to be used outside this function
-        this.target = target;
+        _target = target;
 
         switch (shootType)
         {
             // Simple behavior shoot - goes straight to the target
             case ShootType.DEFAULT:
-                thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
+                _thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
                 AudioManager.instance.PlaySound("DefaultShoot", transform.position);
                 break;
             // Shoot with a spread effect - random target position, based on a radius from the original target
             // Alternate shoot: gatling like version
             case ShootType.SPREAD:
                 SpreadAlternateCalculation(this.alternateShoot);
-                Vector2 randomTarget = new Vector2(Random.Range(target.x - actualSpreadOffSet, target.x + actualSpreadOffSet),
-                                                   Random.Range(target.y - actualSpreadOffSet, target.y + actualSpreadOffSet));
+                Vector2 randomTarget = new Vector2(Random.Range(target.x - _actualSpreadOffSet, target.x + _actualSpreadOffSet),
+                                                   Random.Range(target.y - _actualSpreadOffSet, target.y + _actualSpreadOffSet));
                 PointAtTarget();
-                thisRigidbody2D.velocity = randomTarget.normalized * (actualSpeed + speed);
+                _thisRigidbody2D.velocity = randomTarget.normalized * (_actualSpeed + speed);
                 AudioManager.instance.PlaySound(alternateShoot ? "SpreadAlternateShoot" : "SpreadShoot", transform.position);
                 break;
             // Shoot with a guided behavior - since its a different kind of bullet, it uses logic apart from this function.
-            // Simply play the bullet sound here
             // Alternate shoot: initial bullet spawns several others when destroyed
             case ShootType.GUIDED:
+                _thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
                 AudioManager.instance.PlaySound(alternateShoot ? "GuidedAlternateShoot" : "GuidedShoot", transform.position);
                 break;
         }
@@ -531,7 +565,7 @@ public class Bullet : MonoBehaviour
     /// </summary>
     private void PointAtTarget()
     {
-        Vector3 normalizedTarget = target.normalized;
+        Vector3 normalizedTarget = _target.normalized;
         float angle = Mathf.Atan2(normalizedTarget.y, normalizedTarget.x) * Mathf.Rad2Deg - 90;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
@@ -543,8 +577,8 @@ public class Bullet : MonoBehaviour
     /// <param name="activated"></param>
     public void SpreadAlternateCalculation(bool activated)
     {
-        actualSpeed = activated ? chainSpeed : speed;
-        actualSpreadOffSet = activated ? chainSpread : spreadOffSet;
+        _actualSpeed = activated ? chainSpeed : speed;
+        _actualSpreadOffSet = activated ? chainSpread : spreadOffSet;
     }
 
     /// <summary>
@@ -556,29 +590,29 @@ public class Bullet : MonoBehaviour
     /// </summary>
     private void TrackTarget()
     {
-        actualTrackingTimer -= Time.deltaTime;
-        if (actualTrackingTimer <= 0)
+        _actualTrackingTimer -= Time.deltaTime;
+        if (_actualTrackingTimer <= 0)
         {
             Transform closestTarget = Radar.instance.TargetPosition();
 
             if (closestTarget != null)
             {
-                target = closestTarget.position;
-                foundTarget = true;
+                _target = closestTarget.position;
+                _foundTarget = true;
                 // Doubles the rotation animation speed
-                axis_Rotation.speed = 800;
+                _axis_Rotation.speed = 800;
                 // Zero the rigidbody velocity. Since this dont use the built-in physics, this is to prevent the move towards function struggling with the rigidbody velocity
-                thisRigidbody2D.velocity = Vector2.zero;
+                _thisRigidbody2D.velocity = Vector2.zero;
                 transform.position = Vector2.MoveTowards(transform.position, closestTarget.position, SpeedBoost() * Time.deltaTime);
             } 
 
-            if (!foundTarget)
+            if (!_foundTarget)
             {
-                axis_Rotation.speed = 400;
-                thisRigidbody2D.velocity = target.normalized * this.speed;
+                _axis_Rotation.speed = 400;
+                _thisRigidbody2D.velocity = _target.normalized * this.speed;
             }
 
-            SetTrailEffect(foundTarget);
+            SetTrailEffect(_foundTarget);
 
         }
     }
@@ -592,10 +626,10 @@ public class Bullet : MonoBehaviour
         switch (trailType)
         {
             case TrailType.TRAILRENDERER:
-                trailRenderer.enabled = enable;
+                _trailRenderer.enabled = enable;
                 break;
             case TrailType.ECHOEFFECT:
-                echoEffect.enabled = enable;
+                _echoEffect.enabled = enable;
                 break;
         }
     }
@@ -605,8 +639,8 @@ public class Bullet : MonoBehaviour
     /// </summary>
     private void GuidedShootLifeSpan()
     {
-        actualShootTimer -= Time.deltaTime;
-        if(actualShootTimer <= 0f)
+        _actualShootTimer -= Time.deltaTime;
+        if(_actualShootTimer <= 0f)
         {
             DestroyBehavior();
         }
@@ -622,6 +656,34 @@ public class Bullet : MonoBehaviour
     }
 
     /// <summary>
+    /// Activate / Deactivate the glow effect for this bullet and its collision effect / alternate projectiles (when applicable)
+    /// </summary>
+    private void SetGlowEffect()
+    {
+        _spriteRenderer.material.SetInt("_UseEmission", _useEmission ? 1 : 0);
+
+        if (pooledObject)
+        {
+            SetupCollisionEffect();
+
+            if (shootType == ShootType.GUIDED)
+            {
+                if(_pooledMiniGuidedBullet == null)
+                    InitializePooledMiniGuidedBullets();
+
+                foreach (MiniGuidedBullet miniBullet in _pooledMiniGuidedBullet)
+                {
+                    miniBullet.SetGlowEffect(_useEmission, glowColor, glowIntensity);
+                }
+
+                _explosionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
+            }
+            else
+                _collisionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
+        }
+    }
+
+    /// <summary>
     /// Enum that defines the bullet behavior
     /// </summary>
     public enum ShootType
@@ -632,7 +694,7 @@ public class Bullet : MonoBehaviour
     }
 
     /// <summary>
-    /// Enum that defines the type of trail effect
+    /// Enum that defines the type of trail effect (guided bullet only)
     /// </summary>
     public enum TrailType
     {

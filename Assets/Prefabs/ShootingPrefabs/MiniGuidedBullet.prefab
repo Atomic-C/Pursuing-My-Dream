@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: cd656d278f795b4429c7e08625713af8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -155,12 +155,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strenght: 5
   speed: 5
-  range: 2
-  target: {x: -146.55934, y: 2.0156057}
-  explosionEffectPrefab: {fileID: 1465956396329346561, guid: 45d0d9bf300e37a48bd76a413a05b84e, type: 3}
-  fromPooledObject: 0
   shootTimer: 2
-  trailType: 1
+  target: {x: -146.55934, y: 2.0156057}
+  explosionEffectPrefab: {fileID: 2082159156669490245, guid: 45d0d9bf300e37a48bd76a413a05b84e, type: 3}
+  fromPooledObject: 0
+  trailType: 2
 --- !u!114 &8681150418165397755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +178,7 @@ MonoBehaviour:
   echoTimer: 0.005
 --- !u!96 &285698568994484058
 TrailRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -249,8 +248,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9294118, g: 0.10588236, b: 0.13725491, a: 1}
-      key1: {r: 0.9960785, g: 0.49803925, b: 0.14901961, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -258,7 +257,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 24094
+      ctime1: 65535
       ctime2: 41827
       ctime3: 0
       ctime4: 0
@@ -274,17 +273,14 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 3
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
-  m_ApplyActiveColorSpace: 1

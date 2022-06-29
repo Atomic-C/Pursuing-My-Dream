@@ -18,7 +18,7 @@ public class Axis_Rotation : MonoBehaviour
     /// <summary>
     /// Vector3 used in the Rotate function
     /// </summary>
-    private Vector3 rotation;
+    private Vector3 _rotation;
 
     /// <summary>
     /// Set what speed to rotate the respective axis
@@ -28,13 +28,13 @@ public class Axis_Rotation : MonoBehaviour
         switch (axis)
         {
             case WhichAxis.X:
-                rotation.x = speed;
+                _rotation.x = speed;
                 break;
             case WhichAxis.Y:
-                rotation.y = speed;
+                _rotation.y = speed;
                 break;
             case WhichAxis.Z:
-                rotation.z = speed;
+                _rotation.z = speed;
                 break;
         }
     }
@@ -44,7 +44,7 @@ public class Axis_Rotation : MonoBehaviour
     /// </summary>
     void Update()
     {
-        this.gameObject.transform.Rotate(rotation * Time.deltaTime);
+        this.gameObject.transform.Rotate(_rotation * Time.deltaTime);
     }
 
     /// <summary>

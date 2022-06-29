@@ -79,7 +79,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: cd656d278f795b4429c7e08625713af8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2678e8f1c05c64bb4c04b83f6b4e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  glowColor: {r: 0.9245283, g: 0.12646852, b: 0.12646852, a: 1}
+  glowIntensity: 30
   collisionEffectPrefab: {fileID: 0}
   strenght: 5
   speed: 5
@@ -165,12 +167,12 @@ MonoBehaviour:
   hasAlternateShoot: 1
   alternateSprite: {fileID: -963982025516991787, guid: fbe4fc401d30f104dbd99d3f3c35c797, type: 3}
   pooledObject: 0
-  trackingTimer: 0.5
+  trackingTimer: 1
   shootTimer: 2
   guidedMiniBullet: {fileID: 8517353224790781269, guid: acae459c1bc0c3a49a666bc61c47d269, type: 3}
   miniGuidedAmmount: 3
-  explosionEffectPrefab: {fileID: 1465956396329346561, guid: 8e6e842793d33c542ab0dcef724bbde8, type: 3}
-  trailType: 1
+  explosionEffectPrefab: {fileID: 8006271267712214981, guid: aa27fc357dc0ed641bcd003ef52998a7, type: 3}
+  trailType: 2
   chainSpeed: 0
   chainRateOfFire: 0
   chainSpread: 0
@@ -193,7 +195,7 @@ MonoBehaviour:
   echoTimer: 0.005
 --- !u!96 &8998355301089993236
 TrailRenderer:
-  serializedVersion: 3
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -263,8 +265,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9294118, g: 0.10588236, b: 0.13725491, a: 1}
-      key1: {r: 0.9960785, g: 0.49803925, b: 0.14901961, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -272,7 +274,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 24094
+      ctime1: 65535
       ctime2: 41827
       ctime3: 0
       ctime4: 0
@@ -288,17 +290,14 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 3
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
-  m_ApplyActiveColorSpace: 1

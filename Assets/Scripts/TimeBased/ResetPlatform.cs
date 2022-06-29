@@ -10,21 +10,21 @@ using UnityEngine;
 public class ResetPlatform : MonoBehaviour
 {
     /// <summary>
-    /// Hold the platform collider 2d
-    /// </summary>
-    private Collider2D thisCollider2d;
-
-    /// <summary>
     /// Float uset in the Invoke function
     /// </summary>
     public float invokeTimer = 0.4f;
+
+    /// <summary>
+    /// Hold the platform collider 2d
+    /// </summary>
+    private Collider2D _thisCollider2d;
 
     /// <summary>
     /// Get the collider2d component
     /// </summary>
     private void Start()
     {
-        thisCollider2d = GetComponent<Collider2D>();
+        _thisCollider2d = GetComponent<Collider2D>();
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class ResetPlatform : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (thisCollider2d.isTrigger == true || thisCollider2d.enabled == false)
+        if (_thisCollider2d.isTrigger == true || _thisCollider2d.enabled == false)
         {
             Invoke("ResetProperties", invokeTimer);
         }
@@ -43,7 +43,7 @@ public class ResetPlatform : MonoBehaviour
     /// </summary>
     private void ResetProperties()
     {
-        thisCollider2d.isTrigger = false;
-        thisCollider2d.enabled = true;
+        _thisCollider2d.isTrigger = false;
+        _thisCollider2d.enabled = true;
     }
 }

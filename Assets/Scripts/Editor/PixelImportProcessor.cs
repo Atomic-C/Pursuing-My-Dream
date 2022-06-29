@@ -8,17 +8,28 @@ using UnityEngine;
 /// </summary>
 public class PixelImportProcessor : AssetPostprocessor
 {
+    /// <summary>
+    /// Bool used to determine if the functionality of this script will be used or not
+    /// </summary>
+    public bool useScript;
+
     public void OnPreprocessTexture()
     {
-        TextureImporter importer = (TextureImporter)assetImporter;
+        // Deactivated for now
+        useScript = false;
 
-        //importer.textureType = TextureImporterType.Sprite;
-        //importer.spriteImportMode = SpriteImportMode.Multiple;
-        importer.filterMode = FilterMode.Point;
-        importer.textureCompression = TextureImporterCompression.Uncompressed;
-        //importer.alphaIsTransparency = true;
-        //importer.spritePixelsPerUnit = 32;
-        
-        importer.SaveAndReimport();
+        if (useScript)
+        {
+            TextureImporter importer = (TextureImporter)assetImporter;
+
+            //importer.textureType = TextureImporterType.Sprite;
+            //importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            //importer.alphaIsTransparency = true;
+            //importer.spritePixelsPerUnit = 32;
+
+            importer.SaveAndReimport();
+        }  
     }
 }

@@ -7,19 +7,18 @@ using UnityEngine;
 /// </summary>
 public class AudioManager : MonoBehaviour
 {
-    // As i understood, serialize field allows the access to this property in the editor
-    // at the same time, not letting other scripts to access this directly
-    [SerializeField]
-
-    /// <summary>
-    /// Array of custom class that holds info about the sound to be played   
-    /// </summary>
-    private Sound[] sounds;
-    
     /// <summary>
     /// Instance of the audio manager 
     /// </summary>
     public static AudioManager instance = null;
+
+    // As i understood, serialize field allows the access to this property in the editor
+    // at the same time, not letting other scripts to access this directly
+    [SerializeField]
+    /// <summary>
+    /// Array of custom class that holds info about the sound to be played   
+    /// </summary>
+    private Sound[] _sounds;
 
     /// <summary>
     /// Singleton design pattern to guarantee only one instance of this exists
@@ -43,11 +42,11 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        for (int i = 0; i < sounds.Length; i++)
+        for (int i = 0; i < _sounds.Length; i++)
         {
-            GameObject newSound = new GameObject("Sound_" + i + "_" + sounds[i].name);
+            GameObject newSound = new GameObject("Sound_" + i + "_" + _sounds[i].name);
             newSound.transform.SetParent(this.transform);
-            sounds[i].SetSource(newSound.AddComponent<AudioSource>());
+            _sounds[i].SetSource(newSound.AddComponent<AudioSource>());
         }
         PlaySound("Music", Vector3.zero);
     }
@@ -59,11 +58,11 @@ public class AudioManager : MonoBehaviour
     /// <param name="positionToPlay">The position it will be played</param>
     public void PlaySound(string soundName, Vector3 positionToPlay)
     {
-        for (int i = 0; i < sounds.Length; i++)
+        for (int i = 0; i < _sounds.Length; i++)
         {
-            if (sounds[i].name == soundName)
+            if (_sounds[i].name == soundName)
             {
-                sounds[i].Play(positionToPlay);
+                _sounds[i].Play(positionToPlay);
                 return;
             }
         }
@@ -75,11 +74,11 @@ public class AudioManager : MonoBehaviour
     /// <param name="soundName">The sound name to be stopped</param>
     public void StopSound(string soundName)
     {
-        for (int i = 0; i < sounds.Length; i++)
+        for (int i = 0; i < _sounds.Length; i++)
         {
-            if (sounds[i].name == soundName)
+            if (_sounds[i].name == soundName)
             {
-                sounds[i].Stop();
+                _sounds[i].Stop();
                 return;
             }
         }
@@ -141,7 +140,7 @@ public class Sound
     /// <summary>
     /// The sound audio source
     /// </summary>
-    private AudioSource source { get; set; }
+    private AudioSource _source { get; set; }
 
     /// <summary>
     /// Set the properties below accordingly to the choices in the editor 
@@ -149,9 +148,9 @@ public class Sound
     /// <param name="audioSource">The audio source that will be passed as this sound audio source*</param>
     public void SetSource(AudioSource audioSource)
     {
-        source = audioSource;
-        source.clip = clip;
-        source.loop = loop;
+        _source = audioSource;
+        _source.clip = clip;
+        _source.loop = loop;
     }
 
     /// <summary>
@@ -164,16 +163,16 @@ public class Sound
     /// <param name="positionToPlay">Position that will be used in the PlayClipAtPoint function (SFX only)</param>
     public void Play(Vector3 positionToPlay)
     {
-        source.volume = volume * (1 + UnityEngine.Random.Range(-randomVolume / 2f, randomVolume / 2f));
-        source.pitch = pitch * (1 + UnityEngine.Random.Range(-randomPitch / 2f, randomPitch / 2f));
+        _source.volume = volume * (1 + UnityEngine.Random.Range(-randomVolume / 2f, randomVolume / 2f));
+        _source.pitch = pitch * (1 + UnityEngine.Random.Range(-randomPitch / 2f, randomPitch / 2f));
         
         if (isMusic)
-            source.Play();
+            _source.Play();
         else
              if (!isPlaying)
         {
             if(fromPlayer)
-                source.PlayOneShot(clip);
+                _source.PlayOneShot(clip);
             else
             AudioSource.PlayClipAtPoint(clip, positionToPlay);
 
@@ -189,7 +188,7 @@ public class Sound
     /// </summary>
     public void Stop()
     {
-        source.Stop();
+        _source.Stop();
     }
 
     /// <summary>

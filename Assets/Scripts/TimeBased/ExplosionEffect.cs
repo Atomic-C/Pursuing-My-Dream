@@ -8,51 +8,60 @@ using UnityEngine;
 /// </summary>
 public class ExplosionEffect : MonoBehaviour
 {
+    /// <summary>
+    /// Layer mask used to filter the target
+    /// </summary>
     public LayerMask targetDummyMask;
 
     /// <summary>
     /// Bool that defines if this object belongs to a pooled bullet
     /// </summary>
-    public bool fromPooledObject;
+    private bool _fromPooledObject;
 
     /// <summary>
     /// Bool used to determine which explosion sound will play
     /// </summary>
-    private bool alternateShoot;
+    private bool _alternateShoot;
 
     /// <summary>
     /// Collider set as trigger, used in the area of effect damage mechanic
     /// </summary>
-    private CircleCollider2D aoeRange;
+    private CircleCollider2D _aoeRange;
 
     /// <summary>
     /// Cache the bullet strenght of the one that instantiated this effect
     /// </summary>
-    private float bulletStrenght;
+    private float _bulletStrenght;
 
     /// <summary>
     /// Cache the transform of the bullet that instantiated this effect
     /// </summary>
-    private Transform bulletTransform;
+    private Transform _bulletTransform;
 
     /// <summary>
     /// This object particle system
     /// </summary>
-    private ParticleSystem thisParticleSystem;
+    private ParticleSystem _thisParticleSystem;
 
     /// <summary>
     /// This object point effector 2D, if applicable
     /// </summary>
-    private PointEffector2D thisPointEffector2D;
+    private PointEffector2D _thisPointEffector2D;
+
+    /// <summary>
+    /// This object sprite renderer
+    /// </summary>
+    private SpriteRenderer _spriteRenderer;
 
     /// <summary>
     /// Cache the necessary variables
     /// </summary>
     private void Awake()
     {
-        thisParticleSystem = gameObject.GetComponent<ParticleSystem>();
-        aoeRange = gameObject.GetComponent<CircleCollider2D>();
-        thisPointEffector2D = gameObject.TryGetComponent<PointEffector2D>(out PointEffector2D pointEffector2D) ? pointEffector2D : null;
+        _thisParticleSystem = gameObject.GetComponent<ParticleSystem>();
+        _aoeRange = gameObject.GetComponent<CircleCollider2D>();
+        _thisPointEffector2D = gameObject.TryGetComponent<PointEffector2D>(out PointEffector2D pointEffector2D) ? pointEffector2D : null;
+        _spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
@@ -61,22 +70,22 @@ public class ExplosionEffect : MonoBehaviour
     /// </summary>
     void Start()
     {
-        if(!fromPooledObject)
+        if(!_fromPooledObject)
             StartCoroutine(DestroyFX());        
     }
 
     /// <summary>
-    /// Routine that play the explosion sound and destroy this game object after a set timed has passed
+    /// Routine that play the explosion sound and destroy this game object after the particle system animation ended
     /// </summary>
     /// <returns></returns>
     IEnumerator DestroyFX()
     {
         // This script is used for both the guided as its alternate projectiles, so the ternary is to differentiate which sound will play based on that
-        AudioManager.instance.PlaySound(alternateShoot ? "GuidedMiniExplosion" : "GuidedExplosion", transform.position);
+        AudioManager.instance.PlaySound(_alternateShoot ? "GuidedMiniExplosion" : "GuidedExplosion", transform.position);
         yield return new WaitForSeconds(.2f);
-        if(thisPointEffector2D != null)
-            thisPointEffector2D.enabled = false;
-        yield return new WaitForSeconds(thisParticleSystem.main.duration);
+        if(_thisPointEffector2D != null)
+            _thisPointEffector2D.enabled = false;
+        yield return new WaitForSeconds(_thisParticleSystem.main.duration);
         Destroy(gameObject);
     }
 
@@ -88,10 +97,10 @@ public class ExplosionEffect : MonoBehaviour
     public void Activate(Vector2 bulletPosition)
     {
         gameObject.transform.position = bulletPosition;
-        AudioManager.instance.PlaySound(alternateShoot ? "GuidedMiniExplosion" : "GuidedExplosion", transform.position);
+        AudioManager.instance.PlaySound(_alternateShoot ? "GuidedMiniExplosion" : "GuidedExplosion", transform.position);
         gameObject.SetActive(true);
 
-        Invoke("Deactivate", thisParticleSystem.main.duration);
+        Invoke("Deactivate", _thisParticleSystem.main.duration);
     }
 
     /// <summary>
@@ -112,10 +121,10 @@ public class ExplosionEffect : MonoBehaviour
     /// <param name="bulletTransform">The transform of the bullet that instantiated this</param>
     public void SetupReferences(bool fromPooledObject, bool alternateShoot, float bulletStrenght, Transform bulletTransform)
     {
-        this.fromPooledObject = fromPooledObject;
-        this.alternateShoot = alternateShoot;
-        this.bulletStrenght = bulletStrenght;
-        this.bulletTransform = bulletTransform;
+        _fromPooledObject = fromPooledObject;
+        _alternateShoot = alternateShoot;
+        _bulletStrenght = bulletStrenght;
+        _bulletTransform = bulletTransform;
     }
 
     /// <summary>
@@ -132,7 +141,7 @@ public class ExplosionEffect : MonoBehaviour
         contactFilter2D.SetLayerMask(targetDummyMask);
 
         // Detect all colliders in the radius that belongs to the selected layer
-        aoeRange.OverlapCollider(contactFilter2D, enemyColliders);
+        _aoeRange.OverlapCollider(contactFilter2D, enemyColliders);
 
         // If there is any
         if(enemyColliders.Count != 0)
@@ -140,8 +149,19 @@ public class ExplosionEffect : MonoBehaviour
             // Call its Hit function
             foreach(Collider2D collider in enemyColliders)
             {
-                collider.GetComponent<TargetDummy>().Hit(bulletStrenght, bulletTransform);
+                collider.GetComponent<TargetDummy>().Hit(_bulletStrenght, _bulletTransform);
             }
         }
+    }
+
+    /// <summary>
+    /// Make use or not of the glow effect
+    /// </summary>
+    /// <param name="activate">Bool to activate / deactivate the effect</param>
+    public void SetGlowEffect(bool activate, Color color, float intensity)
+    {
+        _spriteRenderer.material.SetInt("_UseEmission", activate ? 1 : 0);
+        _spriteRenderer.material.SetColor("_GlowColor", color);
+        _spriteRenderer.material.SetFloat("_EmissionIntensity", intensity);
     }
 }

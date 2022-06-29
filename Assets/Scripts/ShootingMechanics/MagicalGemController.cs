@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.U2D;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.U2D.Animation;
 
 /// <summary>
 /// Class responsible for controlling the shooting magical gem / shooting mechanic
@@ -12,17 +13,17 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// Bool used to change the behavior of the current bullet to make use of the object pooling technique
     /// </summary>
-    [SerializeField] private bool usePool;
+    public bool usePool;
 
     /// <summary>
     /// Array to be used in the object pool constructor (to aid dynamicity)
     /// </summary>
-    [SerializeField] private int[] bulletPoolSize, bulletPoolMaxSize;
+    public int[] bulletPoolSize, bulletPoolMaxSize;
 
     /// <summary>
     /// Object pool that hold all objects of the current bullet type
     /// </summary>
-    private IObjectPool<Bullet> bulletPool;
+    private IObjectPool<Bullet> _bulletPool;
 
     [Header("Objects Setup")]
     /// <summary>
@@ -33,7 +34,7 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// Magical gem prefab, to be instantiated in case there is no active gem
     /// </summary>
-    public GameObject magicalGemPrefab;
+    public GameObject gemPrefab;
 
     /// <summary>
     /// Array of game objects that holds all the coloured bar representing each bullet type energy bar
@@ -63,28 +64,104 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// Array of library assets available to the magical gem (several sprites sharing the same animation)
     /// </summary>
-    public UnityEngine.U2D.Animation.SpriteLibraryAsset[] spriteLibraries;
+    public SpriteLibraryAsset[] spriteLibraries;
 
     /// <summary>
     /// Reference to the player movement script
     /// </summary>    
     public Platform_Movement playerMovement;
 
+    [Header("Gem Visual Setup")]
+    ///<summary>
+    /// Make use or not of the glow effect
+    /// </summary>
+    public bool useEmission;
+
+    /// <summary>
+    /// Property that acts as an "on change" listener, where it automatically activate / deactivate the outline effect (through the calling of the SetOutlineEffect function)
+    /// </summary>
+    public bool UseOutline {
+        get
+        {
+            return _useOutline;
+        } set
+        {
+            _useOutline = value;
+            SetOutlineEffect();
+        } 
+    }
+
+    /// <summary>
+    /// Make use or not of the bullet glow effect
+    /// </summary>
+    public bool useBulletEmission;
+
+    /// <summary>
+    /// Color array used in the gem light color
+    /// </summary>
+    public Color[] gemLightColors;
+
+    /// <summary>
+    /// Color array used in the gem glow color
+    /// </summary>
+    public Color[] gemGlowColors;
+
+    /// <summary>
+    /// Controls the intensity of the gem glow
+    /// </summary>
+    public float gemGlowColorIntensity;
+
+    /// <summary>
+    /// Color array used in the gem outline color
+    /// </summary>
+    public Color[] gemOutlineColors;
+
+    /// <summary>
+    /// Controls the intensity of the gem outline
+    /// </summary>
+    public float gemOutlineIntensity;
+
+    /// <summary>
+    /// Controls the thickness of the outline
+    /// </summary>
+    public float gemOutlineThickness;
+
+    /// <summary>
+    /// Bool used as a backing field for the UseOutline property
+    /// </summary>
+    [SerializeField] private bool _useOutline;
+
+    /// <summary>
+    /// Bool that controls when the OnValidate will be able to run properly (things needs to happen on Start / Awake first and since OnValidate runs before them, this is to avoid
+    /// the errors that would happen in this case)
+    /// </summary>
+    private bool _loaded;
+
     /// <summary>
     /// Magical gem object that is being used in the active scene
     /// </summary>
-    private GameObject activeMagicalGem;
+    private GameObject _activeGem;
+
+    /// <summary>
+    /// The light2D attached to the active gem
+    /// </summary>
+    private Light2D _gemLight2D;
+
+    /// <summary>
+    /// The sprite renderer of the active gem
+    /// </summary>
+    private SpriteRenderer _gemSpriteRenderer;
 
     /// <summary>
     /// Crosshair object that is being used in the active scene
     /// </summary>
-    private GameObject activeCrossHairObject;
+    private GameObject _activeCrossHairObject;
 
     /// <summary>
     /// Trigger circle collider 2D used to define the range limit of the current bullet (calculation: player range statistic plus the current bullet range statistic - this affects
     /// the radius of the circle collider 2D)
     /// </summary>
-    private CircleCollider2D rangeArea;
+    private CircleCollider2D _rangeArea;
 
     [Header("Variables Setup")]
     /// <summary>
@@ -95,7 +172,7 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// Current bullet being used
     /// </summary>
-    private int currentBullet;
+    public int currentBullet;
 
     /// <summary>
     /// Statistics of the player: its shoot strenght, projectile speed, range and rate of fire, energy, maximum energy and energy regen
@@ -103,51 +180,68 @@ public class MagicalGemController : MonoBehaviour
     public float shootStrenght, shootSpeed, shootRange, shootRateOfFire, energy, maxEnergy, energyRegen;
 
     /// <summary>
-    /// Float that will be affected by the rate of fire calculation
-    /// </summary>
-    private float fireTimer;
-
-    /// <summary>
     /// Bool used to show / hide a visual representation of the current shoot range
     /// </summary>
     public bool showRange;
 
     /// <summary>
+    /// Float that will be affected by the rate of fire calculation
+    /// </summary>
+    private float _fireTimer;
+
+    /// <summary>
     /// The magical gem animator
     /// </summary>
-    private Animator gemAnimator;
+    private Animator _gemAnimator;
 
     /// <summary>
     /// The sprite library being used by the active magical gem
     /// </summary>
-    private UnityEngine.U2D.Animation.SpriteLibrary gemSpriteLibrary;
+    private SpriteLibrary _gemSpriteLibrary;
 
     // Automated Setup
-    
+
     /// <summary>
     /// Vector3 used to hold and manipulate the energy bar sprite scale. Used in the energy consumption and regen mechanic
     /// </summary>
-    private Vector3 energyBarScale;
+    private Vector3 _energyBarScale;
 
     /// <summary>
     /// Bool used to avoid multiple energy bar flash / error sound playing, when there is no energy to use the current bullet alternate shoot
     /// </summary>
-    private bool noEnergyRoutineIsRunning;
+    private bool _noEnergyRoutineIsRunning;
 
     /// <summary>
     /// Vector3 used as an offset to the following movement
     /// </summary>
-    private Vector3 followOffset;
+    private Vector3 _followOffset;
 
     /// <summary>
     /// Bool used to allow the next fire
     /// </summary>
-    private bool canFire;
+    private bool _canFire;
 
     /// <summary>
     /// The active crosshair sprite renderer
     /// </summary>
-    private SpriteRenderer activeCrosshairSprite;
+    private SpriteRenderer _activeCrosshairSprite;
+
+    [Header("Fields change timer")]
+    [Tooltip("Timer to prevent calling repeatedly functions from the OnGui function")]
+    /// <summary>
+    /// Timer to prevent calling repeatedly functions from the OnGui function
+    /// </summary>
+    public float setBoolTimer;
+
+    /// <summary>
+    /// Timer to prevent calling repeatedly functions from the OnGui function
+    /// </summary>
+    private float _setBoolTimer;
+
+    /// <summary>
+    /// Bool that works together with the _setBoolTimer to prevent calling repeatedly functions from the OnGui function 
+    /// </summary>
+    private bool _allowBoolChange;
 
     /// <summary>
     /// Guarantee there is one crosshair / magical gem in the scene and setup the necessary variable with the current bullet in use
@@ -157,6 +251,9 @@ public class MagicalGemController : MonoBehaviour
         CheckCrosshair();
         CheckGem();
         SetupCurrentBullet(currentBullet);
+        // Set the _loaded bool to true here and rerun the OnValidate
+        _loaded = true;
+        OnValidate();
     }
 
     /// <summary>
@@ -164,8 +261,11 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        rangeArea = GetComponent<CircleCollider2D>();
-        canFire = true;
+        _rangeArea = GetComponent<CircleCollider2D>();
+        // Begins being able to shoot
+        _canFire = true;
+        _allowBoolChange = true;
+        _setBoolTimer = setBoolTimer;
 
         InitializeBulletPool();
 
@@ -190,6 +290,7 @@ public class MagicalGemController : MonoBehaviour
         Animate();
         FireBullet();
         EnergyRegen();
+        AllowBoolChange();
     }
 
     /// <summary>
@@ -197,7 +298,19 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        SmoothFollow.instance.FollowObject(transform,playerMovement.transform,followOffset,smoothSpeed);
+        SmoothFollow.instance.FollowObject(transform, playerMovement.transform, _followOffset, smoothSpeed);
+    }
+
+    /// <summary>
+    /// Check if a field has been changed in the Inspector
+    /// If any field has changed in the Inspector and the _loaded is true, set the property UseOutline with the value in the _useOutline bool (essentially calling the Set function 
+    /// of the property, which will call the SetOuline function). Basically, a work around to activate / deactivate the gem outline glow effect on changing the bool
+    /// Although the OnValidate runs everytime a field has changed, this will only changes the outline when this field changed, was the _useOutline bool itself
+    /// </summary>
+    private void OnValidate()
+    {
+        if (_loaded)
+            UseOutline = _useOutline;
     }
 
     /// <summary>
@@ -205,7 +318,7 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void OnGUI()
     {
-        ChangeBullet();
+        CheckKeyPressed();
     }
 
     /// <summary>
@@ -214,7 +327,15 @@ public class MagicalGemController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (showRange)
-            Gizmos.DrawWireSphere(activeMagicalGem.transform.position, rangeArea.radius * rangeArea.transform.lossyScale.x  );
+            Gizmos.DrawWireSphere(_activeGem.transform.position, _rangeArea.radius * _rangeArea.transform.lossyScale.x);
+    }
+
+    /// <summary>
+    /// Set the shader graph _UseEmission property, activating / deactivating the effect
+    /// </summary>
+    private void SetOutlineEffect()
+    {
+        _gemSpriteRenderer.material.SetInt("_UseOutline", _useOutline ? 1 : 0);
     }
 
     /// <summary>
@@ -229,9 +350,9 @@ public class MagicalGemController : MonoBehaviour
         // Get the isGrounded bool from the player movement script, which is used in its GroundCheck function
         bool isGrounded = playerMovement.isGrounded;
         // Changes the distance above the player, being closer when jumping (not really needed, just for the looks)
-        followOffset = isGrounded ? new Vector3(0, 2, 0) : new Vector3(0, 1, 0);
+        _followOffset = isGrounded ? new Vector3(0, 2, 0) : new Vector3(0, 1, 0);
         // Set the gem animator respective bool
-        gemAnimator.SetBool("playerIsGrounded", isGrounded);
+        _gemAnimator.SetBool("playerIsGrounded", isGrounded);
     }
 
     /// <summary>
@@ -239,14 +360,14 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void FireBullet()
     {
-        if (canFire)
+        if (_canFire)
         {
             // Left mouse click
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                InitBullet(false);
+                Shoot(InitBullet(false), false);
 
-                canFire = false;
+                _canFire = false;
             }
             // Right mouse click and the current bullet has an alternate shoot version
             else if (Input.GetKey(KeyCode.Mouse1) && bullets[currentBullet].hasAlternateShoot)
@@ -255,12 +376,12 @@ public class MagicalGemController : MonoBehaviour
                 if (energy > bullets[currentBullet].energyCost)
                 {
                     // If it is the spread shoot alternate version, uses a different rate of fire setting
-                    fireTimer = bullets[currentBullet].shootType == Bullet.ShootType.SPREAD ? 
+                    _fireTimer = bullets[currentBullet].shootType == Bullet.ShootType.SPREAD ?
                                 bullets[currentBullet].chainRateOfFire - shootRateOfFire : bullets[currentBullet].rateOfFire - shootRateOfFire;
 
-                    InitBullet(true);
+                    Shoot(InitBullet(true), true);
 
-                    canFire = false;
+                    _canFire = false;
 
                     ConsumeEnergy();
                 }
@@ -268,30 +389,41 @@ public class MagicalGemController : MonoBehaviour
                 else
                     StartCoroutine(NotEnoughEnergy());
             }
-        } 
+        }
         // Deplete the current bullet cooldown before being able to shoot again
         else
-            fireTimer -= Time.deltaTime;
-            if (fireTimer <= 0f)
-            {
-                canFire = true;
-                fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
-            }
-    }   
+            _fireTimer -= Time.deltaTime;
+        if (_fireTimer <= 0f)
+        {
+            _canFire = true;
+            _fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
+        }
+
+        if (useEmission)
+        {
+            // Make use or not of the glowing effect provided by the shader, depending on the _canFire bool
+            // _canFire = true: player is not shooting, so dont use the effect
+            // _canFire = false: player shoot, so use it
+            _gemSpriteRenderer.material.SetInt("_UseEmission", _canFire ? 0 : 1);
+        }
+    }
 
     /// <summary>
     /// Instantiate the current bullet at the magical gem position
     /// </summary>
     /// <param name="alternateShoot">Bool that determines if an alternate shoot was fired</param>
-    private void InitBullet(bool alternateShoot)
+    private Bullet InitBullet(bool alternateShoot)
     {
         // Instantiate / get the bullet prefab (at the gem position) attached to the respective Bullet class array 
-        Bullet bullet = usePool ? bulletPool.Get() : Instantiate(bullets[currentBullet], activeMagicalGem.transform.position, Quaternion.identity);
+        Bullet bullet = usePool ? _bulletPool.Get() : Instantiate(bullets[currentBullet], _activeGem.transform.position, Quaternion.identity);
+
+        // Set the bullet UseEmission property that will automatically, on this bullet Bullet script, activate or deactivate its glow effect
+        bullet.UseEmission = useBulletEmission;
 
         // Spread shoot alternate version need to have its animator disabled to be able to use the alternate shoot sprite
-        if(bullet.shootType == Bullet.ShootType.SPREAD && alternateShoot)
+        if (bullet.shootType == Bullet.ShootType.SPREAD && alternateShoot)
             bullet.animator.enabled = false;
-        else if(bullet.shootType == Bullet.ShootType.SPREAD)
+        else if (bullet.shootType == Bullet.ShootType.SPREAD)
             bullet.animator.enabled = true;
 
         bullet.Init(KillBullet);
@@ -300,16 +432,25 @@ public class MagicalGemController : MonoBehaviour
         if (bullet.shootType == Bullet.ShootType.GUIDED && usePool)
             bullet.InitializePooledMiniGuidedBullets();
 
+        return bullet;
         /*Make it ignore the player collider to avoid shooting itself
         >>> Decided to do this by changing the collision matrix instead
         Physics2D.IgnoreCollision(bullet.GetComponent<CircleCollider2D>(), playerObject.GetComponent<CircleCollider2D>(), true);
         Physics2D.IgnoreCollision(bullet.GetComponent<CircleCollider2D>(), bullets[currentBullet].gameObject.GetComponent<CircleCollider2D>(), true);*/
+    }
 
+    /// <summary>
+    /// Calculate the target direction and call the Shoot function of the bullet using this direction
+    /// </summary>
+    /// <param name="bullet">The bullet to shoot</param>
+    /// <param name="alternateShoot">Bool that determines if it is a normal shoot or an alternate version</param>
+    private void Shoot(Bullet bullet, bool alternateShoot)
+    {
         // Get the crosshair position
-        Vector3 direction = activeCrossHairObject.transform.position - bullet.transform.position;
+        Vector3 direction = _activeCrossHairObject.transform.position - bullet.transform.position;
 
         // Calls the Bullet script Shoot function, attached to this instantiated object
-        bullet.Shoot(direction, shootSpeed, alternateShoot);
+        bullet.Shoot(direction, shootSpeed, alternateShoot, shootRange);
     }
 
     /// <summary>
@@ -319,7 +460,7 @@ public class MagicalGemController : MonoBehaviour
     private void KillBullet(Bullet bullet)
     {
         if (usePool)
-            bulletPool.Release(bullet);
+            _bulletPool.Release(bullet);
         else
             Destroy(bullet.gameObject);
     }
@@ -332,7 +473,7 @@ public class MagicalGemController : MonoBehaviour
         float energyConsumed = bullets[currentBullet].energyCost;
         energy -= energyConsumed;
         // Simulate the energy bar diminish effect by using its scale
-        energyBars[currentBullet].transform.localScale = new Vector3(energy, energyBarScale.y, energyBarScale.z);
+        energyBars[currentBullet].transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
     }
 
     /// <summary>
@@ -342,20 +483,23 @@ public class MagicalGemController : MonoBehaviour
     private void CheckGem()
     {
         // Checking if there is a gem
-        activeMagicalGem = GameObject.FindGameObjectWithTag("MagicalGem");
+        _activeGem = GameObject.FindGameObjectWithTag("MagicalGem");
         // If not
-        if (activeMagicalGem == null)
+        if (_activeGem == null)
         {
             // Instantiate one and do the necessary setup for this script to work
-            activeMagicalGem = Instantiate(magicalGemPrefab, transform.position, Quaternion.identity);
-            activeMagicalGem.transform.SetParent(transform, true);
+            _activeGem = Instantiate(gemPrefab, transform.position, Quaternion.identity);
         }
+        
+        // Make the gem a child of this object (necessary for the gem animation to work)
+        _activeGem.transform.SetParent(transform, true);
 
-        // Get the gem animator and set it to the respective bullet color
-        gemSpriteLibrary = activeMagicalGem.GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>();
-        gemAnimator = activeMagicalGem.GetComponent<Animator>();
-
-        rangeArea = activeMagicalGem.GetComponentInChildren<CircleCollider2D>();
+        // Cache the necessary gem variables
+        _gemSpriteLibrary = _activeGem.GetComponent<SpriteLibrary>();
+        _gemAnimator = _activeGem.GetComponent<Animator>();
+        _gemLight2D = _activeGem.GetComponent<Light2D>();
+        _gemSpriteRenderer = _activeGem.GetComponent<SpriteRenderer>();
+        _rangeArea = _activeGem.GetComponentInChildren<CircleCollider2D>();
 
     }
 
@@ -366,21 +510,22 @@ public class MagicalGemController : MonoBehaviour
     private void CheckCrosshair()
     {
         // Checking if there is a crosshair
-        activeCrossHairObject = GameObject.FindGameObjectWithTag("Crosshair");
+        _activeCrossHairObject = GameObject.FindGameObjectWithTag("Crosshair");
         // If not
-        if (activeCrossHairObject == null)
+        if (_activeCrossHairObject == null)
         {
             // Instantiate one and do the necessary setup for this script to work
-            activeCrossHairObject = Instantiate(crossHairPrefab, transform.position, Quaternion.identity);
+            _activeCrossHairObject = Instantiate(crossHairPrefab, transform.position, Quaternion.identity);
         }
 
-        activeCrosshairSprite = activeCrossHairObject.GetComponent<SpriteRenderer>();
+        // Cache the necessary variable
+        _activeCrosshairSprite = _activeCrossHairObject.GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
-    /// Changes the current bullet type being used depending on the key pressed
+    /// Calls functions when the designated key is pressed
     /// </summary>
-    private void ChangeBullet()
+    private void CheckKeyPressed()
     {
         // Get the current event
         Event keyPressed = Event.current;
@@ -404,18 +549,79 @@ public class MagicalGemController : MonoBehaviour
                 case KeyCode.Keypad3:
                     SetupCurrentBullet(2);
                     break;
+                // Key E to activate / deactivate the visual effects
+                case KeyCode.E:
+                    SetVisualEffects();
+                    break;
+                // Key R to activate / deactivate the usage of the object pool
+                case KeyCode.R:
+                    ActivateObjectPooling();
+                    break;
             }
-        }  
+        }
     }
 
     /// <summary>
-    /// Changes the current bullet type being used
+    /// Activate / deactivate the visual effects
     /// </summary>
-    /// <param name="bulletChoosen"></param>
+    private void SetVisualEffects()
+    {
+        // Since the OnGui is called several times per frame, this check is to prevent the quick reverting of the bool fields
+        if(_allowBoolChange)
+        {
+            useEmission = !useEmission;
+            _useOutline = !_useOutline;
+            useBulletEmission = !useBulletEmission;
+            SetOutlineEffect();
+            SetBoolTimer();
+        }
+    }
+
+    /// <summary>
+    /// Activate / Deactivate the use of the object pool
+    /// </summary>
+    private void ActivateObjectPooling()
+    {
+        // Since the OnGui is called several times per frame, this check is to prevent the quick reverting of the bool fields
+        if (_allowBoolChange)
+        {
+            usePool = !usePool;
+            // If the object is not being used anymore, make sure to clear all game objects previously created by it
+            if(!usePool)
+                _bulletPool.Clear();
+            SetBoolTimer();
+        }
+    }
+
+    /// <summary>
+    /// Function that controls the state of the bool that allows the changing of bools from the CheckKeyPressed function
+    /// </summary>
+    private void AllowBoolChange()
+    {
+        _setBoolTimer -= Time.deltaTime;
+        if (_setBoolTimer < 0f)
+        {
+            SetBoolTimer();
+        }
+    }
+
+    /// <summary>
+    /// Reset the _setboolTimer and revert the _allowBoolChange state
+    /// </summary>
+    private void SetBoolTimer()
+    {
+        _setBoolTimer = setBoolTimer;
+        _allowBoolChange = !_allowBoolChange;
+    }
+
+    /// <summary>
+    /// Changes several aspects depending on the current bullet being used
+    /// </summary>
+    /// <param name="bulletChoosen">The selected bullet</param>
     private void SetupCurrentBullet(int bulletChoosen)
     {
         // Do not allow changing to another bullet while the not enough energy coroutine is running. This is to avoid a bug in the bar sprite
-        if (!noEnergyRoutineIsRunning)
+        if (!_noEnergyRoutineIsRunning)
         {
             // Deactivate the current energy bar being used
             energyBars[currentBullet].SetActive(false);
@@ -424,20 +630,29 @@ public class MagicalGemController : MonoBehaviour
             // Activate the energy bar of the new current bullet
             energyBars[currentBullet].SetActive(true);
             // Cache the scale of this energy bar
-            energyBarScale = energyBars[currentBullet].transform.localScale;
+            _energyBarScale = energyBars[currentBullet].transform.localScale;
             // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
-            fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
+            _fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
             // Change the current crosshair by the one corresponding with the current bullet
-            activeCrosshairSprite.sprite = crosshairColors[currentBullet];
+            _activeCrosshairSprite.sprite = crosshairColors[currentBullet];
             // Change the sprite library asset in use by the one correspoding with the current bullet
-            gemSpriteLibrary.spriteLibraryAsset = spriteLibraries[currentBullet];
+            _gemSpriteLibrary.spriteLibraryAsset = spriteLibraries[currentBullet];
             // Set the new range limit
-            rangeArea.radius = shootRange + bullets[currentBullet].range;
+            _rangeArea.radius = shootRange + bullets[currentBullet].range;
+            // Change the gem light depending on the current bullet and using the color set in the gemLightColors array
+            _gemLight2D.color = gemLightColors[currentBullet];
+            /* Change the shader property with reference _GlowColor to use the corresponding color of the gemGlowColors array, depending on the current bullet and increases the color
+            intensity using the gemGlowColorIntensity */
+            _gemSpriteRenderer.material.SetColor("_GlowColor", gemGlowColors[currentBullet] * gemGlowColorIntensity);
+            // The same as above but for the outline of the gem
+            _gemSpriteRenderer.material.SetColor("_OutlineColor", gemOutlineColors[currentBullet] * gemOutlineIntensity);
+            // Same idea but for controlling the outline thickness
+            _gemSpriteRenderer.material.SetFloat("_OutlineThickness", gemOutlineThickness);
 
             if (usePool)
             {
                 // Single object pool, so clear all of the previsouly used bullets
-                bulletPool.Clear();
+                _bulletPool.Clear();
                 InitializeBulletPool();
             }
         }
@@ -448,8 +663,8 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void InitializeBulletPool()
     {
-        bulletPool = new ObjectPool<Bullet>(CreatePooledObject, OnTakeFromPool, OnReturnToPool, OnDestroyObject, 
-                                                           true, bulletPoolSize[currentBullet], bulletPoolMaxSize[currentBullet]);
+        _bulletPool = new ObjectPool<Bullet>(CreatePooledObject, OnTakeFromPool, OnReturnToPool, OnDestroyObject,
+                                            true, bulletPoolSize[currentBullet], bulletPoolMaxSize[currentBullet]);
     }
 
     /// <summary>
@@ -471,8 +686,7 @@ public class MagicalGemController : MonoBehaviour
     private void OnTakeFromPool(Bullet bullet)
     {
         // Make sure the bullet will appear at the magical gem position
-        bullet.transform.position = activeMagicalGem.transform.position;
-        // Set the bullet isReleased bool to false, for it to be able to be released again
+        bullet.transform.position = _activeGem.transform.position;
         bullet.isReleased = false;
         bullet.gameObject.SetActive(true);
     }
@@ -494,7 +708,7 @@ public class MagicalGemController : MonoBehaviour
     /// <summary>
     /// Destroy the object from the pool
     /// </summary>
-    /// <param name="bullet"></param>
+    /// <param name="bullet">The bullet object</param>
     private void OnDestroyObject(Bullet bullet)
     {
         Destroy(bullet.gameObject);
@@ -510,10 +724,10 @@ public class MagicalGemController : MonoBehaviour
             if (energy < maxEnergy)
             {
                 energy += energyRegen * Time.deltaTime;
-                foreach(GameObject bar in energyBars)
-                    bar.transform.localScale = new Vector3(energy, energyBarScale.y, energyBarScale.z);
+                foreach (GameObject bar in energyBars)
+                    bar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
             }
-        }  
+        }
     }
 
     /// <summary>
@@ -522,9 +736,9 @@ public class MagicalGemController : MonoBehaviour
     /// <returns></returns>
     IEnumerator NotEnoughEnergy()
     {
-        if (!noEnergyRoutineIsRunning)
+        if (!_noEnergyRoutineIsRunning)
         {
-            noEnergyRoutineIsRunning = true;
+            _noEnergyRoutineIsRunning = true;
 
             AudioManager.instance.PlaySound("NotEnoughEnergy", transform.position);
 
@@ -536,9 +750,10 @@ public class MagicalGemController : MonoBehaviour
                 energyBars[currentBullet].GetComponent<SpriteRenderer>().material = originalBarMaterial;
             }
 
-            noEnergyRoutineIsRunning = false;
+            _noEnergyRoutineIsRunning = false;
         }
 
         StopCoroutine("NotEnoughEnergy");
     }
+
 }

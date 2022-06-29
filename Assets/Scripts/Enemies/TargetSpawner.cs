@@ -23,16 +23,16 @@ public class TargetSpawner : MonoBehaviour
     /// <summary>
     /// Actual counter of objects spawned
     /// </summary>
-    private int dummyCounter;
+    private int _dummyCounter;
 
     /// <summary>
     /// Actual timer before each spawn
     /// </summary>
-    private float actualSpawnTimer;
+    private float _actualSpawnTimer;
 
     private void Start()
     {
-        actualSpawnTimer = spawnTimer;
+        _actualSpawnTimer = spawnTimer;
     }
 
     // Update is called once per frame
@@ -46,16 +46,19 @@ public class TargetSpawner : MonoBehaviour
     /// </summary>
     private void SpawnTargetDummy()
     {
-        if(dummyCounter < spawnLimit)
+        if(_dummyCounter < spawnLimit)
         {
-            actualSpawnTimer -= Time.deltaTime;
-            if (actualSpawnTimer < 0f)
+            _actualSpawnTimer -= Time.deltaTime;
+            if (_actualSpawnTimer < 0f)
             {
                 TargetDummy targetDummy = Instantiate(this.targetDummy, transform.position, Quaternion.identity);
                 // Guarante the object spawned has a reference to this
                 targetDummy.SetSpawner(this);
-                actualSpawnTimer = spawnTimer;
-                dummyCounter++;
+                // Spawn the dummy randomly facing right or left
+                bool facingLeft = Random.Range(0f, 1f) == 0 ? false : true;
+                targetDummy.facingLeft = facingLeft;
+                _actualSpawnTimer = spawnTimer;
+                _dummyCounter++;
             }
         }
     }
@@ -65,6 +68,6 @@ public class TargetSpawner : MonoBehaviour
     /// </summary>
     public void DummyDestroyed()
     {
-        dummyCounter--;
+        _dummyCounter--;
     }
 }

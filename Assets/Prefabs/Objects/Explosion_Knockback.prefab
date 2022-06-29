@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 1783276646780061818}
   - component: {fileID: 3641929484914070037}
   - component: {fileID: 1963209980418204458}
-  - component: {fileID: 1465956396329346561}
+  - component: {fileID: 4400245336827232327}
+  - component: {fileID: -8328809719506697467}
   m_Layer: 0
   m_Name: Explosion_Knockback
   m_TagString: Untagged
@@ -604,7 +605,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
     maxNumParticles: 750
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -4059,7 +4059,6 @@ ParticleSystem:
         m_RotationOrder: 4
     minVertexDistance: 0.2
     textureMode: 0
-    textureScale: {x: 1, y: 1}
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
@@ -4923,7 +4922,7 @@ CircleCollider2D:
   m_Offset: {x: 0.24070454, y: -0.08935213}
   serializedVersion: 2
   m_Radius: 2.7628517
---- !u!114 &1465956396329346561
+--- !u!114 &4400245336827232327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4932,10 +4931,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1783276646780061817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adccd12c93dd87d4cacb0bb33fea5ca9, type: 3}
+  m_Script: {fileID: 11500000, guid: e1039a5c2807ac24c893590e42fb4ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetDummyMask:
-    serializedVersion: 2
-    m_Bits: 0
-  fromPooledObject: 0
+  lightPrefab: {fileID: 144495789642121329, guid: 285a505f63c069e4a8969f0833a7e830, type: 3}
+--- !u!114 &-8328809719506697467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783276646780061817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4366e804bdc3a946b62a5f97b1d8308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

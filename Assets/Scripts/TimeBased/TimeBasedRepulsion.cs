@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// This script simulates an timed explosion that has a knock back effect in the player (to be improved)
@@ -6,26 +8,41 @@ using UnityEngine;
 public class TimeBasedRepulsion : MonoBehaviour
 {
     /// <summary>
-    /// Actual timer that will be affected by the passing of time
-    /// </summary>
-    public float activateTimer;
-
-    /// <summary>
     /// Float that holds the value that the activateTimer will be reset too, after every explosion
     /// </summary>
     public float activateTimerSet = 2f;
 
-    private CircleCollider2D circleCollider2D;
+    /// <summary>
+    /// Actual timer that will be affected by the passing of time
+    /// </summary>
+    private float _activateTimer;
 
-    private PointEffector2D pointEffector2D;
+    /// <summary>
+    /// Circle collider 2D responsible for destroying bullets that enter into contact with the explosion radius
+    /// </summary>
+    private CircleCollider2D _circleCollider2D;
 
-    private Animator animator;
+    /// <summary>
+    /// This object point effector 2D, responsible for the knock back effect
+    /// </summary>
+    private PointEffector2D _pointEffector2D;
+
+    /// <summary>
+    /// This object light2D (the explosion emits light)
+    /// </summary>
+    private Light2D _light2D;
+
+    /// <summary>
+    /// This object animator
+    /// </summary>
+    private Animator _animator;
 
     private void Awake()
     {
-        circleCollider2D = gameObject.GetComponent<CircleCollider2D>();
-        pointEffector2D = gameObject.GetComponent<PointEffector2D>();
-        animator = gameObject.GetComponent<Animator>();
+        _circleCollider2D = gameObject.GetComponent<CircleCollider2D>();
+        _pointEffector2D = gameObject.GetComponent<PointEffector2D>();
+        _animator = gameObject.GetComponent<Animator>();
+        _light2D = gameObject.GetComponent<Light2D>();
     }
 
     /// <summary>
@@ -33,7 +50,10 @@ public class TimeBasedRepulsion : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        activateTimer = activateTimerSet;
+        _activateTimer = activateTimerSet;
+        _circleCollider2D.enabled = false;
+        _pointEffector2D.enabled = false;
+        _light2D.enabled = false;
     }
 
     // Update is called once per frame
@@ -43,14 +63,14 @@ public class TimeBasedRepulsion : MonoBehaviour
     /// </summary>
     void Update()
     {
-        activateTimer -= Time.deltaTime;
+        _activateTimer -= Time.deltaTime;
 
-        if (activateTimer <= 0)
+        if (_activateTimer <= 0)
         {
             Activate();
             AudioManager.instance.PlaySound("Explosion", gameObject.transform.position);
-            Invoke("Deactivate", animator.GetCurrentAnimatorStateInfo(0).length);
-            activateTimer = activateTimerSet;
+            StartCoroutine(Deactivate());
+            _activateTimer = activateTimerSet;
         } 
     }
 
@@ -59,19 +79,25 @@ public class TimeBasedRepulsion : MonoBehaviour
     /// </summary>
     void Activate()
     {
-        animator.SetBool("Activate", true);
-        circleCollider2D.enabled = true;
-        pointEffector2D.enabled = true;
+        _animator.SetBool("Activate", true);
+        _circleCollider2D.enabled = true;
+        _pointEffector2D.enabled = true;
     }
 
     /// <summary>
     /// Deactivate both
     /// </summary>
-    void Deactivate()
+    IEnumerator Deactivate()
     {
-        animator.SetBool("Activate", false);
-        circleCollider2D.enabled = false;
-        pointEffector2D.enabled = false;
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
+        _animator.SetBool("Activate", false);
+        _circleCollider2D.enabled = false;
+        _pointEffector2D.enabled = false;
+        _light2D.enabled = true;
+        yield return new WaitForSeconds(.15f);
+        _light2D.enabled = false;
+
+        StopCoroutine("Deactivate");
     }
 }
 

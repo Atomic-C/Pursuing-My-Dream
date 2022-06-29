@@ -11,19 +11,19 @@ public class Scene_Animation : MonoBehaviour
     public float speed = 0.1f;
 
     /// <summary>
-    /// The game object renderer
-    /// </summary>
-    private Renderer rend;
-
-    /// <summary>
     /// Enum used to determine which renderer this game object is using
     /// </summary>
     public RendererType rendererType;
 
+    /// <summary>
+    /// The game object renderer
+    /// </summary>
+    private Renderer _rend;
+
     // Cache the sprite renderer component
     private void Start()
     {
-        rend = GetComponent<Renderer>();
+        _rend = GetComponent<Renderer>();
     }
 
     /// <summary>
@@ -37,12 +37,12 @@ public class Scene_Animation : MonoBehaviour
             // If its a sprite renderer, animate differently...
             case RendererType.SPRITE:
                 Vector3 offsetV3 = new Vector3(speed * Time.deltaTime, 0);
-                rend.transform.position += offsetV3;
+                _rend.transform.position += offsetV3;
                 break;
             // ...than a mesh renderer
             case RendererType.MESH:
                 Vector2 offsetV2 = new Vector2(speed * Time.deltaTime, 0);
-                rend.material.mainTextureOffset += offsetV2;
+                _rend.material.mainTextureOffset += offsetV2;
                 break;
         }
     }

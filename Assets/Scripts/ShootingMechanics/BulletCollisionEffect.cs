@@ -6,18 +6,24 @@ using UnityEngine;
 public class BulletCollisionEffect : MonoBehaviour
 {
     /// <summary>
-    /// The effect object animator
-    /// </summary>
-    private Animator animator;
-
-    /// <summary>
     /// Bool that defines if this object belongs to a pooled bullet
     /// </summary>
     public bool fromPooledObject;
 
+    /// <summary>
+    /// The effect object animator
+    /// </summary>
+    private Animator _animator;
+
+    /// <summary>
+    /// This object sprite renderer
+    /// </summary>
+    private SpriteRenderer _spriteRenderer;
+
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -26,7 +32,7 @@ public class BulletCollisionEffect : MonoBehaviour
     void Start()
     {
         if (!fromPooledObject)
-            Invoke("DestroyObject", animator.GetCurrentAnimatorStateInfo(0).length);
+            Invoke("DestroyObject", _animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
     /// <summary>
@@ -39,7 +45,7 @@ public class BulletCollisionEffect : MonoBehaviour
         gameObject.SetActive(true);
         gameObject.transform.position = bulletPosition;
 
-        Invoke("Deactivate", animator.GetCurrentAnimatorStateInfo(0).length);
+        Invoke("Deactivate", _animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
     /// <summary>
@@ -57,5 +63,16 @@ public class BulletCollisionEffect : MonoBehaviour
     private void DestroyObject()
     {
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Make use or not of the glow effect
+    /// </summary>
+    /// <param name="activate">Bool to activate / deactivate the effect</param>
+    public void SetGlowEffect(bool activate, Color color, float intensity)
+    {
+        _spriteRenderer.material.SetInt("_UseEmission", activate ? 1 : 0);
+        _spriteRenderer.material.SetColor("_GlowColor", color);
+        _spriteRenderer.material.SetFloat("_EmissionIntensity", intensity);
     }
 }

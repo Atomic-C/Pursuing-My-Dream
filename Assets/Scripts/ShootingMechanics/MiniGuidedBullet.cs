@@ -31,6 +31,12 @@ public class MiniGuidedBullet : MonoBehaviour
     public bool fromPooledObject;
 
     /// <summary>
+    /// Make use or not of the glow effect
+    /// </summary>
+    public bool useEmission;
+
+    [Header("Echo effect is not perfomance friendly")]
+    /// <summary>
     /// Enum used to define which trail effect the guided shoot will have
     /// </summary>
     public Bullet.TrailType trailType;
@@ -38,37 +44,42 @@ public class MiniGuidedBullet : MonoBehaviour
     /// <summary>
     /// Its rigidbody 2D
     /// </summary>
-    private Rigidbody2D thisRigidbody2D;
+    private Rigidbody2D _thisRigidbody2D;
 
     /// <summary>
     /// Its rotation controlling script
     /// </summary>
-    private Axis_Rotation axis_Rotation;
+    private Axis_Rotation _axis_Rotation;
 
     /// <summary>
     /// Variable that will hold the instantiated explosion prefab
     /// </summary>
-    private ExplosionEffect explosionEffect;
+    private ExplosionEffect _explosionEffect;
 
     /// <summary>
     /// Its echo effect script
     /// </summary>
-    private EchoEffect echoEffect;
+    private EchoEffect _echoEffect;
 
     /// <summary>
     /// Its trail renderer component
     /// </summary>
-    private TrailRenderer trailRenderer;
+    private TrailRenderer _trailRenderer;
 
     /// <summary>
     /// The actual timer that will dictate its life span
     /// </summary>
-    private float actualShootTimer;
+    private float _actualShootTimer;
 
     /// <summary>
     /// Bool used in finetuning the behavior of the guided shoot variant 
     /// </summary>
-    private bool foundTarget;
+    private bool _foundTarget;
+
+    /// <summary>
+    /// This object sprite renderer
+    /// </summary>
+    private SpriteRenderer _spriteRenderer;
 
     /// <summary>
     /// Cache the necessary variables
@@ -76,13 +87,14 @@ public class MiniGuidedBullet : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        thisRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-        actualShootTimer = Random.Range(shootTimer / 2, shootTimer * 2);
-        axis_Rotation = gameObject.GetComponent<Axis_Rotation>();
-        echoEffect = gameObject.GetComponent<EchoEffect>();
-        echoEffect.enabled = false;
-        trailRenderer = gameObject.GetComponent<TrailRenderer>();
-        trailRenderer.enabled = false;
+        _thisRigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        _actualShootTimer = Random.Range(shootTimer / 2, shootTimer * 2);
+        _axis_Rotation = gameObject.GetComponent<Axis_Rotation>();
+        _echoEffect = gameObject.GetComponent<EchoEffect>();
+        _echoEffect.enabled = false;
+        _trailRenderer = gameObject.GetComponent<TrailRenderer>();
+        _trailRenderer.enabled = false;
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -94,8 +106,8 @@ public class MiniGuidedBullet : MonoBehaviour
         {
             ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab);
             explosionEffect.SetupReferences(fromPooledObject, true, strenght, transform);
-            this.explosionEffect = explosionEffect;
-            this.explosionEffect.gameObject.SetActive(false);
+            _explosionEffect = explosionEffect;
+            _explosionEffect.gameObject.SetActive(false);
         }
     }
 
@@ -139,14 +151,14 @@ public class MiniGuidedBullet : MonoBehaviour
     {
         if (gameObject.scene.isLoaded)
         {
-            if (fromPooledObject && explosionEffect != null)
-                Destroy(explosionEffect.gameObject);
+            if (fromPooledObject && _explosionEffect != null)
+                Destroy(_explosionEffect.gameObject);
             else if (!fromPooledObject)
             {
                 ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
                 explosionEffect.SetupReferences(fromPooledObject, true, strenght, transform);
                 explosionEffect.AoEDamage();
-                this.explosionEffect = explosionEffect;
+                _explosionEffect = explosionEffect;
             }   
         }
     }
@@ -156,8 +168,8 @@ public class MiniGuidedBullet : MonoBehaviour
     /// </summary>
     private void GuidedShootLifeSpan()
     {
-        actualShootTimer -= Time.deltaTime;
-        if (actualShootTimer <= 0f)
+        _actualShootTimer -= Time.deltaTime;
+        if (_actualShootTimer <= 0f)
         {
             DestroyBehavior();
         }
@@ -172,8 +184,8 @@ public class MiniGuidedBullet : MonoBehaviour
         if (fromPooledObject)
         {
             ResetMiniBullet();
-            explosionEffect.Activate(transform.position);
-            explosionEffect.AoEDamage();
+            _explosionEffect.Activate(transform.position);
+            _explosionEffect.AoEDamage();
             gameObject.SetActive(false);
         } else
             Destroy(gameObject);
@@ -189,18 +201,18 @@ public class MiniGuidedBullet : MonoBehaviour
         if (closestTarget != null)
         {
             target = closestTarget.position;
-            foundTarget = true;
+            _foundTarget = true;
             // Doubles the rotation animation speed
-            axis_Rotation.speed = 800;
+            _axis_Rotation.speed = 800;
             // Zero the rigidbody velocity. Since this dont use the built-in physics, this is to prevent the move towards function struggling with the rigidbody velocity
-            thisRigidbody2D.velocity = Vector2.zero;
+            _thisRigidbody2D.velocity = Vector2.zero;
             transform.position = Vector2.MoveTowards(transform.position, closestTarget.position, SpeedBoost() * Time.deltaTime);
         }
 
-        if (!foundTarget)
+        if (!_foundTarget)
         {
-            axis_Rotation.speed = 400;
-            thisRigidbody2D.velocity = target.normalized * this.speed;
+            _axis_Rotation.speed = 400;
+            _thisRigidbody2D.velocity = target.normalized * this.speed;
         }
 
 
@@ -208,10 +220,10 @@ public class MiniGuidedBullet : MonoBehaviour
         switch (trailType)
         {
             case Bullet.TrailType.TRAILRENDERER:
-                trailRenderer.enabled = foundTarget;
+                _trailRenderer.enabled = _foundTarget;
                 break;
             case Bullet.TrailType.ECHOEFFECT:
-                echoEffect.enabled = foundTarget;
+                _echoEffect.enabled = _foundTarget;
                 break;
         }
     }
@@ -243,8 +255,8 @@ public class MiniGuidedBullet : MonoBehaviour
     /// </summary>
     public void ResetMiniBullet()
     {
-        foundTarget = false;
-        actualShootTimer = Random.Range(shootTimer / 2, shootTimer * 2);
+        _foundTarget = false;
+        _actualShootTimer = Random.Range(shootTimer / 2, shootTimer * 2);
     }
 
     /// <summary>
@@ -261,5 +273,16 @@ public class MiniGuidedBullet : MonoBehaviour
         this.speed = speed;
         this.strenght = strenght;
         this.fromPooledObject = fromPooledObject;
+    }
+
+    /// <summary>
+    /// Make use or not of the glow effect
+    /// </summary>
+    /// <param name="activate">Bool to activate / deactivate the effect</param>
+    public void SetGlowEffect(bool activate, Color color, float intensity)
+    {
+        _spriteRenderer.material.SetInt("_UseEmission", activate ? 1 : 0);
+        _spriteRenderer.material.SetColor("_GlowColor", color);
+        _spriteRenderer.material.SetFloat("_EmissionIntensity", intensity);
     }
 }

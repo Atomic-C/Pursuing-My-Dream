@@ -8,12 +8,12 @@ public class CrosshairController : MonoBehaviour
     /// <summary>
     /// Vector3 that holds the position of the mouse
     /// </summary>
-    private Vector3 mousePosition;
+    private Vector3 _mousePosition;
 
     /// <summary>
     /// Bool used to show / hide the mouse cursor
     /// </summary>
-    private bool showCursor;
+    private bool _showCursor;
 
     /// <summary>
     /// Start with the mouse cursor hidden
@@ -22,7 +22,7 @@ public class CrosshairController : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
-        showCursor = false;
+        _showCursor = false;
     }
 
     // Update is called once per frame
@@ -37,8 +37,8 @@ public class CrosshairController : MonoBehaviour
     /// </summary>
     private void FollowMouse()
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f);
+        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(_mousePosition.x, _mousePosition.y, 0f);
     }
 
     /// <summary>
@@ -47,8 +47,8 @@ public class CrosshairController : MonoBehaviour
     private void ShowHideCursor()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            showCursor = !showCursor;
+            _showCursor = !_showCursor;
 
-        Cursor.visible = showCursor;
+        Cursor.visible = _showCursor;
     }
 }

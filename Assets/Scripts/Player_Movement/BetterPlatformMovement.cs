@@ -16,14 +16,18 @@ public class BetterPlatformMovement : MonoBehaviour
     /// Float used as a multiplier for the gravity when the player quickly pressed the jump button, making it do a low jump
     /// </summary>
     public float lowJumpMultiplier = 2f;
-    private Rigidbody2D rb;
+
+    /// <summary>
+    /// This object rigidbody2D
+    /// </summary>
+    private Rigidbody2D _rb;
 
     /// <summary>
     /// Cache the player rigidbody 2d
     /// </summary>
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -32,10 +36,10 @@ public class BetterPlatformMovement : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (rb.velocity.y < 0)
+        if (_rb.velocity.y < 0)
         {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        } else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            _rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        } else if (_rb.velocity.y > 0 && !Input.GetButton("Jump"))
+            _rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
     }
 }

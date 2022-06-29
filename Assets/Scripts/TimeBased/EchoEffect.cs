@@ -12,11 +12,6 @@ public class EchoEffect : MonoBehaviour
     public GameObject echoEffectPrefab;
 
     /// <summary>
-    /// The position of the object receiving the effect
-    /// </summary>
-    private Transform target;
-
-    /// <summary>
     /// Bool used to determine if this echo belongs to the alternate shoot 
     /// </summary>
     public bool alternateShoot;
@@ -32,15 +27,20 @@ public class EchoEffect : MonoBehaviour
     public float echoTimer;
 
     /// <summary>
+    /// The position of the object receiving the effect
+    /// </summary>
+    private Transform _target;
+
+    /// <summary>
     /// Timer that will be used in the calculation (by Time.deltaTime)
     /// </summary>
-    private float actualEchoTimer;
+    private float _actualEchoTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = transform;
-        actualEchoTimer = echoTimer;
+        _target = transform;
+        _actualEchoTimer = echoTimer;
     }
     /// <summary>
     /// Each time the timer depletes, instantiate the echo game object at the position of this object, change the echo sprite if it is from an alternate shoot, destroy the echo
@@ -49,17 +49,17 @@ public class EchoEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (actualEchoTimer <= 0)
+        if (_actualEchoTimer <= 0)
         {
-            GameObject echo = Instantiate(echoEffectPrefab, target.position, Quaternion.identity);
+            GameObject echo = Instantiate(echoEffectPrefab, _target.position, Quaternion.identity);
             if(alternateShoot)
                 echo.GetComponent<SpriteRenderer>().sprite = alternateSprite;
             Destroy(echo, 2f);
-            actualEchoTimer = echoTimer;
+            _actualEchoTimer = echoTimer;
         }
         else
         {
-            actualEchoTimer -= Time.deltaTime;
+            _actualEchoTimer -= Time.deltaTime;
         }
     }
 }

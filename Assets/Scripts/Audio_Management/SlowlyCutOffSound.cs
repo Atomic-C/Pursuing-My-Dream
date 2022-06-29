@@ -30,7 +30,7 @@ public class SlowlyCutOffSound : MonoBehaviour
     /// Int used to increment / decrement the audio filter frequency over time
     /// </summary>
     [SerializeField]
-    private int frequencyNum;
+    private int _frequencyNum;
 
     /// <summary>
     /// Int used as a multiplier to boost the audio normalize speed, after the player exited the trigger area
@@ -38,17 +38,17 @@ public class SlowlyCutOffSound : MonoBehaviour
     /// this is only used to normalize the audio
     /// </summary>
     [SerializeField]
-    private int normalizeAudio;
+    private int _normalizeAudio;
 
     /// <summary>
     /// Int that holds the audio filter minimum frequency value
     /// </summary>
-    private int minCutOffFrequency = 10;
+    private int _minCutOffFrequency = 10;
 
     /// <summary>
     /// Int that holds the audio filter maximum frequency value
     /// </summary>
-    private int maxCutOffFrequency = 22000;
+    private int _maxCutOffFrequency = 22000;
 
     /// <summary>
     /// Call the respective function depending on which audio filter is being used
@@ -70,23 +70,23 @@ public class SlowlyCutOffSound : MonoBehaviour
     {
         if (enteredCutOffZone)
         {
-            if (highFilter.cutoffFrequency < maxCutOffFrequency)
+            if (highFilter.cutoffFrequency < _maxCutOffFrequency)
             {
-                highFilter.cutoffFrequency += frequencyNum;
-                if (highFilter.cutoffFrequency >= maxCutOffFrequency)
+                highFilter.cutoffFrequency += _frequencyNum;
+                if (highFilter.cutoffFrequency >= _maxCutOffFrequency)
                 {
-                    highFilter.cutoffFrequency = maxCutOffFrequency;
+                    highFilter.cutoffFrequency = _maxCutOffFrequency;
                 }
             }
         }
         else
         {
-            if (highFilter.cutoffFrequency > minCutOffFrequency)
+            if (highFilter.cutoffFrequency > _minCutOffFrequency)
             {
-                highFilter.cutoffFrequency -= frequencyNum * normalizeAudio;
-                if (highFilter.cutoffFrequency <= minCutOffFrequency)
+                highFilter.cutoffFrequency -= _frequencyNum * _normalizeAudio;
+                if (highFilter.cutoffFrequency <= _minCutOffFrequency)
                 {
-                    highFilter.cutoffFrequency = minCutOffFrequency;
+                    highFilter.cutoffFrequency = _minCutOffFrequency;
                 }
             }
         }
@@ -101,23 +101,23 @@ public class SlowlyCutOffSound : MonoBehaviour
     {
         if (enteredCutOffZone)
         {
-            if (lowFilter.cutoffFrequency != minCutOffFrequency)
+            if (lowFilter.cutoffFrequency != _minCutOffFrequency)
             {
-                lowFilter.cutoffFrequency -= frequencyNum;
-                if (lowFilter.cutoffFrequency < minCutOffFrequency)
+                lowFilter.cutoffFrequency -= _frequencyNum;
+                if (lowFilter.cutoffFrequency < _minCutOffFrequency)
                 {
-                    lowFilter.cutoffFrequency = minCutOffFrequency;
+                    lowFilter.cutoffFrequency = _minCutOffFrequency;
                 }
             }
         }
         else
         {
-            if (lowFilter.cutoffFrequency != maxCutOffFrequency)
+            if (lowFilter.cutoffFrequency != _maxCutOffFrequency)
             {
-                lowFilter.cutoffFrequency += frequencyNum * normalizeAudio;
-                if (lowFilter.cutoffFrequency > maxCutOffFrequency)
+                lowFilter.cutoffFrequency += _frequencyNum * _normalizeAudio;
+                if (lowFilter.cutoffFrequency > _maxCutOffFrequency)
                 {
-                    lowFilter.cutoffFrequency = maxCutOffFrequency;
+                    lowFilter.cutoffFrequency = _maxCutOffFrequency;
                 }
             }
         }

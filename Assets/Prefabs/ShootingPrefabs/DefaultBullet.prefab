@@ -92,7 +92,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: cd656d278f795b4429c7e08625713af8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,6 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2678e8f1c05c64bb4c04b83f6b4e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useEmission: 0
+  glowColor: {r: 1, g: 0.5568628, b: 0, a: 1}
+  glowIntensity: 150
   collisionEffectPrefab: {fileID: 183944073273497494, guid: 059e09d943842d34e8a71c780665fa23, type: 3}
   strenght: 3
   speed: 10

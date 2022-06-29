@@ -39,3 +39,5 @@ Keypad 1: default shoot, no alternate version
 Keypad 2: spread shoot, faster rate of fire but less accurate. Alternate version: burst stream, extremely fast and precise.
 <br>
 Keypad 3: guided shoot, tracks the closest target from the player. Alternate version: projectile cluster, spawns several mini versions of itself.
+<br>
+Press M to mute / unmute the music

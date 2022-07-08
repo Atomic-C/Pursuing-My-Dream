@@ -153,10 +153,10 @@ MonoBehaviour:
   dropChance: 1
   singleDrop: 1
   enemyDrops:
-  - {fileID: -2937610022237331849, guid: ca828a496addc7f4da941235d0743a89, type: 3}
   - {fileID: 4409705397168440658, guid: a17f1ae915f85e94f9b8d370deece36e, type: 3}
   - {fileID: 2885221662902825490, guid: 27bb457d82766eb4ca629ee1216e8a01, type: 3}
   - {fileID: 1888892801584291628, guid: 6a113c9b6a0c2f9449181aa8b4b4a44e, type: 3}
+  - {fileID: -2937610022237331849, guid: ca828a496addc7f4da941235d0743a89, type: 3}
 --- !u!60 &3375254744676797963
 PolygonCollider2D:
   m_ObjectHideFlags: 0

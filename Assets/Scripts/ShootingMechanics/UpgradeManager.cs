@@ -58,7 +58,7 @@ public class UpgradeManager : MonoBehaviour
         AudioManager.instance.PlaySound("PowerUp", transform.position);
 
         // Randomize the upgrade picked up
-        int upgrade = Random.Range(3, 4);
+        int upgrade = Random.Range(1, 8);
 
         // Check which upgrade was picked up and verify if the player reached its maximum rank in this upgrade statistic
         // If the maximum rank was reached, exit the function

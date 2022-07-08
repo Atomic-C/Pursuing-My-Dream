@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 90bd09b375e11a34bae726fa91645100
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - strengthIndicator: {fileID: 1502325504862386658, guid: 3d7213aa48ee918439f3f43d92717bc3, type: 3}
+  - speedIndicator: {fileID: 6277567547643260024, guid: b5281b44db5446b479aae48c0eb15a2e, type: 3}
+  - rateOfFireIndicator: {fileID: 7336611306361505795, guid: d99e6aa3069ba1c4f8cadb5a3d47cfa7, type: 3}
+  - rangeIndicator: {fileID: 8193520943729129311, guid: a0e5b02a9ece4664ab43d08d843af9a4, type: 3}
+  - energyIndicator: {fileID: 4300311510059528873, guid: 29b4517b4c13d23488776b9622efa7be, type: 3}
+  - energyRegenIndicator: {fileID: 7023782886432802283, guid: fe9efa732700f6d40abd1560dbb0172f, type: 3}
+  - lifeIndicator: {fileID: 7965709856805599483, guid: d95f18fedbcfaeb48999b45649c3aa11, type: 3}
+  - magicalGemController: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

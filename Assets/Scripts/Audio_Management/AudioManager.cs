@@ -83,6 +83,25 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Function to get a specific sound from the audio manager
+    /// </summary>
+    /// <param name="soundName">The name of the sound</param>
+    /// <returns></returns>
+    public Sound GetSound(string soundName)
+    {
+        Sound sound = null;
+
+        for (int i = 0; i < _sounds.Length; i++)
+        {
+            if (_sounds[i].name == soundName)
+            {
+                sound = _sounds[i];
+            }
+        }
+        return sound;
+    }
 }
 
 // System.Serializable allows the manipulation of custom classes in the editor
@@ -124,7 +143,7 @@ public class Sound
     /// <summary>
     /// Bool used to control aspects of the sound
     /// </summary>
-    public bool loop, isMusic, isPlaying;
+    public bool loop, isMusic;
 
     /// <summary>
     /// Bool used to determine if this sound is emitted by the player, directly or on touch
@@ -138,9 +157,14 @@ public class Sound
     public AudioClip clip;
 
     /// <summary>
+    /// Bool used to control aspects of the sound
+    /// </summary>
+    private bool _isPlaying;
+
+    /// <summary>
     /// The sound audio source
     /// </summary>
-    private AudioSource _source { get; set; }
+    public AudioSource source { get; set; }
 
     /// <summary>
     /// Set the properties below accordingly to the choices in the editor 
@@ -148,9 +172,9 @@ public class Sound
     /// <param name="audioSource">The audio source that will be passed as this sound audio source*</param>
     public void SetSource(AudioSource audioSource)
     {
-        _source = audioSource;
-        _source.clip = clip;
-        _source.loop = loop;
+        source = audioSource;
+        source.clip = clip;
+        source.loop = loop;
     }
 
     /// <summary>
@@ -163,16 +187,16 @@ public class Sound
     /// <param name="positionToPlay">Position that will be used in the PlayClipAtPoint function (SFX only)</param>
     public void Play(Vector3 positionToPlay)
     {
-        _source.volume = volume * (1 + UnityEngine.Random.Range(-randomVolume / 2f, randomVolume / 2f));
-        _source.pitch = pitch * (1 + UnityEngine.Random.Range(-randomPitch / 2f, randomPitch / 2f));
+        source.volume = volume * (1 + UnityEngine.Random.Range(-randomVolume / 2f, randomVolume / 2f));
+        source.pitch = pitch * (1 + UnityEngine.Random.Range(-randomPitch / 2f, randomPitch / 2f));
         
         if (isMusic)
-            _source.Play();
+            source.Play();
         else
-             if (!isPlaying)
+             if (!_isPlaying)
         {
             if(fromPlayer)
-                _source.PlayOneShot(clip);
+                source.PlayOneShot(clip);
             else
             AudioSource.PlayClipAtPoint(clip, positionToPlay);
 
@@ -188,7 +212,7 @@ public class Sound
     /// </summary>
     public void Stop()
     {
-        _source.Stop();
+        source.Stop();
     }
 
     /// <summary>
@@ -211,6 +235,6 @@ public class Sound
     /// </summary>
     public void SetIsPlaying()
     {
-        isPlaying = !isPlaying;
+        _isPlaying = !_isPlaying;
     }
 }

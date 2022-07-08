@@ -62,9 +62,9 @@ public class Bullet : MonoBehaviour
 
     [Header("Variables Setup")]
     /// <summary>
-    /// Strenght of the bullet (ammount of damage cause to targets)
+    /// Strength of the bullet (ammount of damage caused to targets)
     /// </summary>
-    public float strenght;
+    public float strength;
 
     /// <summary>
     /// Speed of the bullet (travel time speed)
@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour
     public float speed;
 
     /// <summary>
-    /// Range of the bullet (maximum range before disappearing)
+    /// Range of the bullet (maximum range before disappearing). Used in the MagicalGemController to adjust the trigger circle collider radius
     /// </summary>
     public float range;
 
@@ -85,11 +85,6 @@ public class Bullet : MonoBehaviour
     /// Energy cost of the bullet alternate shoot, when applicable
     /// </summary>
     public float energyCost;
-
-    /// <summary>
-    /// Float used as an spread off set as the target position, affects accuracy of the bullet
-    /// </summary>
-    public float spreadOffSet;
 
     /// <summary>
     /// Enum used to determine the behaviour of this bullet
@@ -215,6 +210,11 @@ public class Bullet : MonoBehaviour
 
     [Header("Spread shoot only")]
     /// <summary>
+    /// Float used as an spread off set as the target position, affects accuracy of the bullet
+    /// </summary>
+    public float spreadOffSet;
+
+    /// <summary>
     /// Float used in the spread shoot alternate version: faster speed
     /// </summary>
     public float chainSpeed;
@@ -310,9 +310,126 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Enemy") && shootType != ShootType.GUIDED)
-            collision.collider.GetComponent<TargetDummy>().Hit(strenght, transform);
-
+        {
+            // Check if the enemy has a health function (some objects are considered enemies but they dont have a health pool)
+            bool hasHitFunction = collision.collider.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealth);
+            if (hasHitFunction)
+                enemyHealth.Hit(strength, transform);
+        }
         DestroyBehavior();
+    }
+
+    /// <summary>
+    /// Initialize the array of mini guided bullets, used if this bullet belongs to a pool
+    /// </summary>
+    public void InitializePooledMiniGuidedBullets()
+    {
+        // Double check to avoid instantiating more than necessary
+        if (pooledObject && _pooledMiniGuidedBullet == null)
+        {
+            _pooledMiniGuidedBullet = new MiniGuidedBullet[miniGuidedAmmount];
+
+            for (int i = 0; i < _pooledMiniGuidedBullet.Length; i++)
+            {
+                MiniGuidedBullet miniGuidedBullet = Instantiate(guidedMiniBullet);
+                miniGuidedBullet.fromPooledObject = true;
+                miniGuidedBullet.gameObject.SetActive(false);
+                _pooledMiniGuidedBullet[i] = miniGuidedBullet;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Function that controls the bullet trajectory
+    /// </summary>
+    /// <param name="target">The mouse position</param>
+    /// <param name="speed">The speed of the player shoot (rank at the moment of the shoot)</param>
+    /// <param name="alternateShoot">Bool that dictate if an alternate shoot was used (right click)</param>
+    public void Shoot(Vector3 target, bool alternateShoot)
+    {
+        // Cache the alternate shoot bool, since there are behaviors that happens outside this function
+        this.alternateShoot = alternateShoot;
+
+        // If the current bullet has an alternate shoot and it was used, change the sprite to have a different look
+        if (this.alternateShoot && hasAlternateShoot)
+        {
+            _spriteRenderer.sprite = alternateSprite;
+
+            // Also changes the echo effect sprite, when applicable
+            if (trailType == TrailType.ECHOEFFECT)
+                _echoEffect.alternateShoot = alternateShoot;
+        }
+        // Not using alternate shoot, so use its original sprite (in case the player already used the alternate shoot, revert the sprite back to its original)
+        else
+            _spriteRenderer.sprite = _originalSprite;
+
+        // Cache the target to be used outside this function
+        _target = target;
+
+        switch (shootType)
+        {
+            // Simple behavior shoot - goes straight to the target
+            case ShootType.DEFAULT:
+                _thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
+                AudioManager.instance.PlaySound("DefaultShoot", transform.position);
+                break;
+            // Shoot with a spread effect - random target position, based on a radius from the original target
+            // Alternate shoot: gatling like version
+            case ShootType.SPREAD:
+                SpreadAlternateCalculation(this.alternateShoot);
+                Vector2 randomTarget = new Vector2(Random.Range(target.x - _actualSpreadOffSet, target.x + _actualSpreadOffSet),
+                                                   Random.Range(target.y - _actualSpreadOffSet, target.y + _actualSpreadOffSet));
+                PointAtTarget();
+                _thisRigidbody2D.velocity = randomTarget.normalized * (_actualSpeed + speed);
+                AudioManager.instance.PlaySound(alternateShoot ? "SpreadAlternateShoot" : "SpreadShoot", transform.position);
+                break;
+            // Shoot with a guided behavior - since its a different kind of bullet, it uses logic apart from this function.
+            // Alternate shoot: initial bullet spawns several others when destroyed
+            case ShootType.GUIDED:
+                _thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
+                AudioManager.instance.PlaySound(alternateShoot ? "GuidedAlternateShoot" : "GuidedShoot", transform.position);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Setup which behavior this object will have when being destroyed (colliding or reaching its range limit)
+    /// With object pooling: release the object back to the pool (deactivate it)
+    /// Without object pooling: destroy the object
+    /// </summary>
+    /// <param name="killAction">Function received from the magical gem controller script</param>
+    public void Init(Action<Bullet> killAction)
+    {
+        _killAction = killAction;
+    }
+
+    /// <summary>
+    /// Affects the variables used in the spread shoot version
+    /// Using alternate shoot: faster speed, less spread and faster rate of fire (the last affecting the MagicalGemController script, since it controls the rate of fire)
+    /// </summary>
+    /// <param name="activated"></param>
+    public void SpreadAlternateCalculation(bool activated)
+    {
+        _actualSpeed = activated ? chainSpeed : speed;
+        _actualSpreadOffSet = activated ? chainSpread : spreadOffSet;
+    }
+
+    /// <summary>
+    /// Set the bullets stats according to the player stats
+    /// </summary>
+    /// <param name="playerStrength">The player strength</param>
+    /// <param name="playerShootSpeed">The player shoot speed</param>
+    /// <param name="playerRoF">The player rate of fire</param>
+    public void SetBulletStats(float playerStrength, float playerShootSpeed, float playerRoF)
+    {
+        // If its not from an object pool, set the bullet stats. If it is, the bullet stats has already been set (the pool is responsible for this, to avoid the bullet stats being 
+        // infinitely increased
+        if (!pooledObject)
+        {
+            strength += playerStrength;
+            speed += playerShootSpeed;
+            rateOfFire -= playerRoF;
+        } 
     }
 
     /// <summary>
@@ -346,17 +463,6 @@ public class Bullet : MonoBehaviour
             SetTrailEffect(false);
             _killAction(this);
         }  
-    }
-
-    /// <summary>
-    /// Setup which behavior this object will have when being destroyed (colliding or reaching its range limit)
-    /// With object pooling: release the object back to the pool (deactivate it)
-    /// Without object pooling: destroy the object
-    /// </summary>
-    /// <param name="killAction">Function received from the magical gem controller script</param>
-    public void Init(Action<Bullet> killAction)
-    {
-        _killAction = killAction;
     }
 
     /// <summary>
@@ -407,7 +513,7 @@ public class Bullet : MonoBehaviour
         {
             // Create the necessary reference
             ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
-            explosionEffect.SetupReferences(pooledObject, alternateShoot, strenght, transform);
+            explosionEffect.SetupReferences(pooledObject, alternateShoot, strength, transform);
             explosionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
             explosionEffect.AoEDamage();
             _explosionEffect = explosionEffect;
@@ -439,7 +545,7 @@ public class Bullet : MonoBehaviour
                 for (int i = 0; i < _pooledMiniGuidedBullet.Length; i++)
                 {
                     _pooledMiniGuidedBullet[i].ResetMiniBullet();
-                    _pooledMiniGuidedBullet[i].SetupMiniBullet(_target, speed, strenght, pooledObject);
+                    _pooledMiniGuidedBullet[i].SetupMiniBullet(_target, speed, strength, pooledObject);
                     _pooledMiniGuidedBullet[i].Activate(transform.position, spreadOffSet);
                 }
               // Not using object pooling
@@ -451,33 +557,13 @@ public class Bullet : MonoBehaviour
                     MiniGuidedBullet miniBullet = Instantiate(guidedMiniBullet, new Vector2(Random.Range(transform.position.x - spreadOffSet, transform.position.x + spreadOffSet),
                                                               Random.Range(transform.position.y - spreadOffSet, transform.position.y + spreadOffSet)), Quaternion.identity);
                     // Function that setups these projectiles, by basically using the same stats as the main projectile
-                    miniBullet.SetupMiniBullet(_target, speed, strenght, pooledObject);
+                    miniBullet.SetupMiniBullet(_target, speed, strength, pooledObject);
 
                     // Activate / deactivate the mini bullet glow effect
                     miniBullet.SetGlowEffect(_useEmission, glowColor, glowIntensity);
                 }
         }
 
-    }
-
-    /// <summary>
-    /// Initialize the array of mini guided bullets, used if this bullet belongs to a pool
-    /// </summary>
-    public void InitializePooledMiniGuidedBullets()
-    {
-        // Double check to avoid instantiating more than necessary
-        if (pooledObject && _pooledMiniGuidedBullet == null)
-        {
-            _pooledMiniGuidedBullet = new MiniGuidedBullet[miniGuidedAmmount];
-
-            for (int i = 0; i < _pooledMiniGuidedBullet.Length; i++)
-            {
-                MiniGuidedBullet miniGuidedBullet = Instantiate(guidedMiniBullet);
-                miniGuidedBullet.fromPooledObject = true;
-                miniGuidedBullet.gameObject.SetActive(false);
-                _pooledMiniGuidedBullet[i] = miniGuidedBullet;
-            }     
-        }
     }
 
     /// <summary>
@@ -489,7 +575,7 @@ public class Bullet : MonoBehaviour
         if(shootType == ShootType.GUIDED && _explosionEffect == null)
         {
             ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab);
-            explosionEffect.SetupReferences(pooledObject, alternateShoot, strenght, transform);
+            explosionEffect.SetupReferences(pooledObject, alternateShoot, strength, transform);
             explosionEffect.SetGlowEffect(_useEmission, glowColor, glowIntensity);
             _explosionEffect = explosionEffect;
             _explosionEffect.gameObject.SetActive(false);
@@ -504,62 +590,6 @@ public class Bullet : MonoBehaviour
     }
 
     /// <summary>
-    /// Function that controls the bullet trajectory
-    /// </summary>
-    /// <param name="target">The mouse position</param>
-    /// <param name="speed">The speed of the player shoot (rank at the moment of the shoot)</param>
-    /// <param name="alternateShoot">Bool that dictate if an alternate shoot was used (right click)</param>
-    public void Shoot(Vector3 target, float speed, bool alternateShoot, float range)
-    {
-        // Get the maximum range (bullet + player) for the instant bullet type
-        this.range = range;
-
-        // Cache the alternate shoot bool, since there are behaviors that happens outside this function
-        this.alternateShoot = alternateShoot;
-
-        // If the current bullet has an alternate shoot and it was used, change the sprite to have a different look
-        if (this.alternateShoot && hasAlternateShoot)
-        {
-            _spriteRenderer.sprite = alternateSprite;
-
-            // Also changes the echo effect sprite, when applicable
-            if (trailType == TrailType.ECHOEFFECT)
-                _echoEffect.alternateShoot = alternateShoot;
-        }
-        // Not using alternate shoot, so use its original sprite (in case the player already used the alternate shoot, revert the sprite back to its original)
-        else
-            _spriteRenderer.sprite = _originalSprite;
-
-        // Cache the target to be used outside this function
-        _target = target;
-
-        switch (shootType)
-        {
-            // Simple behavior shoot - goes straight to the target
-            case ShootType.DEFAULT:
-                _thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
-                AudioManager.instance.PlaySound("DefaultShoot", transform.position);
-                break;
-            // Shoot with a spread effect - random target position, based on a radius from the original target
-            // Alternate shoot: gatling like version
-            case ShootType.SPREAD:
-                SpreadAlternateCalculation(this.alternateShoot);
-                Vector2 randomTarget = new Vector2(Random.Range(target.x - _actualSpreadOffSet, target.x + _actualSpreadOffSet),
-                                                   Random.Range(target.y - _actualSpreadOffSet, target.y + _actualSpreadOffSet));
-                PointAtTarget();
-                _thisRigidbody2D.velocity = randomTarget.normalized * (_actualSpeed + speed);
-                AudioManager.instance.PlaySound(alternateShoot ? "SpreadAlternateShoot" : "SpreadShoot", transform.position);
-                break;
-            // Shoot with a guided behavior - since its a different kind of bullet, it uses logic apart from this function.
-            // Alternate shoot: initial bullet spawns several others when destroyed
-            case ShootType.GUIDED:
-                _thisRigidbody2D.velocity = new Vector2(target.x, target.y).normalized * (this.speed + speed);
-                AudioManager.instance.PlaySound(alternateShoot ? "GuidedAlternateShoot" : "GuidedShoot", transform.position);
-                break;
-        }
-    }
-
-    /// <summary>
     /// Function used in the spread shoot version: make the sprite points towards the target direction
     /// Only necessary if the sprite used is irregular (not rounded, etc)
     /// </summary>
@@ -568,17 +598,6 @@ public class Bullet : MonoBehaviour
         Vector3 normalizedTarget = _target.normalized;
         float angle = Mathf.Atan2(normalizedTarget.y, normalizedTarget.x) * Mathf.Rad2Deg - 90;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
-
-    /// <summary>
-    /// Affects the variables used in the spread shoot version
-    /// Using alternate shoot: faster speed, less spread and faster rate of fire (the last affecting the MagicalGemController script, since it controls the rate of fire)
-    /// </summary>
-    /// <param name="activated"></param>
-    public void SpreadAlternateCalculation(bool activated)
-    {
-        _actualSpeed = activated ? chainSpeed : speed;
-        _actualSpreadOffSet = activated ? chainSpread : spreadOffSet;
     }
 
     /// <summary>

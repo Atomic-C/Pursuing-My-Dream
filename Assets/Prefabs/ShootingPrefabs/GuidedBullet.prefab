@@ -156,23 +156,23 @@ MonoBehaviour:
   glowColor: {r: 0.9245283, g: 0.12646852, b: 0.12646852, a: 1}
   glowIntensity: 30
   collisionEffectPrefab: {fileID: 0}
-  strenght: 5
+  strength: 5
   speed: 5
   range: 2
   rateOfFire: 1
   energyCost: 0.5
-  spreadOffSet: 1
   shootType: 2
   isReleased: 0
   hasAlternateShoot: 1
   alternateSprite: {fileID: -963982025516991787, guid: fbe4fc401d30f104dbd99d3f3c35c797, type: 3}
   pooledObject: 0
-  trackingTimer: 1
+  trackingTimer: 0.5
   shootTimer: 2
   guidedMiniBullet: {fileID: 8517353224790781269, guid: acae459c1bc0c3a49a666bc61c47d269, type: 3}
   miniGuidedAmmount: 3
   explosionEffectPrefab: {fileID: 8006271267712214981, guid: aa27fc357dc0ed641bcd003ef52998a7, type: 3}
   trailType: 2
+  spreadOffSet: 1
   chainSpeed: 0
   chainRateOfFire: 0
   chainSpread: 0

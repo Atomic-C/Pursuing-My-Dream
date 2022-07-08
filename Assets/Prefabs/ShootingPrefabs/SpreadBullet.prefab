@@ -157,16 +157,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2678e8f1c05c64bb4c04b83f6b4e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useEmission: 1
   glowColor: {r: 0.68771565, g: 0.06541473, b: 0.9245283, a: 1}
   glowIntensity: 40
   collisionEffectPrefab: {fileID: 4916615025883986089, guid: b51a6a95cc763ab47b6ad9a3f6aa5032, type: 3}
-  strenght: 2
+  strength: 2
   speed: 15
   range: 0.5
   rateOfFire: 0.2
   energyCost: 0.05
-  spreadOffSet: 1
   shootType: 1
   isReleased: 0
   hasAlternateShoot: 1
@@ -178,6 +176,7 @@ MonoBehaviour:
   miniGuidedAmmount: 0
   explosionEffectPrefab: {fileID: 0}
   trailType: 0
+  spreadOffSet: 1
   chainSpeed: 30
   chainRateOfFire: 0.005
   chainSpread: 0

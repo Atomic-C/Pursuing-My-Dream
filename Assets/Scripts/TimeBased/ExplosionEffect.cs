@@ -29,9 +29,9 @@ public class ExplosionEffect : MonoBehaviour
     private CircleCollider2D _aoeRange;
 
     /// <summary>
-    /// Cache the bullet strenght of the one that instantiated this effect
+    /// Cache the bullet strength of the one that instantiated this effect
     /// </summary>
-    private float _bulletStrenght;
+    private float _bulletStrength;
 
     /// <summary>
     /// Cache the transform of the bullet that instantiated this effect
@@ -117,13 +117,13 @@ public class ExplosionEffect : MonoBehaviour
     /// </summary>
     /// <param name="fromPooledObject">The object that instantiated does belong to a pool?</param>
     /// <param name="alternateShoot">This object is being used as the main or alternate version of the bullet?</param>
-    /// <param name="bulletStrenght">The strenght of the bullet that instantiated this</param>
+    /// <param name="bulletStrength">The strength of the bullet that instantiated this</param>
     /// <param name="bulletTransform">The transform of the bullet that instantiated this</param>
-    public void SetupReferences(bool fromPooledObject, bool alternateShoot, float bulletStrenght, Transform bulletTransform)
+    public void SetupReferences(bool fromPooledObject, bool alternateShoot, float bulletStrength, Transform bulletTransform)
     {
         _fromPooledObject = fromPooledObject;
         _alternateShoot = alternateShoot;
-        _bulletStrenght = bulletStrenght;
+        _bulletStrength = bulletStrength;
         _bulletTransform = bulletTransform;
     }
 
@@ -149,7 +149,7 @@ public class ExplosionEffect : MonoBehaviour
             // Call its Hit function
             foreach(Collider2D collider in enemyColliders)
             {
-                collider.GetComponent<TargetDummy>().Hit(_bulletStrenght, _bulletTransform);
+                collider.GetComponent<EnemyHealth>().Hit(_bulletStrength, _bulletTransform);
             }
         }
     }

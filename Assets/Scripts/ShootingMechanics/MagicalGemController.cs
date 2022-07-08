@@ -37,9 +37,24 @@ public class MagicalGemController : MonoBehaviour
     public GameObject gemPrefab;
 
     /// <summary>
-    /// Array of game objects that holds all the coloured bar representing each bullet type energy bar
+    /// Game object that represents each bullet type energy bar
     /// </summary>
-    public GameObject[] energyBars;
+    public GameObject energyBar;
+
+    /// <summary>
+    /// Game object that represents each bullet type energy bar icon
+    /// </summary>
+    public GameObject energyBarIcon;
+
+    /// <summary>
+    /// Array of sprites for all bullet types energy bar sprites
+    /// </summary>
+    public Sprite[] energyBarSprites;
+
+    /// <summary>
+    /// Array of sprites for all bullet types energy bar icon sprites
+    /// </summary>
+    public Sprite[] energyIconSprites;
 
     /// <summary>
     /// Original material applied to the energy bar sprites
@@ -153,6 +168,16 @@ public class MagicalGemController : MonoBehaviour
     private SpriteRenderer _gemSpriteRenderer;
 
     /// <summary>
+    /// The sprite renderer of the energy bar
+    /// </summary>
+    private SpriteRenderer _energyBarRenderer;
+
+    /// <summary>
+    /// The sprite renderer of the energy bar icon
+    /// </summary>
+    private SpriteRenderer _energyIconRenderer;
+
+    /// <summary>
     /// Crosshair object that is being used in the active scene
     /// </summary>
     private GameObject _activeCrossHairObject;
@@ -175,14 +200,24 @@ public class MagicalGemController : MonoBehaviour
     public int currentBullet;
 
     /// <summary>
-    /// Statistics of the player: its shoot strenght, projectile speed, range and rate of fire, energy, maximum energy and energy regen
+    /// Statistics of the player: projectile strength, speed, range, maximum energy and energy regen
     /// </summary>
-    public float shootStrenght, shootSpeed, shootRange, shootRateOfFire, energy, maxEnergy, energyRegen;
+    public float shootStrength, shootSpeed, shootRange, maxEnergy, energyRegen;
+
+    /// <summary>
+    /// Statistics of the player rate of fire, one for bullet type
+    /// </summary>
+    public float[] rateOfFire;
 
     /// <summary>
     /// Bool used to show / hide a visual representation of the current shoot range
     /// </summary>
     public bool showRange;
+
+    /// <summary>
+    /// Statistic of the player: current energy
+    /// </summary>
+    private float _energy;
 
     /// <summary>
     /// Float that will be affected by the rate of fire calculation
@@ -261,11 +296,13 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        _rangeArea = GetComponent<CircleCollider2D>();
         // Begins being able to shoot
         _canFire = true;
         _allowBoolChange = true;
         _setBoolTimer = setBoolTimer;
+        _energy = maxEnergy;
+        _energyBarRenderer = energyBar.GetComponent<SpriteRenderer>();
+        _energyIconRenderer = energyBarIcon.GetComponent<SpriteRenderer>();
 
         InitializeBulletPool();
 
@@ -331,6 +368,99 @@ public class MagicalGemController : MonoBehaviour
     }
 
     /// <summary>
+    /// Function that controls the energy pickup mechanic (used by the CollectableManager)
+    /// </summary>
+    public void PickedUpEnergy(float value)
+    {
+        // Play the energy up sound
+        AudioManager.instance.PlaySound("EnergyUp", transform.position);
+
+        // Increase the current energy
+        _energy += value;
+
+        // If the current energy goes above the maximum energy, set it to the maximum energy
+        if(_energy > maxEnergy)
+            _energy = maxEnergy;
+
+        // Manipulate the energy bar local scale accordingly
+        energyBar.transform.localScale = new Vector3(_energy, _energyBarScale.y, _energyBarScale.z);
+    }
+
+    /// <summary>
+    /// Function called when the player picks up an upgrade, to clear the object pool to include the new upgraded statistics, if applicable
+    /// </summary>
+    public void UpgradedStatistic()
+    {
+        // If using the object pool, reset it to include the new statistics value
+        if (usePool)
+        {
+            _bulletPool.Clear();
+            InitializeBulletPool();
+        }
+    }
+
+    /// <summary>
+    /// Upgrade the player shoot strength (if using percentage, the base value used is from the current bullet)
+    /// </summary>
+    /// <param name="value">The upgrade percentage</param>
+    public void StrengthUpgrade(float value, bool isPercentage)
+    {
+        shootStrength += isPercentage ? (bullets[currentBullet].strength / 100) * value : value;
+    }
+
+    /// <summary>
+    /// Upgrade the player shoot speed (if using percentage, the base value used is from the current bullet)
+    /// </summary>
+    /// <param name="value">The upgrade percentage</param>
+    public void SpeedUpgrade(float value, bool isPercentage)
+    {
+        shootSpeed += isPercentage ? (bullets[currentBullet].speed / 100) * value : value;
+    }
+
+    /// <summary>
+    /// Upgrade the player rate of fire for all bullets (if using percentage, the base value used is from the current bullet)
+    /// </summary>
+    /// <param name="value">The upgrade percentage</param>
+    public void RateOfFireUpgrade(float value, bool isPercentage)
+    {
+        for (int i = 0; i < rateOfFire.Length; i++)
+        {
+            rateOfFire[i] += isPercentage ? (bullets[i].rateOfFire / 100) * value : value;
+        }
+        // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
+        _fireTimer = bullets[currentBullet].rateOfFire - rateOfFire[currentBullet];
+    }
+
+    /// <summary>
+    /// Upgrade the player shoot range (if using percentage, the base value used is from the current bullet)
+    /// </summary>
+    /// <param name="value">The upgrade percentage</param>
+    public void RangeUpgrade(float value, bool isPercentage)
+    {
+        shootRange += isPercentage ? (bullets[currentBullet].range / 100) * value : value;
+        // Set the new range limit
+        _rangeArea.radius = shootRange + bullets[currentBullet].range;
+    }
+
+    /// <summary>
+    /// Upgrade the player max energy
+    /// </summary>
+    /// <param name="value">The upgrade percentage</param>
+    public void EnergyUpgrade(float value, bool isPercentage)
+    {
+        maxEnergy += isPercentage ? (maxEnergy / 100) * value : value;
+    }
+
+    /// <summary>
+    /// Upgrade the player energy regen
+    /// </summary>
+    /// <param name="value">The upgrade percentage</param>
+    public void EnergyRegenUpgrade(float value, bool isPercentage)
+    {
+        energyRegen += isPercentage ? (energyRegen / 100) * value : value;
+    }
+
+    /// <summary>
     /// Set the shader graph _UseEmission property, activating / deactivating the effect
     /// </summary>
     private void SetOutlineEffect()
@@ -373,11 +503,11 @@ public class MagicalGemController : MonoBehaviour
             else if (Input.GetKey(KeyCode.Mouse1) && bullets[currentBullet].hasAlternateShoot)
             {
                 // If the player has the necessary energy to use the alternate shoot
-                if (energy > bullets[currentBullet].energyCost)
+                if (_energy > bullets[currentBullet].energyCost)
                 {
                     // If it is the spread shoot alternate version, uses a different rate of fire setting
                     _fireTimer = bullets[currentBullet].shootType == Bullet.ShootType.SPREAD ?
-                                bullets[currentBullet].chainRateOfFire - shootRateOfFire : bullets[currentBullet].rateOfFire - shootRateOfFire;
+                                bullets[currentBullet].chainRateOfFire : bullets[currentBullet].rateOfFire - rateOfFire[currentBullet];
 
                     Shoot(InitBullet(true), true);
 
@@ -396,7 +526,7 @@ public class MagicalGemController : MonoBehaviour
         if (_fireTimer <= 0f)
         {
             _canFire = true;
-            _fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
+            _fireTimer = bullets[currentBullet].rateOfFire - rateOfFire[currentBullet];
         }
 
         if (useEmission)
@@ -416,6 +546,9 @@ public class MagicalGemController : MonoBehaviour
     {
         // Instantiate / get the bullet prefab (at the gem position) attached to the respective Bullet class array 
         Bullet bullet = usePool ? _bulletPool.Get() : Instantiate(bullets[currentBullet], _activeGem.transform.position, Quaternion.identity);
+
+        // Set the bullet stats
+        bullet.SetBulletStats(shootStrength, shootSpeed, rateOfFire[currentBullet]);
 
         // Set the bullet UseEmission property that will automatically, on this bullet Bullet script, activate or deactivate its glow effect
         bullet.UseEmission = useBulletEmission;
@@ -450,7 +583,7 @@ public class MagicalGemController : MonoBehaviour
         Vector3 direction = _activeCrossHairObject.transform.position - bullet.transform.position;
 
         // Calls the Bullet script Shoot function, attached to this instantiated object
-        bullet.Shoot(direction, shootSpeed, alternateShoot, shootRange);
+        bullet.Shoot(direction, alternateShoot);
     }
 
     /// <summary>
@@ -471,9 +604,9 @@ public class MagicalGemController : MonoBehaviour
     private void ConsumeEnergy()
     {
         float energyConsumed = bullets[currentBullet].energyCost;
-        energy -= energyConsumed;
+        _energy -= energyConsumed;
         // Simulate the energy bar diminish effect by using its scale
-        energyBars[currentBullet].transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
+        energyBar.transform.localScale = new Vector3(_energy, _energyBarScale.y, _energyBarScale.z);
     }
 
     /// <summary>
@@ -623,16 +756,20 @@ public class MagicalGemController : MonoBehaviour
         // Do not allow changing to another bullet while the not enough energy coroutine is running. This is to avoid a bug in the bar sprite
         if (!_noEnergyRoutineIsRunning)
         {
-            // Deactivate the current energy bar being used
-            energyBars[currentBullet].SetActive(false);
             // Set the currentBullet int by the keypad pressed by the player
             currentBullet = bulletChoosen;
-            // Activate the energy bar of the new current bullet
-            energyBars[currentBullet].SetActive(true);
+            // Activate / deactivate the energy bar of the new current bullet
+            energyBar.SetActive(currentBullet == 0 ? false : true);
+            // Activate / deactivate the energy bar icon of the new current bullet
+            energyBarIcon.SetActive(currentBullet == 0 ? false : true);
+            // Set the energy bar sprite accordingly
+            _energyBarRenderer.sprite = energyBarSprites[currentBullet];
+            // Set the energy bar icon sprite accordingly
+            _energyIconRenderer.sprite = energyIconSprites[currentBullet];
             // Cache the scale of this energy bar
-            _energyBarScale = energyBars[currentBullet].transform.localScale;
+            _energyBarScale = energyBar.transform.localScale;
             // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
-            _fireTimer = bullets[currentBullet].rateOfFire - shootRateOfFire;
+            _fireTimer = bullets[currentBullet].rateOfFire - rateOfFire[currentBullet];
             // Change the current crosshair by the one corresponding with the current bullet
             _activeCrosshairSprite.sprite = crosshairColors[currentBullet];
             // Change the sprite library asset in use by the one correspoding with the current bullet
@@ -674,6 +811,7 @@ public class MagicalGemController : MonoBehaviour
     private Bullet CreatePooledObject()
     {
         Bullet bullet = Instantiate(bullets[currentBullet]);
+        bullet.SetBulletStats(shootStrength, shootSpeed, rateOfFire[currentBullet]);
         bullet.pooledObject = true;
         bullet.gameObject.SetActive(false);
         return bullet;
@@ -721,11 +859,10 @@ public class MagicalGemController : MonoBehaviour
     {
         if (bullets[currentBullet].hasAlternateShoot)
         {
-            if (energy < maxEnergy)
+            if (_energy < maxEnergy)
             {
-                energy += energyRegen * Time.deltaTime;
-                foreach (GameObject bar in energyBars)
-                    bar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
+                _energy += energyRegen * Time.deltaTime;
+                energyBar.transform.localScale = new Vector3(_energy, _energyBarScale.y, _energyBarScale.z);
             }
         }
     }
@@ -745,9 +882,9 @@ public class MagicalGemController : MonoBehaviour
             for (int i = 0; i < 2; i++)
             {
                 yield return new WaitForSeconds(0.2f);
-                energyBars[currentBullet].GetComponent<SpriteRenderer>().material = flashBarMaterial;
+                _energyBarRenderer.material = flashBarMaterial;
                 yield return new WaitForSeconds(0.2f);
-                energyBars[currentBullet].GetComponent<SpriteRenderer>().material = originalBarMaterial;
+                _energyBarRenderer.material = originalBarMaterial;
             }
 
             _noEnergyRoutineIsRunning = false;

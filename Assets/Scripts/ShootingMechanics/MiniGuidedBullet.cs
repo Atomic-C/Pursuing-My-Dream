@@ -6,9 +6,14 @@ using UnityEngine;
 public class MiniGuidedBullet : MonoBehaviour
 {
     /// <summary>
-    /// This projectile statistics
+    /// This projectile strength
     /// </summary>
-    public float strenght, speed;
+    public float strength;
+
+    /// <summary>
+    /// This projectile speed
+    /// </summary>
+    public float speed;
 
     /// <summary>
     /// Life span timer
@@ -105,7 +110,7 @@ public class MiniGuidedBullet : MonoBehaviour
         if (fromPooledObject)
         {
             ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab);
-            explosionEffect.SetupReferences(fromPooledObject, true, strenght, transform);
+            explosionEffect.SetupReferences(fromPooledObject, true, strength, transform);
             _explosionEffect = explosionEffect;
             _explosionEffect.gameObject.SetActive(false);
         }
@@ -156,7 +161,7 @@ public class MiniGuidedBullet : MonoBehaviour
             else if (!fromPooledObject)
             {
                 ExplosionEffect explosionEffect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
-                explosionEffect.SetupReferences(fromPooledObject, true, strenght, transform);
+                explosionEffect.SetupReferences(fromPooledObject, true, strength, transform);
                 explosionEffect.AoEDamage();
                 _explosionEffect = explosionEffect;
             }   
@@ -265,13 +270,13 @@ public class MiniGuidedBullet : MonoBehaviour
     /// <param name="target">Its target</param>
     /// <param name="range">Projectile range</param>
     /// <param name="speed">Projectile speed</param>
-    /// <param name="strenght">Projectile strenght</param>
+    /// <param name="strength">Projectile strength</param>
     /// <param name="fromPooledObject">If it belongs to a pooled object</param>
-    public void SetupMiniBullet(Vector2 target, float speed, float strenght, bool fromPooledObject)
+    public void SetupMiniBullet(Vector2 target, float speed, float strength, bool fromPooledObject)
     {
         this.target = target;
         this.speed = speed;
-        this.strenght = strenght;
+        this.strength = strength;
         this.fromPooledObject = fromPooledObject;
     }
 

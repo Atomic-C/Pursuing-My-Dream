@@ -35,6 +35,13 @@ TagManager:
   - DestroyBullet
   - Enemy
   - DestroyObject
+  - LifeUPG
+  - EnergyRegenUPG
+  - EnergyUPG
+  - RangeUPG
+  - RateOfFireUPG
+  - SpeedUPG
+  - StrenghtUPG
   layers:
   - Default
   - TransparentFX
@@ -55,8 +62,8 @@ TagManager:
   - Range Limit
   - Main Camera
   - Post Processing
-  - 
-  - 
+  - Upgrade
+  - Gem
   - 
   - 
   - 

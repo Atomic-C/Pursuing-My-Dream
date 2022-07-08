@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 6193005840407841225}
   - component: {fileID: 6092179883733446710}
   - component: {fileID: 1595693720683268331}
-  m_Layer: 18
+  - component: {fileID: 5986286118188469510}
+  m_Layer: 20
   m_Name: MagicalGem
   m_TagString: MagicalGem
   m_Icon: {fileID: 0}
@@ -216,6 +217,44 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!60 &5986286118188469510
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946747252279223158}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.13, y: 0.11}
+    newSize: {x: 0.15, y: 0.13}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.030140152, y: 0.050571192}
+      - {x: -0.04181202, y: 0.037225768}
+      - {x: -0.060613085, y: 0.019935556}
+      - {x: -0.06091126, y: 0.01093351}
+      - {x: -0.033310525, y: -0.013935394}
+      - {x: 0.00044967234, y: -0.05074199}
+      - {x: 0.028323099, y: -0.021549031}
+      - {x: 0.035211258, y: -0.012156753}
+      - {x: 0.052460015, y: 0.0033048433}
+      - {x: 0.06079636, y: 0.008498725}
+      - {x: 0.060172282, y: 0.02374042}
+      - {x: 0.04341921, y: 0.039575633}
+      - {x: 0.03303819, y: 0.05070967}
 --- !u!1 &5289361440717423157
 GameObject:
   m_ObjectHideFlags: 0

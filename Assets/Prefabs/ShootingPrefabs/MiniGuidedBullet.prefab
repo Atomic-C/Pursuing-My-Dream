@@ -153,12 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182aa50736dcbb74f8dce6e51198618b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strenght: 5
+  strength: 3
   speed: 5
   shootTimer: 2
   target: {x: -146.55934, y: 2.0156057}
   explosionEffectPrefab: {fileID: 2082159156669490245, guid: 45d0d9bf300e37a48bd76a413a05b84e, type: 3}
   fromPooledObject: 0
+  useEmission: 0
   trailType: 2
 --- !u!114 &8681150418165397755
 MonoBehaviour:

@@ -161,6 +161,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (canStart)
         {
+            retryText.gameObject.SetActive(false);
+
             _maxHealth = maxHealth;
             _currentHealth = _maxHealth;
             _animator = GetComponent<Animator>();
@@ -474,6 +476,9 @@ public class PlayerHealth : MonoBehaviour
 
         // After everything is done, set the _isDead bool to true
         _isDead = true;
+
+        // Activate retry text UI game object
+        retryText.gameObject.SetActive(true);
 
         // Call the fade in effect for both game over text's
         gameOverText.StartFadeEffect(true);

@@ -9,6 +9,8 @@ using UnityEngine.U2D.Animation;
 /// </summary>
 public class MagicalGemController : MonoBehaviour
 {
+    public bool canStart;
+
     [Header("Object Pooling")]
     /// <summary>
     /// Bool used to change the behavior of the current bullet to make use of the object pooling technique
@@ -283,12 +285,15 @@ public class MagicalGemController : MonoBehaviour
     /// </summary> 
     private void Start()
     {
-        CheckCrosshair();
-        CheckGem();
-        SetupCurrentBullet(currentBullet);
-        // Set the _loaded bool to true here and rerun the OnValidate
-        _loaded = true;
-        OnValidate();
+        if (canStart)
+        {
+            CheckCrosshair();
+            CheckGem();
+            SetupCurrentBullet(currentBullet);
+            // Set the _loaded bool to true here and rerun the OnValidate
+            _loaded = true;
+            OnValidate();
+        } 
     }
 
     /// <summary>
@@ -296,15 +301,18 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // Begins being able to shoot
-        _canFire = true;
-        _allowBoolChange = true;
-        _setBoolTimer = setBoolTimer;
-        _energy = maxEnergy;
-        _energyBarRenderer = energyBar.GetComponent<SpriteRenderer>();
-        _energyIconRenderer = energyBarIcon.GetComponent<SpriteRenderer>();
+        if (canStart)
+        {
+            // Begins being able to shoot
+            _canFire = true;
+            _allowBoolChange = true;
+            _setBoolTimer = setBoolTimer;
+            _energy = maxEnergy;
+            _energyBarRenderer = energyBar.GetComponent<SpriteRenderer>();
+            _energyIconRenderer = energyBarIcon.GetComponent<SpriteRenderer>();
 
-        InitializeBulletPool();
+            InitializeBulletPool();
+        }
 
         // The initial idea was to try and use an array of object pools, one for each bullet type. But i found its easier to use only one pool and reset it accordingly to the current
         // bullet being used
@@ -324,10 +332,13 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        Animate();
-        FireBullet();
-        EnergyRegen();
-        AllowBoolChange();
+        if (canStart)
+        {
+            Animate();
+            FireBullet();
+            EnergyRegen();
+            AllowBoolChange();
+        }
     }
 
     /// <summary>
@@ -335,7 +346,8 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        SmoothFollow.instance.FollowObject(transform, playerMovement.transform, _followOffset, smoothSpeed);
+        if(canStart)
+            SmoothFollow.instance.FollowObject(transform, playerMovement.transform, _followOffset, smoothSpeed);
     }
 
     /// <summary>
@@ -365,6 +377,12 @@ public class MagicalGemController : MonoBehaviour
     {
         if (showRange)
             Gizmos.DrawWireSphere(_activeGem.transform.position, _rangeArea.radius * _rangeArea.transform.lossyScale.x);
+    }
+
+    public void Initialize()
+    {
+        Awake();
+        Start();
     }
 
     /// <summary>

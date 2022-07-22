@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
+    public bool canStart;
+
     [Header("Upgrades config")]
     /// <summary>
     /// Bool used to control how the calculation is done: percentage or flat value
@@ -45,7 +47,13 @@ public class UpgradeManager : MonoBehaviour
 
     private void Awake()
     {
-        _magicalGemController = gameObject.GetComponent<MagicalGemController>();
+        if(canStart)
+            _magicalGemController = gameObject.GetComponent<MagicalGemController>();
+    }
+
+    public void Initialize()
+    {
+        Awake();
     }
 
     /// <summary>

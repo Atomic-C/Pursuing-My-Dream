@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7311811908852607955}
   m_Layer: 19
   m_Name: StrengthUpgradeIndicator
-  m_TagString: StrenghtUPG
+  m_TagString: Undefined
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

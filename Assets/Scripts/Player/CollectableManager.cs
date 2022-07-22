@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class CollectableManager : MonoBehaviour
 {
+    public bool canStart;
+
     /// <summary>
     /// UI coins counter
     /// </summary>
@@ -33,7 +35,8 @@ public class CollectableManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerHealth = GetComponent<PlayerHealth>();
+        if(canStart)
+            _playerHealth = GetComponent<PlayerHealth>();
     }
 
     /// <summary>
@@ -62,6 +65,11 @@ public class CollectableManager : MonoBehaviour
 
             Destroy(otherObject.gameObject);
         }
+    }
+
+    public void Initialize()
+    {
+        Awake();
     }
 
     /// <summary>

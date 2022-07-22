@@ -282,7 +282,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 685346543
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -443,7 +442,7 @@ Transform:
   m_Children:
   - {fileID: 1356188824412905249}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8998683782962852823
 SpriteRenderer:
@@ -485,7 +484,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 471651161
   m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -6713843135523949396, guid: 76cf23ad981c4ab4f80b64299362c5c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -536,5 +535,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectorExplanation: {fileID: 1356188824412905251}
-  exclamationSignPosition: {fileID: 8430901445282630674}
   setCameraFocus: 1
+  exclamationSignPosition: {fileID: 8430901445282630674}

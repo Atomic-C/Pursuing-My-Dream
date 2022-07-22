@@ -8,6 +8,8 @@ using UnityEngine.Rendering.Universal;
 /// </summary>
 public class PlayerHealth : MonoBehaviour
 {
+    public bool canStart;
+
     [Header("Setup")]
     /// <summary>
     /// The player maximum health
@@ -38,6 +40,17 @@ public class PlayerHealth : MonoBehaviour
     /// Holds a reference to the UI canvas, to build the player lifebar
     /// </summary>
     public Canvas canvas;
+
+    [Header("Game over screen objects")]
+    /// <summary>
+    /// The game over UI text
+    /// </summary>
+    public UIFadeEffect gameOverText;
+
+    /// <summary>
+    /// The retry UI text
+    /// </summary>
+    public UIFadeEffect retryText;
 
     [Header("Stun effect")]
     /// <summary>
@@ -133,9 +146,12 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize the hearts list
-        _hearts = new List<Heart>();
-        SetHealthBar();
+        if (canStart)
+        {
+            // Initialize the hearts list
+            _hearts = new List<Heart>();
+            SetHealthBar();
+        }
     }
 
     /// <summary>
@@ -143,13 +159,16 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        _maxHealth = maxHealth;
-        _currentHealth = _maxHealth;
-        _animator = GetComponent<Animator>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _platformMovement = GetComponent<Platform_Movement>();
-        _originalColor = _spriteRenderer.color;
+        if (canStart)
+        {
+            _maxHealth = maxHealth;
+            _currentHealth = _maxHealth;
+            _animator = GetComponent<Animator>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _platformMovement = GetComponent<Platform_Movement>();
+            _originalColor = _spriteRenderer.color;
+        }
     }
 
     /// <summary>
@@ -185,6 +204,12 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
             TakeHit(collision.transform);
+    }
+
+    public void Initialize()
+    {
+        Awake();
+        Start();
     }
 
     /// <summary>
@@ -449,6 +474,10 @@ public class PlayerHealth : MonoBehaviour
 
         // After everything is done, set the _isDead bool to true
         _isDead = true;
+
+        // Call the fade in effect for both game over text's
+        gameOverText.StartFadeEffect(true);
+        retryText.StartFadeEffect(true);
     }
 
     /// <summary>

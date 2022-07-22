@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1041753519544272314
+--- !u!1 &7889609410469893927
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1041753519544272308}
-  - component: {fileID: 1041753519544272309}
+  - component: {fileID: 1351004074054046730}
+  - component: {fileID: 7889609410469893913}
+  - component: {fileID: 7889609410469893926}
   m_Layer: 0
   m_Name: MagicalGemController
-  m_TagString: Untagged
+  m_TagString: MagicalGemController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1041753519544272308
+--- !u!4 &1351004074054046730
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041753519544272314}
+  m_GameObject: {fileID: 7889609410469893927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -181.22, y: -0.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1041753519544272309
+--- !u!114 &7889609410469893913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041753519544272314}
+  m_GameObject: {fileID: 7889609410469893927}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d82f63d17f633b7488c3416ff7eb22f5, type: 3}
@@ -49,10 +50,16 @@ MonoBehaviour:
   bulletPoolMaxSize: 0f0000002c0100000f000000
   crossHairPrefab: {fileID: 8347547301129538201, guid: 15a7c861f70e9e54aa9c6690207e16f6, type: 3}
   gemPrefab: {fileID: 3946747252279223158, guid: 3de4df4681b850f4790a079cc6275fff, type: 3}
-  energyBars:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  energyBar: {fileID: 0}
+  energyBarIcon: {fileID: 0}
+  energyBarSprites:
+  - {fileID: -4517549209914134686, guid: 964431dda26d47c418b5d6d976ec44c1, type: 3}
+  - {fileID: -1027166025824103704, guid: 964431dda26d47c418b5d6d976ec44c1, type: 3}
+  - {fileID: 8401347299046109351, guid: 964431dda26d47c418b5d6d976ec44c1, type: 3}
+  energyIconSprites:
+  - {fileID: -1234022654, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
+  - {fileID: -1568038566, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
+  - {fileID: -2036758549, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
   originalBarMaterial: {fileID: 2100000, guid: da845563df30ca64dbfb2f1132d36fa0, type: 2}
   flashBarMaterial: {fileID: 2100000, guid: 4ed88764be041db4fbd9fa01f5f1f350, type: 2}
   bullets:
@@ -88,12 +95,48 @@ MonoBehaviour:
   _useOutline: 0
   smoothSpeed: 0.125
   currentBullet: 0
-  shootStrenght: 0
+  shootStrength: 0
   shootSpeed: 0
   shootRange: 1
-  shootRateOfFire: 0
-  energy: 1
   maxEnergy: 1
   energyRegen: 0.1
+  rateOfFire:
+  - 0
+  - 0
+  - 0
   showRange: 0
-  setBoolTimer: 0.5
+  setBoolTimer: 0.2
+--- !u!114 &7889609410469893926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889609410469893927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bd09b375e11a34bae726fa91645100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPercentage: 1
+  playerHealth: {fileID: 0}
+  strengthRankMax: 10
+  speedRankMax: 5
+  rangeRankMax: 5
+  rateOfFireRankMax: 9
+  energyRankMax: 20
+  energyRegenRankMax: 20
+  lifeRankMax: 15
+  strengthUpgrade: 50
+  speedUpgrade: 10
+  rangeUpgrade: 10
+  rateOfFireUpgrade: 10
+  energyUpgrade: 10
+  energyRegenUpgrade: 10
+  strengthIndicator: {fileID: 1502325504862386658, guid: 3d7213aa48ee918439f3f43d92717bc3, type: 3}
+  speedIndicator: {fileID: 6277567547643260024, guid: b5281b44db5446b479aae48c0eb15a2e, type: 3}
+  rateOfFireIndicator: {fileID: 7336611306361505795, guid: d99e6aa3069ba1c4f8cadb5a3d47cfa7, type: 3}
+  rangeIndicator: {fileID: 8193520943729129311, guid: a0e5b02a9ece4664ab43d08d843af9a4, type: 3}
+  energyIndicator: {fileID: 4300311510059528873, guid: 29b4517b4c13d23488776b9622efa7be, type: 3}
+  energyRegenIndicator: {fileID: 7023782886432802283, guid: fe9efa732700f6d40abd1560dbb0172f, type: 3}
+  lifeIndicator: {fileID: 7965709856805599483, guid: d95f18fedbcfaeb48999b45649c3aa11, type: 3}

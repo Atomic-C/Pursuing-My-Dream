@@ -15,7 +15,10 @@ Already implemented:
 - All sprites for the yellow slime / ground / trees and bushes are mine (not using the trees and bushes right now). I've spent some time with Aseprite and ended up mading then 😆
 - Background scenery with parallax effects and infinite horizontal / vertical scrolling
 - Shooting mechanics with built-in object pooling: 5 different shoot (3 main, 2 alternate versions). Alternate version make use of a new energy consumption mechanic
+- Floating magical gem and its bullets has a visual aspects function - nicer effects and stuff!
 - Implemented a target dummy spawner with animated targets and damage mechanic
+- Implemented a fully functional upgrade system: shoot strength, speed, range, rate of fire upgrades! Max energy and energy regen too!
+- Implemented the player health system which is too upgradeable
 
 Next steps:
 - Finish the visual aspects of the level

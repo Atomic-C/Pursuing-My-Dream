@@ -38,7 +38,6 @@ public class PauseManager : MonoBehaviour
         _pauseTimer = pauseTimer;
         _canPause = true;
         _playerIsDead = false;
-        _pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
     }
 
     /// <summary>
@@ -69,6 +68,15 @@ public class PauseManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Function that sets the reference to the pause menu object
+    /// </summary>
+    /// <param name="pauseMenu">The pause menu object</param>
+    public void SetPauseMenuObject(GameObject pauseMenu)
+    {
+        _pauseMenu = pauseMenu;
+    }
+
+    /// <summary>
     /// Function that show / hide the mouse cursor when escape is pressed
     /// And pauses / unpauses the game, showing / hiding the pause menu
     /// </summary>
@@ -82,13 +90,13 @@ public class PauseManager : MonoBehaviour
             {
                 Time.timeScale = 0f;
                 AudioManager.instance.PauseSound("Music");
-                _pauseMenu?.SetActive(true);
+                _pauseMenu.SetActive(true);
             }
             else
             {
                 Time.timeScale = 1f;
                 AudioManager.instance.PlaySound("Music", transform.position);
-                _pauseMenu?.SetActive(false);
+                _pauseMenu.SetActive(false);
             }
 
             AudioManager.instance.PlaySound("Pause", transform.position);

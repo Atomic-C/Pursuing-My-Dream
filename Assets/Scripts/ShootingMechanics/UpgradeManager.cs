@@ -111,9 +111,14 @@ public class UpgradeManager : MonoBehaviour
                 }
             }
 
-            // The pause menu object must be active at the beginning to make possible to cache all the necessary references (upgrade bars here and the pause menu itself in the pause
-            // manager script), so after everything is ready, deactivate it effectively hiding it from the player (it will be shown when the game is paused - see the pause manager script)
-            GameObject.FindGameObjectWithTag("PauseMenu").SetActive(false);
+            // Get the pause menu object
+            GameObject pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
+
+            // Pass its reference to the pause manager
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseManager>().SetPauseMenuObject(pauseMenu);
+
+            // Deactivate the pause menu object
+            pauseMenu.SetActive(false);
         }            
     }
 

@@ -4898,7 +4898,7 @@ MonoBehaviour:
   minRandomRange: -100
   maxRandomRange: 100
   incrementValue: 0
-  dropChance: 1
+  dropChance: 0.4
   dropType: 2
   lifeSpan: 2
   vanishTime: 2

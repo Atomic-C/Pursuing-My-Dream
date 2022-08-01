@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Script that controls a fade in / fade out effect, entirely through code without the need of using animations
+/// Script that controls a fade in / fade out effect, entirely through code without the need of using animations (for the game over texts)
 /// </summary>
-public class UIFadeEffect : MonoBehaviour
+public class GameOverFadeEffect : MonoBehaviour
 {
     /// <summary>
     /// The speed in which the fade effect will play
@@ -42,7 +42,7 @@ public class UIFadeEffect : MonoBehaviour
         {
             for (float i = 0; i <= 1; i += fadeSpeed)
             {
-                _image.color = new Color(1, 1, 1, i);
+                _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, i);
                 yield return null;
             }
         }

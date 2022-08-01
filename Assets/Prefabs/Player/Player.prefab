@@ -62,7 +62,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8642461791036585143}
-  m_LocalRotation: {x: -0, y: 0.008727774, z: -0, w: 0.9999619}
+  m_LocalRotation: {x: 0, y: 0.008726558, z: 0, w: 0.999962}
   m_LocalPosition: {x: -154.87, y: -0.02, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdd5766e77f4e24c9a0b91ba28d736c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canStart: 0
   coinsUiText: {fileID: 0}
   upgradeManager: {fileID: 0}
   magicalGemController: {fileID: 0}
@@ -253,7 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58346131ef8de243838ce0751d554f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canStart: 0
   maxHealth: 5
+  heartSpawnDirection: 0
   flashingColor: {r: 0, g: 0, b: 0, a: 0}
   heart: {fileID: 8007052434722455889, guid: 2009fc93d8bcb674b9dc017dabd54d20, type: 3}
   firstHeartPosition: {x: -9.13, y: 4.37, z: 0}

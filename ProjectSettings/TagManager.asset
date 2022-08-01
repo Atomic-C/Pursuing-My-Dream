@@ -23,6 +23,18 @@ TagManager:
   - UICanvas
   - EnergyBar
   - EnergyBarIcon
+  - SpeedUPG
+  - RateOfFireUPG
+  - RangeUPG
+  - EnergyUPG
+  - EnergyRegenUPG
+  - LifeUPG
+  - GameOver
+  - Retry
+  - OutdoorEffect
+  - Undefined
+  - StrengthUPG
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

@@ -118,6 +118,8 @@ public class EnemyHealth : MonoBehaviour
     /// </summary>
     private Rigidbody2D _thisRigidbody2D;
 
+    private DamageIndicator _damageIndicator;
+
     /// <summary>
     /// Call the flip function to flip the sprite direction if needed (also make sure the healthbar is hidden)
     /// </summary>
@@ -142,6 +144,7 @@ public class EnemyHealth : MonoBehaviour
         _actualHealth = maxHealth;
         _xLocalScale = transform.localScale.x;
         _healthBar_XLocalScale = healthBar.transform.localScale.x;
+        _damageIndicator = gameObject.GetComponent<DamageIndicator>();
     }
 
     /// <summary>
@@ -198,6 +201,9 @@ public class EnemyHealth : MonoBehaviour
 
         // Then flips the sprite, if applicable
         Flip();
+
+        // Show the damage inflicted
+        _damageIndicator.ShowDamage(damage);
 
         // Fatal hit
         if(_actualHealth <= 0)

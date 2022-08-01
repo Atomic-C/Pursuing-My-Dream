@@ -4971,3 +4971,7 @@ MonoBehaviour:
   incrementValue: 0.25
   dropChance: 0.4
   dropType: 1
+  lifeSpan: 2
+  vanishTime: 2
+  vanishDeltaTime: 0.2
+  flashingColor: {r: 0, g: 0, b: 0, a: 0}

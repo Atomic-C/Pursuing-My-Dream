@@ -85,6 +85,22 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Function that pauses the sound with the respective sound name
+    /// </summary>
+    /// <param name="soundName">The sound name to be paused</param>
+    public void PauseSound(string soundName)
+    {
+        for (int i = 0; i < _sounds.Length; i++)
+        {
+            if (_sounds[i].name == soundName)
+            {
+                _sounds[i].Pause();
+                return;
+            }
+        }
+    }
+
+    /// <summary>
     /// Function to get a specific sound from the audio manager
     /// </summary>
     /// <param name="soundName">The name of the sound</param>
@@ -213,6 +229,14 @@ public class Sound
     public void Stop()
     {
         source.Stop();
+    }
+    
+    /// <summary>
+    /// Function used to pause the audio clip
+    /// </summary>
+    public void Pause()
+    {
+        source.Pause();
     }
 
     /// <summary>

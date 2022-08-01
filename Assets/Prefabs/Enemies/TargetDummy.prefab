@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2116019141039259996}
   - component: {fileID: 2116019141039259998}
   - component: {fileID: 2116019141039259995}
+  - component: {fileID: -6263118787099964540}
   - component: {fileID: 3375254744676797963}
   - component: {fileID: -2400432009453452756}
   - component: {fileID: -6424524404264234714}
@@ -153,10 +154,25 @@ MonoBehaviour:
   dropChance: 1
   singleDrop: 1
   enemyDrops:
+  - {fileID: -2937610022237331849, guid: ca828a496addc7f4da941235d0743a89, type: 3}
   - {fileID: 4409705397168440658, guid: a17f1ae915f85e94f9b8d370deece36e, type: 3}
   - {fileID: 2885221662902825490, guid: 27bb457d82766eb4ca629ee1216e8a01, type: 3}
   - {fileID: 1888892801584291628, guid: 6a113c9b6a0c2f9449181aa8b4b4a44e, type: 3}
-  - {fileID: -2937610022237331849, guid: ca828a496addc7f4da941235d0743a89, type: 3}
+--- !u!114 &-6263118787099964540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116019141039259985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da558a42b470a54e8acd07df04fef5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageObject: {fileID: 5588324544600236707, guid: 3fb70ebd8f8e47b4f872c9f617e13ded, type: 3}
+  minRandomRange: 0
+  maxRandomRange: 200
 --- !u!60 &3375254744676797963
 PolygonCollider2D:
   m_ObjectHideFlags: 0

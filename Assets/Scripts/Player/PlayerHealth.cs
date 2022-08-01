@@ -17,6 +17,11 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth;
 
     /// <summary>
+    /// Direction which the hearts will spawn
+    /// </summary>
+    public SpawnDirection heartSpawnDirection;
+
+    /// <summary>
     /// The color the player sprite assumes when being hit (flashing effect)
     /// </summary>
     public Color flashingColor;
@@ -41,16 +46,21 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public Canvas canvas;
 
+    /// <summary>
+    /// Physics material 2D with maxed friction
+    /// </summary>
+    public PhysicsMaterial2D physicsMaterial2D;
+
     [Header("Game over screen objects")]
     /// <summary>
     /// The game over UI text
     /// </summary>
-    public UIFadeEffect gameOverText;
+    private GameOverFadeEffect _gameOverText;
 
     /// <summary>
     /// The retry UI text
     /// </summary>
-    public UIFadeEffect retryText;
+    private GameOverFadeEffect _retryText;
 
     [Header("Stun effect")]
     /// <summary>
@@ -161,7 +171,10 @@ public class PlayerHealth : MonoBehaviour
     {
         if (canStart)
         {
-            retryText.gameObject.SetActive(false);
+            _gameOverText = GameObject.FindGameObjectWithTag("GameOver").GetComponent<GameOverFadeEffect>();
+            _retryText = GameObject.FindGameObjectWithTag("Retry").GetComponent<GameOverFadeEffect>();
+
+            _retryText.gameObject.SetActive(false);
 
             _maxHealth = maxHealth;
             _currentHealth = _maxHealth;
@@ -211,7 +224,6 @@ public class PlayerHealth : MonoBehaviour
     public void Initialize()
     {
         Awake();
-        Start();
     }
 
     /// <summary>
@@ -262,6 +274,9 @@ public class PlayerHealth : MonoBehaviour
         // Increase the _maxHealth
         _maxHealth++;
 
+        // Increase the player current health
+        _currentHealth++;
+
         // Instantiate the heart object and make it a child of the UI canvas
         GameObject newHeart = Instantiate(heart.gameObject);
         newHeart.transform.SetParent(canvas.transform);
@@ -281,8 +296,8 @@ public class PlayerHealth : MonoBehaviour
                 // Iterate the hearts list again, but beginning from the depleted heart found index (thats why its being used the int x = 'i+1')
                 for (int x = i+1; x <= _hearts.Count - 1; x++)
                 {
-                    // And move the heart to the right, using the heartsSpaceOffset
-                    _hearts[x].transform.localPosition = _hearts[x].transform.localPosition.WithAxis(Axis.X, _hearts[x].transform.localPosition.x + heartsSpaceOffset);
+                    // And move the heart to the direction dictated by the heartSpawnDirection enum, using the heartsSpaceOffset
+                    SetHeartPosition(_hearts[x].gameObject, _hearts[x].transform.localPosition, 1);
                 }
 
                 // Exit the function
@@ -290,30 +305,55 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        // If there's no heart depleted (no damage was taken), set its position to the right of the last heart and add it to the end of the list
+        // If there's no heart depleted (no damage was taken), set its position to the heartSpawnDirection direction of the last heart and add it to the end of the list
         newHeart.transform.localPosition = _hearts[_hearts.Count - 1].transform.localPosition;
-        newHeart.transform.localPosition = newHeart.transform.localPosition.WithAxis(Axis.X, _hearts[_hearts.Count - 1].transform.localPosition.x + heartsSpaceOffset);
+        SetHeartPosition(newHeart, _hearts[_hearts.Count - 1].transform.localPosition, 1);
         _hearts.Add(newHeart.GetComponent<Heart>());
     }
 
     /// <summary>
     /// Build the player health bar, instantiating the necessary ammount of hearts and making all of them a child of the UI canvas
     /// Calculation for distance between them: the first heart is instantiate in the firstHeartPosition Vector2 position. All others are instantiate in the same position but with
-    /// a distance to the right, in the x axis, that is calculated with the formula for i variable times the heartsSpaceOffset value
+    /// a distance dictacted by the heartSpawnDirection enum, that is calculated with the formula for i variable times the heartsSpaceOffset value
     /// </summary>
     private void SetHealthBar()
     {
-        for (int i = 0; i < _maxHealth; i++)
+        for (int i = 1; i <= _maxHealth; i++)
         {
             GameObject newHeart = Instantiate(heart.gameObject);
             newHeart.transform.SetParent(canvas.transform);
             newHeart.transform.localPosition = firstHeartPosition;
 
-            if(i != 0)
-                newHeart.transform.localPosition = newHeart.transform.localPosition.WithAxis(Axis.X, firstHeartPosition.x + (heartsSpaceOffset * i));
-
-            _hearts.Add(newHeart.GetComponent<Heart>());
+            _hearts.Add(SetHeartPosition(newHeart, firstHeartPosition, i).GetComponent<Heart>());
         }
+    }
+
+    /// <summary>
+    /// Set the direction the hearts will spawn depending on the heartSpawnDirection enum
+    /// </summary>
+    /// <param name="newHeart">The spawned heart object</param>
+    /// <param name="vector2">The first heart position, used as an initial position</param>
+    /// <param name="i">Value used as multiplier for the heart offset position</param>
+    /// <returns></returns>
+    private GameObject SetHeartPosition(GameObject newHeart, Vector2 vector2, int i)
+    {
+        switch (heartSpawnDirection)
+        {
+            case SpawnDirection.RIGHT:
+                newHeart.transform.localPosition = newHeart.transform.localPosition.WithAxis(Axis.X, vector2.x + (heartsSpaceOffset * i));
+                break;
+            case SpawnDirection.LEFT:
+                newHeart.transform.localPosition = newHeart.transform.localPosition.WithAxis(Axis.X, vector2.x - (heartsSpaceOffset * i));
+                break;
+            case SpawnDirection.DOWN:
+                newHeart.transform.localPosition = newHeart.transform.localPosition.WithAxis(Axis.Y, vector2.y - (heartsSpaceOffset * i));
+                break;
+            case SpawnDirection.UP:
+                newHeart.transform.localPosition = newHeart.transform.localPosition.WithAxis(Axis.Y, vector2.y + (heartsSpaceOffset * i));
+                break;
+        }
+
+        return newHeart;
     }
 
     /// <summary>
@@ -426,18 +466,20 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     private void Death()
     {
+        // Communicate with the pause manager script, preventing the game from being paused after the player death
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PauseManager>().PlayerDied();
+
         // Get the MagicalGemController and deactivate it (disabling the shooting mechanics)
-        GameObject.Find("MagicalGemController").GetComponent<MagicalGemController>().enabled = false;
+        GameObject.FindGameObjectWithTag("MagicalGemController").GetComponent<MagicalGemController>().enabled = false;
 
         // Get the magical gem reference
-        _magicalGem = GameObject.Find("MagicalGem(Clone)");
+        _magicalGem = GameObject.FindGameObjectWithTag("MagicalGem(Clone)");
 
         // Disable its animator to make the gem stop midair
         _magicalGem.GetComponent<Animator>().enabled = false;
 
-        // Set the player rigidbody velocity to zero in the x axis, to stop it where it took the last hit (still susceptible to other objects influences though)
-        // But still maintains its velocity in the y axis (if the hit was took in midair, the player will still fall to the ground)
-        _rigidbody2D.velocity = new Vector2(0f, _rigidbody2D.velocity.y);
+        // Set the player collider with a physics material 2D with maxed friction, to prevent the player to go sliding places
+        gameObject.GetComponent<CircleCollider2D>().sharedMaterial = physicsMaterial2D;
 
         // Stop the music
         AudioManager.instance.StopSound("Music");
@@ -478,11 +520,11 @@ public class PlayerHealth : MonoBehaviour
         _isDead = true;
 
         // Activate retry text UI game object
-        retryText.gameObject.SetActive(true);
+        _retryText.gameObject.SetActive(true);
 
         // Call the fade in effect for both game over text's
-        gameOverText.StartFadeEffect(true);
-        retryText.StartFadeEffect(true);
+        _gameOverText.StartFadeEffect(true);
+        _retryText.StartFadeEffect(true);
     }
 
     /// <summary>
@@ -491,5 +533,16 @@ public class PlayerHealth : MonoBehaviour
     private void StaticRigidBody()
     {
         _rigidbody2D.bodyType = RigidbodyType2D.Static;
+    }
+
+    /// <summary>
+    /// Enum that controls which direction the hearts will be positioned
+    /// </summary>
+    public enum SpawnDirection
+    {
+        RIGHT,
+        LEFT,
+        DOWN,
+        UP
     }
 }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Script responsible for automatically setting up all the necessary game objects / components references for the yellow slime to work
@@ -26,11 +27,6 @@ public class GameManager : MonoBehaviour
     /// The game object with the auto letter box script attached
     /// </summary>
     public GameObject forceCameraRatio;
-
-    /// <summary>
-    /// Game object with the follow helper script attached
-    /// </summary>
-    public GameObject cameraFollow;
     
     /// <summary>
     /// Reference of the camera currently in the scene
@@ -53,11 +49,17 @@ public class GameManager : MonoBehaviour
     private GameObject _forceCameraRatio;
 
     /// <summary>
+    /// Current scene in the game
+    /// </summary>
+    private string _currentSceneName;
+
+    /// <summary>
     /// Get the main camera in the scene
     /// </summary>
     private void Awake()
     {
-        _mainCamera = Camera.main;   
+        _mainCamera = Camera.main;
+        _currentSceneName = SceneManager.GetActiveScene().name;
     }
 
     private void Start()
@@ -74,9 +76,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void SpawnNecessaryEntities()
     {
-        // Instantiate the follow helper object
-        Instantiate(cameraFollow, transform.position, Quaternion.identity);
-
         // Check if there is already a camera in the scene and destroy it
         if(_mainCamera != null)
             Destroy(_mainCamera.gameObject);
@@ -90,7 +89,71 @@ public class GameManager : MonoBehaviour
         // Instantiate the magical gem controller object
         _magicalGemController = Instantiate(magicalGemController, transform.position, Quaternion.identity);
     }
-    
+
+    /// <summary>
+    /// Set up the camera references to work properly
+    /// </summary>
+    private void SetupCamera()
+    {
+        SetupCameraFollow();
+
+        SetupRadar();
+
+        Invoke("SetupAutoLetterBox", .1f);
+
+        CheckBackground();
+    }
+
+    private void CheckBackground()
+    {
+        foreach (GameObject outdoorEffects in GameObject.FindGameObjectsWithTag("OutdoorEffect"))
+            outdoorEffects.SetActive(_currentSceneName == SceneLoader.Scene.Shop.ToString());
+    }
+
+    /// <summary>
+    /// Instantiate the auto letter box object and activate it (it is deactivated by default to avoid a bug where it automatically tries to cache a reference to the main camera
+    /// which is not available)
+    /// </summary>
+    private void SetupAutoLetterBox()
+    {
+        _forceCameraRatio = Instantiate(forceCameraRatio, transform.position, Quaternion.identity);
+        _forceCameraRatio.gameObject.SetActive(true);
+
+        Invoke("SetupBoxCollider2D", .5f);
+    }
+
+    /// <summary>
+    /// Set the camera box collider 2D to be the same size as the camera size
+    /// </summary>
+    private void SetupBoxCollider2D()
+    {
+        _mainCamera.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+
+        float sizeY = _mainCamera.orthographicSize * 2;
+        float sizeX = sizeY * _mainCamera.aspect;
+
+        _mainCamera.gameObject.GetComponent<BoxCollider2D>().size = new Vector2(sizeX, sizeY);
+
+    }
+
+    /// <summary>
+    /// Get the target for the camera follow script, using the CameraTarget tag (its a child game object of the player object)
+    /// </summary>
+    private void SetupCameraFollow()
+    {
+        _mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = GameObject.FindGameObjectWithTag("CameraTarget").transform;
+    }
+
+    /// <summary>
+    /// Set the necessary reference for the radar script to work
+    /// </summary>
+    private void SetupRadar()
+    {
+        _mainCamera.gameObject.GetComponent<Radar>().triggerCollider = mainCamera.GetComponent<BoxCollider2D>();
+        _mainCamera.gameObject.GetComponent<Radar>().playerPosition = player.transform;
+    }
+
+   
     /// <summary>
     /// Set up all the necessary references for the player scripts to work
     /// </summary>
@@ -129,61 +192,6 @@ public class GameManager : MonoBehaviour
         _magicalGemController.playerMovement = _player.GetComponent<Platform_Movement>();
         // Set the gem controller upgrade manager, player health script reference
         _magicalGemController.GetComponent<UpgradeManager>().playerHealth = _player.GetComponent<PlayerHealth>();
-    }
-
-    /// <summary>
-    /// Set up the camera references to work properly
-    /// </summary>
-    private void SetupCamera()
-    {
-        SetupCameraFollow();
-
-        SetupRadar();
-
-        Invoke("SetupAutoLetterBox", .1f);
-    }
-
-    /// <summary>
-    /// Get the target for the camera follow script, using the CameraTarget tag (its a child game object of the player object)
-    /// </summary>
-    private void SetupCameraFollow()
-    {
-        _mainCamera.gameObject.GetComponent<CameraFollow>().targetPosition = GameObject.FindGameObjectWithTag("CameraTarget").transform;
-    }
-
-    /// <summary>
-    /// Set the camera box collider 2D to be the same size as the camera size
-    /// </summary>
-    private void SetupBoxCollider2D()
-    {
-        _mainCamera.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
-
-        float sizeY = _mainCamera.orthographicSize * 2;
-        float sizeX = sizeY * _mainCamera.aspect;
-
-        _mainCamera.gameObject.GetComponent<BoxCollider2D>().size = new Vector2(sizeX, sizeY);
-
-    }
-
-    /// <summary>
-    /// Set the necessary reference for the radar script to work
-    /// </summary>
-    private void SetupRadar()
-    {
-        _mainCamera.gameObject.GetComponent<Radar>().triggerCollider = mainCamera.GetComponent<BoxCollider2D>();
-        _mainCamera.gameObject.GetComponent<Radar>().playerPosition = player.transform;
-    }
-
-    /// <summary>
-    /// Instantiate the auto letter box object and activate it (it is deactivated by default to avoid a bug where it automatically tries to cache a reference to the main camera
-    /// which is not available)
-    /// </summary>
-    private void SetupAutoLetterBox()
-    {
-        _forceCameraRatio = Instantiate(forceCameraRatio, transform.position, Quaternion.identity);
-        _forceCameraRatio.gameObject.SetActive(true);
-
-        Invoke("SetupBoxCollider2D", .5f);
     }
 
     /// <summary>

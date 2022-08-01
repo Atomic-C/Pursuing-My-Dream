@@ -97,3 +97,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41174e9aeda4f8e46a8222f89cc44118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePointer: {fileID: 21300000, guid: a397857e230b9cd4dbf1f260fb86069a, type: 3}

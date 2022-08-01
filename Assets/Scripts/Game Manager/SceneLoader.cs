@@ -19,6 +19,7 @@ public static class SceneLoader
     /// </summary>
     public enum Scene
     {
-        First_Level
+        First_Level,
+        Shop
     }
 }

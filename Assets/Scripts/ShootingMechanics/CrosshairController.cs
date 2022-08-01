@@ -5,31 +5,40 @@ using UnityEngine;
 /// </summary>
 public class CrosshairController : MonoBehaviour
 {
+    public Sprite pausePointer;
+
     /// <summary>
     /// Vector3 that holds the position of the mouse
     /// </summary>
     private Vector3 _mousePosition;
 
     /// <summary>
-    /// Bool used to show / hide the mouse cursor
+    /// The scene main camera
     /// </summary>
-    private bool _showCursor;
+    private Camera _mainCamera;
 
-    /// <summary>
-    /// Start with the mouse cursor hidden
-    /// </summary>
-    // Start is called before the first frame update
-    void Start()
+    private Sprite _originalSprite;
+
+    private SpriteRenderer _spriteRenderer;
+
+    private void Awake()
     {
-        Cursor.visible = false;
-        _showCursor = false;
+        _mainCamera = Camera.main;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalSprite = _spriteRenderer.sprite;
     }
 
     // Update is called once per frame
     void Update()
     {
         FollowMouse();
-        ShowHideCursor();
+        GameIsPaused();
+    }
+
+    public void ChangeSprite(Sprite sprite)
+    {
+        _spriteRenderer.sprite = sprite;
+        _originalSprite = sprite;
     }
 
     /// <summary>
@@ -37,18 +46,17 @@ public class CrosshairController : MonoBehaviour
     /// </summary>
     private void FollowMouse()
     {
-        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(_mousePosition.x, _mousePosition.y, 0f);
     }
 
-    /// <summary>
-    /// Function that show / hide the mouse cursor when escape is pressed
-    /// </summary>
-    private void ShowHideCursor()
+    private void GameIsPaused()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            _showCursor = !_showCursor;
-
-        Cursor.visible = _showCursor;
+        if (Time.timeScale == 0)
+            _spriteRenderer.sprite = pausePointer;
+        else
+            _spriteRenderer.sprite = _originalSprite;
     }
+
+
 }

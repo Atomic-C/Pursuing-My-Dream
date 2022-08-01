@@ -4900,6 +4900,11 @@ MonoBehaviour:
   incrementValue: 0
   dropChance: 1
   dropType: 2
+  lifeSpan: 2
+  vanishTime: 2
+  vanishDeltaTime: 0.2
+  flashingColor: {r: 0, g: 0, b: 0, a: 0}
+  fromShop: 0
 --- !u!199 &6983326650127839893
 ParticleSystemRenderer:
   serializedVersion: 6

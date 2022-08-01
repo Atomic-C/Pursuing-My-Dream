@@ -258,11 +258,6 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private bool _canFire;
 
-    /// <summary>
-    /// The active crosshair sprite renderer
-    /// </summary>
-    private SpriteRenderer _activeCrosshairSprite;
-
     [Header("Fields change timer")]
     [Tooltip("Timer to prevent calling repeatedly functions from the OnGui function")]
     /// <summary>
@@ -382,7 +377,6 @@ public class MagicalGemController : MonoBehaviour
     public void Initialize()
     {
         Awake();
-        Start();
     }
 
     /// <summary>
@@ -508,7 +502,7 @@ public class MagicalGemController : MonoBehaviour
     /// </summary>
     private void FireBullet()
     {
-        if (_canFire)
+        if (_canFire && Time.timeScale != 0)
         {
             // Left mouse click
             if (Input.GetKey(KeyCode.Mouse0))
@@ -668,9 +662,6 @@ public class MagicalGemController : MonoBehaviour
             // Instantiate one and do the necessary setup for this script to work
             _activeCrossHairObject = Instantiate(crossHairPrefab, transform.position, Quaternion.identity);
         }
-
-        // Cache the necessary variable
-        _activeCrosshairSprite = _activeCrossHairObject.GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -789,7 +780,7 @@ public class MagicalGemController : MonoBehaviour
             // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
             _fireTimer = bullets[currentBullet].rateOfFire - rateOfFire[currentBullet];
             // Change the current crosshair by the one corresponding with the current bullet
-            _activeCrosshairSprite.sprite = crosshairColors[currentBullet];
+            _activeCrossHairObject.GetComponent<CrosshairController>().ChangeSprite(crosshairColors[currentBullet]);
             // Change the sprite library asset in use by the one correspoding with the current bullet
             _gemSpriteLibrary.spriteLibraryAsset = spriteLibraries[currentBullet];
             // Set the new range limit

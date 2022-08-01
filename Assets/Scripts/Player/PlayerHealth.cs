@@ -473,7 +473,7 @@ public class PlayerHealth : MonoBehaviour
         GameObject.FindGameObjectWithTag("MagicalGemController").GetComponent<MagicalGemController>().enabled = false;
 
         // Get the magical gem reference
-        _magicalGem = GameObject.FindGameObjectWithTag("MagicalGem(Clone)");
+        _magicalGem = GameObject.FindGameObjectWithTag("MagicalGem");
 
         // Disable its animator to make the gem stop midair
         _magicalGem.GetComponent<Animator>().enabled = false;

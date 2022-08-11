@@ -35,6 +35,9 @@ TagManager:
   - Undefined
   - StrengthUPG
   - PauseMenu
+  - GameManager
+  - ShopKeeper
+  - ShopKeeperSpeech
   layers:
   - Default
   - TransparentFX

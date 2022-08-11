@@ -11,7 +11,16 @@ public static class SceneLoader
     /// <param name="scene">Enum that indicates a scene</param>
     public static void LoadScene(Scene scene)
     {
-        SceneManager.LoadScene(scene.ToString());
+        SceneManager.LoadScene(scene.ToString(), LoadSceneMode.Single);
+    }
+
+    /// <summary>
+    /// Function that loads a specified scene
+    /// </summary>
+    /// <param name="scene">String that indicates a scene</param>
+    public static void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
     /// <summary>

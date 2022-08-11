@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canStart: 0
+  coins: 0
   coinsUiText: {fileID: 0}
   upgradeManager: {fileID: 0}
   magicalGemController: {fileID: 0}
@@ -256,12 +257,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canStart: 0
   maxHealth: 5
+  currentMaxHealth: 5
+  currentHealth: 5
   heartSpawnDirection: 0
   flashingColor: {r: 0, g: 0, b: 0, a: 0}
   heart: {fileID: 8007052434722455889, guid: 2009fc93d8bcb674b9dc017dabd54d20, type: 3}
   firstHeartPosition: {x: -9.13, y: 4.37, z: 0}
   heartsSpaceOffset: 0.8
   canvas: {fileID: 0}
+  physicsMaterial2D: {fileID: 6200000, guid: 7fcc9adf3d5375549b104f8c22464dea, type: 2}
   useStunEffect: 0
   hitStunTimer: 0
   hitDistance: 1

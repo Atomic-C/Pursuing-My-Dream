@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4464484909298802122}
   - component: {fileID: 5588343309001143264}
   - component: {fileID: 4409705397168440658}
+  - component: {fileID: 6324646977829413244}
   m_Layer: 0
   m_Name: HealthUp
   m_TagString: collectable
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 104631a471edba9468ac463324ca6f4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4955,3 +4956,16 @@ MonoBehaviour:
   vanishTime: 2
   vanishDeltaTime: 0.2
   flashingColor: {r: 0, g: 0, b: 0, a: 0}
+  fromShop: 1
+--- !u!114 &6324646977829413244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691434998475397812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c19c00ee7ba411459b17c8d14ad3a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

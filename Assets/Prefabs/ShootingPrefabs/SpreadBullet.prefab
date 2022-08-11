@@ -162,7 +162,7 @@ MonoBehaviour:
   collisionEffectPrefab: {fileID: 4916615025883986089, guid: b51a6a95cc763ab47b6ad9a3f6aa5032, type: 3}
   strength: 2
   speed: 15
-  range: 0.5
+  range: 0.8
   rateOfFire: 0.2
   energyCost: 0.05
   shootType: 1

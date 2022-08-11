@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3869102385473879844}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbb5a89541094440ba4c442e47fed22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: 8dd20365ec7bb834e9ae8eaa365c1054, type: 2}
+  spawnAndSetup: 1
   player: {fileID: 8642461791036585143, guid: 47d409d6097868d4ba70bd1f065ae29a, type: 3}
   magicalGemController: {fileID: 7889609410469893913, guid: c13b8ec6ca9d01843b7187134655f280, type: 3}
   mainCamera: {fileID: 5618679210641427181, guid: 6f8f48836ffb7524a83c6660d43d96cf, type: 3}
   forceCameraRatio: {fileID: 2631126462040586085, guid: cd0a74d035172ba4691f5a35b1e10e0b, type: 3}
-  cameraFollow: {fileID: 4032127082893737721, guid: 3a43c9bbfb43e0745b9d2df7f936c40d, type: 3}

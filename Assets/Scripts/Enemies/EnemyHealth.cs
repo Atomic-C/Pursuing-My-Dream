@@ -79,6 +79,11 @@ public class EnemyHealth : MonoBehaviour
     private bool _isHit;
 
     /// <summary>
+    /// Bool that determine if the enemy already dropped an item
+    /// </summary>
+    private bool _alreadyDropped;
+
+    /// <summary>
     /// Float that will hold its transform x local scale
     /// </summary>
     private float _xLocalScale;
@@ -222,6 +227,9 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Show the enemy health bar after it was hit and reflect the damage visually into the bar
+    /// </summary>
     private void HealthBarHit()
     {
         // Show the healthbar
@@ -290,6 +298,10 @@ public class EnemyHealth : MonoBehaviour
     /// </summary>
     private void DropOnDeath()
     {
+        // If the enemy already dropped an item, exit this function
+        if (_alreadyDropped)
+            return;
+
         // First, check the drop chance from the enemy
         float chance = Random.Range(0.0f, 1.0f);
 
@@ -306,6 +318,9 @@ public class EnemyHealth : MonoBehaviour
                 {
                     // Call the EnemyDrop script SpawnDrop function
                     drop.SpawnDrop(transform.position);
+
+                    // Dropped an item, set the bool to true
+                    _alreadyDropped = true;
 
                     // If using the single drop mechanic
                     if (singleDrop)

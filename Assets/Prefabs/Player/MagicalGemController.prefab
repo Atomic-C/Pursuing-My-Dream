@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7889609410469893927}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -181.22, y: -0.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d82f63d17f633b7488c3416ff7eb22f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canStart: 0
   usePool: 0
   bulletPoolSize: 0a000000320000000a000000
   bulletPoolMaxSize: 0f0000002c0100000f000000
@@ -97,8 +98,10 @@ MonoBehaviour:
   currentBullet: 0
   shootStrength: 0
   shootSpeed: 0
-  shootRange: 1
+  shootRange: 0
   maxEnergy: 1
+  currentMaxEnergy: 1
+  energy: 1
   energyRegen: 0.1
   rateOfFire:
   - 0
@@ -118,21 +121,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90bd09b375e11a34bae726fa91645100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canStart: 0
   isPercentage: 1
   playerHealth: {fileID: 0}
   strengthRankMax: 10
   speedRankMax: 5
   rangeRankMax: 5
-  rateOfFireRankMax: 9
-  energyRankMax: 20
-  energyRegenRankMax: 20
-  lifeRankMax: 15
+  rateOfFireRankMax: 10
+  energyRankMax: 10
+  energyRegenRankMax: 10
+  lifeRankMax: 5
+  strengthRank: 0
+  speedRank: 0
+  rangeRank: 0
+  rateOfFireRank: 0
+  energyRank: 0
+  energyRegenRank: 0
+  lifeRank: 0
   strengthUpgrade: 50
   speedUpgrade: 10
-  rangeUpgrade: 10
-  rateOfFireUpgrade: 10
+  rangeUpgrade: 50
+  rateOfFireUpgrade: 9
   energyUpgrade: 10
-  energyRegenUpgrade: 10
+  energyRegenUpgrade: 20
   strengthIndicator: {fileID: 1502325504862386658, guid: 3d7213aa48ee918439f3f43d92717bc3, type: 3}
   speedIndicator: {fileID: 6277567547643260024, guid: b5281b44db5446b479aae48c0eb15a2e, type: 3}
   rateOfFireIndicator: {fileID: 7336611306361505795, guid: d99e6aa3069ba1c4f8cadb5a3d47cfa7, type: 3}
@@ -140,3 +151,22 @@ MonoBehaviour:
   energyIndicator: {fileID: 4300311510059528873, guid: 29b4517b4c13d23488776b9622efa7be, type: 3}
   energyRegenIndicator: {fileID: 7023782886432802283, guid: fe9efa732700f6d40abd1560dbb0172f, type: 3}
   lifeIndicator: {fileID: 7965709856805599483, guid: d95f18fedbcfaeb48999b45649c3aa11, type: 3}
+  upgradeBarSprites_10:
+  - {fileID: -2085190991, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -1523401368, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 1961005036, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 582537956, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -449623439, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 1922801519, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 1221440098, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -2044583200, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -1401319530, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -1208793983, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 652818638, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  upgradeBarSprites_5:
+  - {fileID: -314957234, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 544760527, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -168212638, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 1147139026, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: -1291118739, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}
+  - {fileID: 88474243, guid: ce83ed81ae56ec642821ed3a943f8275, type: 3}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eeb2bf90f718594494e40dc62f1c714, type: 3}
+  m_Name: Player Stats
+  m_EditorClassIdentifier: 
+  coins: 700
+  currentHealth: 5
+  maxHealth: 5
+  currentEnergy: 1
+  maxEnergy: 1
+  currentBullet: 0
+  strengthRank: 0
+  speedRank: 0
+  rangeRank: 0
+  rateOfFireRank: 0
+  energyRank: 0
+  energyRegenRank: 0
+  lifeRank: 0
+  isLoad: 0
+  initialLevelPosition: {x: -173.61, y: -1.71, z: 0}

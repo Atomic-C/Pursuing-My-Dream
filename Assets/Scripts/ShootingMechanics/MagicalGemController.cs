@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D.Animation;
 
 /// <summary>
@@ -9,6 +10,9 @@ using UnityEngine.U2D.Animation;
 /// </summary>
 public class MagicalGemController : MonoBehaviour
 {
+    /// <summary>
+    /// Bool that initialize this script, used by the GameManager script
+    /// </summary>
     public bool canStart;
 
     [Header("Object Pooling")]
@@ -202,9 +206,9 @@ public class MagicalGemController : MonoBehaviour
     public int currentBullet;
 
     /// <summary>
-    /// Statistics of the player: projectile strength, speed, range, maximum energy and energy regen
+    /// Statistics of the player: projectile strength, speed, range, maximum energy, current maximum energy, current energy and energy regen
     /// </summary>
-    public float shootStrength, shootSpeed, shootRange, maxEnergy, energyRegen;
+    public float shootStrength, shootSpeed, shootRange, maxEnergy, currentMaxEnergy, energy, energyRegen;
 
     /// <summary>
     /// Statistics of the player rate of fire, one for bullet type
@@ -215,11 +219,6 @@ public class MagicalGemController : MonoBehaviour
     /// Bool used to show / hide a visual representation of the current shoot range
     /// </summary>
     public bool showRange;
-
-    /// <summary>
-    /// Statistic of the player: current energy
-    /// </summary>
-    private float _energy;
 
     /// <summary>
     /// Float that will be affected by the rate of fire calculation
@@ -302,7 +301,6 @@ public class MagicalGemController : MonoBehaviour
             _canFire = true;
             _allowBoolChange = true;
             _setBoolTimer = setBoolTimer;
-            _energy = maxEnergy;
             _energyBarRenderer = energyBar.GetComponent<SpriteRenderer>();
             _energyIconRenderer = energyBarIcon.GetComponent<SpriteRenderer>();
 
@@ -388,14 +386,15 @@ public class MagicalGemController : MonoBehaviour
         AudioManager.instance.PlaySound("EnergyUp", transform.position);
 
         // Increase the current energy
-        _energy += value;
+        energy += value;
 
         // If the current energy goes above the maximum energy, set it to the maximum energy
-        if(_energy > maxEnergy)
-            _energy = maxEnergy;
+        if(energy > currentMaxEnergy)
+            energy = currentMaxEnergy;
 
-        // Manipulate the energy bar local scale accordingly
-        energyBar.transform.localScale = new Vector3(_energy, _energyBarScale.y, _energyBarScale.z);
+        // Manipulate the energy bar local scale accordingly, if applicable (default shoot has the energy bar deactivated)
+        if(energyBar.activeSelf)
+            energyBar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
     }
 
     /// <summary>
@@ -451,6 +450,8 @@ public class MagicalGemController : MonoBehaviour
     {
         shootRange += isPercentage ? (bullets[currentBullet].range / 100) * value : value;
         // Set the new range limit
+        if (_rangeArea == null || _activeGem == null)
+            CheckGem();
         _rangeArea.radius = shootRange + bullets[currentBullet].range;
     }
 
@@ -460,7 +461,7 @@ public class MagicalGemController : MonoBehaviour
     /// <param name="value">The upgrade percentage</param>
     public void EnergyUpgrade(float value, bool isPercentage)
     {
-        maxEnergy += isPercentage ? (maxEnergy / 100) * value : value;
+        currentMaxEnergy += isPercentage ? (currentMaxEnergy / 100) * value : value;
     }
 
     /// <summary>
@@ -470,6 +471,16 @@ public class MagicalGemController : MonoBehaviour
     public void EnergyRegenUpgrade(float value, bool isPercentage)
     {
         energyRegen += isPercentage ? (energyRegen / 100) * value : value;
+    }
+
+    /// <summary>
+    /// Function used by the game manager to maintain the player current energy levels between scenes
+    /// </summary>
+    /// <param name="currentEnergy">Previous scene current energy</param>
+    public void SetEnergyBetweenScenes(float currentEnergy, float maxEnergy)
+    {
+        currentMaxEnergy = maxEnergy;
+        energy = currentEnergy;
     }
 
     /// <summary>
@@ -515,7 +526,7 @@ public class MagicalGemController : MonoBehaviour
             else if (Input.GetKey(KeyCode.Mouse1) && bullets[currentBullet].hasAlternateShoot)
             {
                 // If the player has the necessary energy to use the alternate shoot
-                if (_energy > bullets[currentBullet].energyCost)
+                if (energy > bullets[currentBullet].energyCost)
                 {
                     // If it is the spread shoot alternate version, uses a different rate of fire setting
                     _fireTimer = bullets[currentBullet].shootType == Bullet.ShootType.SPREAD ?
@@ -616,9 +627,9 @@ public class MagicalGemController : MonoBehaviour
     private void ConsumeEnergy()
     {
         float energyConsumed = bullets[currentBullet].energyCost;
-        _energy -= energyConsumed;
+        energy -= energyConsumed;
         // Simulate the energy bar diminish effect by using its scale
-        energyBar.transform.localScale = new Vector3(_energy, _energyBarScale.y, _energyBarScale.z);
+        energyBar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
     }
 
     /// <summary>
@@ -709,7 +720,7 @@ public class MagicalGemController : MonoBehaviour
     private void SetVisualEffects()
     {
         // Since the OnGui is called several times per frame, this check is to prevent the quick reverting of the bool fields
-        if(_allowBoolChange)
+        if(_allowBoolChange && Time.timeScale != 0)
         {
             useEmission = !useEmission;
             _useOutline = !_useOutline;
@@ -725,7 +736,7 @@ public class MagicalGemController : MonoBehaviour
     private void ActivateObjectPooling()
     {
         // Since the OnGui is called several times per frame, this check is to prevent the quick reverting of the bool fields
-        if (_allowBoolChange)
+        if (_allowBoolChange && Time.timeScale != 0)
         {
             usePool = !usePool;
             // If the object is not being used anymore, make sure to clear all game objects previously created by it
@@ -763,7 +774,7 @@ public class MagicalGemController : MonoBehaviour
     private void SetupCurrentBullet(int bulletChoosen)
     {
         // Do not allow changing to another bullet while the not enough energy coroutine is running. This is to avoid a bug in the bar sprite
-        if (!_noEnergyRoutineIsRunning)
+        if (!_noEnergyRoutineIsRunning && Time.timeScale != 0)
         {
             // Set the currentBullet int by the keypad pressed by the player
             currentBullet = bulletChoosen;
@@ -777,6 +788,8 @@ public class MagicalGemController : MonoBehaviour
             _energyIconRenderer.sprite = energyIconSprites[currentBullet];
             // Cache the scale of this energy bar
             _energyBarScale = energyBar.transform.localScale;
+            // Set the bar size according to the player current energy
+            energyBar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
             // Firing cooldown calculation: the current bullet rate of fire minus the player current rate of fire (which is upgradeable, further decreasing cooldown between shots)
             _fireTimer = bullets[currentBullet].rateOfFire - rateOfFire[currentBullet];
             // Change the current crosshair by the one corresponding with the current bullet
@@ -868,10 +881,10 @@ public class MagicalGemController : MonoBehaviour
     {
         if (bullets[currentBullet].hasAlternateShoot)
         {
-            if (_energy < maxEnergy)
+            if (energy < currentMaxEnergy)
             {
-                _energy += energyRegen * Time.deltaTime;
-                energyBar.transform.localScale = new Vector3(_energy, _energyBarScale.y, _energyBarScale.z);
+                energy += energyRegen * Time.deltaTime;
+                energyBar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
             }
         }
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -89,13 +90,13 @@ public class PauseManager : MonoBehaviour
             if (_showCursor)
             {
                 Time.timeScale = 0f;
-                AudioManager.instance.PauseSound("Music");
+                AudioManager.instance.PauseSound("Music_" + SceneManager.GetActiveScene().name);
                 _pauseMenu.SetActive(true);
             }
             else
             {
                 Time.timeScale = 1f;
-                AudioManager.instance.PlaySound("Music", transform.position);
+                AudioManager.instance.PlaySound("Music_" + SceneManager.GetActiveScene().name, transform.position);
                 _pauseMenu.SetActive(false);
             }
 

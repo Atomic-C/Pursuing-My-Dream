@@ -131,10 +131,10 @@ public class MiniGuidedBullet : MonoBehaviour
     /// <param name="collision">The other object collider</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // It will only be destroyed when touching anything but the range limit
-        // Its already inside the trigger circle collider, so this is needed in order to avoid it exploding instantly
-        if (!collision.CompareTag("RangeLimit"))
-            DestroyBehavior();      
+        if (collision.CompareTag("DestroyBullet"))
+        {
+            Invoke("DestroyBehavior", .5f);
+        }
     }
 
     /// <summary>
@@ -143,8 +143,25 @@ public class MiniGuidedBullet : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("RangeLimit"))
+        if (collision.CompareTag("RangeLimit") && gameObject.activeSelf)
             DestroyBehavior();
+    }
+
+    /// <summary>
+    /// Call the DestroyBehavior function when colliding
+    /// Also call the target dummy Hit function in collision (guided is an aoe, which will damage enemies in another script)
+    /// </summary>
+    /// <param name="collision">The other object collider</param>
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            // Check if the enemy has a health function (some objects are considered enemies but they dont have a health pool)
+            bool hasHitFunction = collision.collider.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealth);
+            if (hasHitFunction)
+                enemyHealth.Hit(strength, transform);
+        }
+        DestroyBehavior();
     }
 
     /// <summary>
@@ -268,7 +285,6 @@ public class MiniGuidedBullet : MonoBehaviour
     /// Initially set all of its variables
     /// </summary>
     /// <param name="target">Its target</param>
-    /// <param name="range">Projectile range</param>
     /// <param name="speed">Projectile speed</param>
     /// <param name="strength">Projectile strength</param>
     /// <param name="fromPooledObject">If it belongs to a pooled object</param>

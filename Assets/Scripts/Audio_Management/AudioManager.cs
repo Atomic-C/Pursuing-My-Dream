@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Class that controls, dynamically, the sounds and musics of the game
@@ -48,7 +49,9 @@ public class AudioManager : MonoBehaviour
             newSound.transform.SetParent(this.transform);
             _sounds[i].SetSource(newSound.AddComponent<AudioSource>());
         }
-        PlaySound("Music", Vector3.zero);
+
+        // Play the current level music
+        PlaySound("Music_" + SceneManager.GetActiveScene().name, transform.position);
     }
 
     /// <summary>

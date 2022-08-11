@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Script that controls everything related to the player health, damage and life bar setup
 /// </summary>
 public class PlayerHealth : MonoBehaviour
 {
+    /// <summary>
+    /// Bool that initializes this script, used by the GameManager script
+    /// </summary>
     public bool canStart;
 
     [Header("Setup")]
@@ -15,6 +19,16 @@ public class PlayerHealth : MonoBehaviour
     /// The player maximum health
     /// </summary>
     public int maxHealth;
+
+    /// <summary>
+    /// The player maximum health, that will be affected by health up upgrades
+    /// </summary>
+    public int currentMaxHealth;
+
+    /// <summary>
+    /// The player current health, that will be deducted when taking damage
+    /// </summary>
+    public int currentHealth;
 
     /// <summary>
     /// Direction which the hearts will spawn
@@ -99,16 +113,6 @@ public class PlayerHealth : MonoBehaviour
     private Animator _animator;
 
     /// <summary>
-    /// The player maximum health, that will be affected by health up upgrades
-    /// </summary>
-    private int _maxHealth;
-
-    /// <summary>
-    /// The player current health, that will be deducted when taking damage
-    /// </summary>
-    private int _currentHealth;
-
-    /// <summary>
     /// List that will hold all the player hearts, used for manipulating its sprites
     /// </summary>
     private List<Heart> _hearts;
@@ -153,17 +157,6 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     private Platform_Movement _platformMovement;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (canStart)
-        {
-            // Initialize the hearts list
-            _hearts = new List<Heart>();
-            SetHealthBar();
-        }
-    }
-
     /// <summary>
     /// Cache all the necessary variables
     /// </summary>
@@ -176,13 +169,24 @@ public class PlayerHealth : MonoBehaviour
 
             _retryText.gameObject.SetActive(false);
 
-            _maxHealth = maxHealth;
-            _currentHealth = _maxHealth;
             _animator = GetComponent<Animator>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _platformMovement = GetComponent<Platform_Movement>();
             _originalColor = _spriteRenderer.color;
+
+            // Initialize the hearts list
+            if(_hearts == null)
+                _hearts = new List<Heart>();
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (canStart)
+        {
+            SetHealthBar();
         }
     }
 
@@ -224,6 +228,7 @@ public class PlayerHealth : MonoBehaviour
     public void Initialize()
     {
         Awake();
+        Start();
     }
 
     /// <summary>
@@ -235,14 +240,14 @@ public class PlayerHealth : MonoBehaviour
         AudioManager.instance.PlaySound("HealthUp", transform.position);
 
         // If the current health is lower than the max health (to avoid increasing the current health value above the maximum) and is different that 0 (dead cant pick health)
-        if (_currentHealth < _maxHealth && _currentHealth != 0)
+        if (currentHealth < currentMaxHealth && currentHealth != 0)
         {
             // Increase the current health
-            _currentHealth += (int)value;
+            currentHealth += (int)value;
 
             // If the current health goes above the maximum health, set it to the maximum health
-            if (_currentHealth > _maxHealth)
-                _currentHealth = _maxHealth;
+            if (currentHealth > currentMaxHealth)
+                currentHealth = currentMaxHealth;
 
             // Loop using the value ammount of times
             for (int i = 1; i <= (int)value; i++)
@@ -272,10 +277,10 @@ public class PlayerHealth : MonoBehaviour
     public void PickedUpHealthUpgrade()
     {
         // Increase the _maxHealth
-        _maxHealth++;
+        currentMaxHealth++;
 
         // Increase the player current health
-        _currentHealth++;
+        currentHealth++;
 
         // Instantiate the heart object and make it a child of the UI canvas
         GameObject newHeart = Instantiate(heart.gameObject);
@@ -312,19 +317,41 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
+    /// Function used by the GameManager to set the player health, between scenes, according to its current life and life upgrade rank 
+    /// </summary>
+    /// <param name="healthUpgradeRank"></param>
+    public void SetHealthBetweenScenes(int lifeUpgradeRank, int currHealth)
+    {
+        currentMaxHealth = maxHealth + lifeUpgradeRank;
+        currentHealth = currHealth;
+    }
+
+    /// <summary>
     /// Build the player health bar, instantiating the necessary ammount of hearts and making all of them a child of the UI canvas
     /// Calculation for distance between them: the first heart is instantiate in the firstHeartPosition Vector2 position. All others are instantiate in the same position but with
     /// a distance dictacted by the heartSpawnDirection enum, that is calculated with the formula for i variable times the heartsSpaceOffset value
     /// </summary>
     private void SetHealthBar()
     {
-        for (int i = 1; i <= _maxHealth; i++)
+        // Workaround for the game manager load game function: this function runs twice, so check if the health bar has been initialized
+        // If it has, ignore this function
+        if(_hearts.Count == 0)
         {
-            GameObject newHeart = Instantiate(heart.gameObject);
-            newHeart.transform.SetParent(canvas.transform);
-            newHeart.transform.localPosition = firstHeartPosition;
+            // The function SetHeartPosition uses the value of i to do a multiplication, in the calculation of the hearts objects space between each other
+            // So, i must begin as 1, since any value multiplied by zero is zero, bugging the function
+            for (int i = 1; i <= currentMaxHealth; i++)
+            {
+                GameObject newHeart = Instantiate(heart.gameObject);
+                newHeart.transform.SetParent(canvas.transform);
+                newHeart.transform.localPosition = firstHeartPosition;
 
-            _hearts.Add(SetHeartPosition(newHeart, firstHeartPosition, i).GetComponent<Heart>());
+                _hearts.Add(SetHeartPosition(newHeart, firstHeartPosition, i).GetComponent<Heart>());
+            }
+
+            for (int i = currentMaxHealth - 1; i >= currentHealth; i--)
+            {
+                _hearts[i].TookHit();
+            }
         }
     }
 
@@ -373,7 +400,7 @@ public class PlayerHealth : MonoBehaviour
                 if (_hearts[i].isDepleted == false)
                 {
                     // Deduce the player current health
-                    _currentHealth--;
+                    currentHealth--;
 
                     _tookHit = true;
 
@@ -390,7 +417,7 @@ public class PlayerHealth : MonoBehaviour
                     _animator.SetBool("TookDamage", true);
 
                     // Or if the player just lost its last heart
-                    if (_currentHealth == 0)
+                    if (currentHealth == 0)
                     {
                         // Call the Death function and exit this function
                         Death();
@@ -482,7 +509,7 @@ public class PlayerHealth : MonoBehaviour
         gameObject.GetComponent<CircleCollider2D>().sharedMaterial = physicsMaterial2D;
 
         // Stop the music
-        AudioManager.instance.StopSound("Music");
+        AudioManager.instance.StopSound("Music_" + SceneManager.GetActiveScene().name);
 
         // Set the Platform_Movement script isDead bool to true, preventing all movement inputs
         _platformMovement.isDead = true;

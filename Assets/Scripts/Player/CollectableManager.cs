@@ -6,7 +6,15 @@ using UnityEngine;
 /// </summary>
 public class CollectableManager : MonoBehaviour
 {
+    /// <summary>
+    /// Bool that initializes this script, used by the GameManager script
+    /// </summary>
     public bool canStart;
+
+    /// <summary>
+    /// Player coins counter
+    /// </summary>
+    public int coins = 0;
 
     /// <summary>
     /// UI coins counter
@@ -28,15 +36,14 @@ public class CollectableManager : MonoBehaviour
     /// </summary>
     private PlayerHealth _playerHealth;
 
-    /// <summary>
-    /// Player coins counter
-    /// </summary>
-    private int _coins = 0;
-
     private void Awake()
     {
-        if(canStart)
+        if (canStart)
+        {
             _playerHealth = GetComponent<PlayerHealth>();
+            InitializeCoins();
+        }
+            
     }
 
     /// <summary>
@@ -82,12 +89,32 @@ public class CollectableManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Function used by the ShopItemManager script
+    /// Player bought an item so decrease the coins ammount and play a sound
+    /// </summary>
+    /// <param name="ammount">The ammount of coins spent in the purchase</param>
+    public void CoinSpent(int ammount)
+    {
+        coins -= ammount;
+        coinsUiText.text = "x " + coins;
+        AudioManager.instance.PlaySound("ItemBought", gameObject.transform.position);
+    }
+
+    /// <summary>
+    /// Initiliaze the player coins counter
+    /// </summary>
+    private void InitializeCoins()
+    {
+        coinsUiText.text = "x " + coins;
+    }
+
+    /// <summary>
     /// Function responsible for the coin pickup mechanic, increasing the player coins counter in the UI
     /// </summary>
     private void CoinPickup(int value)
     {
-        _coins += value;
-        coinsUiText.text = "x " + _coins;
+        coins += value;
+        coinsUiText.text = "x " + coins;
         AudioManager.instance.PlaySound("CoinPickup", gameObject.transform.position);
     }
 }

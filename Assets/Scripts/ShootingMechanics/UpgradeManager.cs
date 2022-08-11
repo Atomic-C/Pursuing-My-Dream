@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UpgradeManager : MonoBehaviour
 {
+    /// <summary>
+    /// Bool that initialize this script, used by the GameManager script
+    /// </summary>
     public bool canStart;
 
     [Header("Upgrades config")]
@@ -20,6 +24,11 @@ public class UpgradeManager : MonoBehaviour
     /// Value that determine a limit in this statistic maximum upgrade
     /// </summary>
     public int strengthRankMax, speedRankMax, rangeRankMax, rateOfFireRankMax, energyRankMax, energyRegenRankMax, lifeRankMax;
+
+    /// <summary>
+    /// Indication of how many upgrades the player currently has for each statistic
+    /// </summary>
+    public int strengthRank, speedRank, rangeRank, rateOfFireRank, energyRank, energyRegenRank, lifeRank;
 
     /// <summary>
     /// The percentage increase when an upgrade is picked up
@@ -52,11 +61,6 @@ public class UpgradeManager : MonoBehaviour
     private MagicalGemController _magicalGemController;
 
     /// <summary>
-    /// Indication of how many upgrades the player currently has for each statistic
-    /// </summary>
-    private int _strengthRank, _speedRank, _rangeRank, _rateOfFireRank, _energyRank, _energyRegenRank, _lifeRank;
-
-    /// <summary>
     /// Empty game object that serves as a parent for the upgrade indicator (to make the upgrade indicator animation to work)
     /// </summary>
     private GameObject indicatorParent;
@@ -66,47 +70,45 @@ public class UpgradeManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if(canStart)
+        if (canStart)
         {
-            _magicalGemController = gameObject.GetComponent<MagicalGemController>();
-
             // Initialize the upgrade bars Image component array (there are 7 upgrades in total)
             _upgradeBarImages = new Image[7];
 
             // Iterate the newly created array
             for(int i = 0; i < _upgradeBarImages.Length; i++)
             {
-                // Then go get the reference for all the upgrade bars objects using their respective tag and initialize its sprite (to maintain the visual representation of the player
-                // current rank in each statistics)
+                // Then go get the reference for all the upgrade bars objects using their respective tag and initialize its sprite (to maintain the visual
+                // representation of the player current rank in each statistics)
                 switch (i)
                 {
                     case 0:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("StrengthUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[_strengthRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[strengthRank];
                         break;
                     case 1:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("SpeedUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_5[_speedRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_5[speedRank];
                         break;
                     case 2:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("RateOfFireUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[_rateOfFireRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[rateOfFireRank];
                         break;
                     case 3:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("RangeUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_5[_rangeRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_5[rangeRank];
                         break;
                     case 4:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("EnergyUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[_energyRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[energyRank];
                         break;
                     case 5:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("EnergyRegenUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[_energyRegenRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_10[energyRegenRank];
                         break;
                     case 6:
                         _upgradeBarImages[i] = GameObject.FindGameObjectWithTag("LifeUPG").GetComponent<Image>();
-                        _upgradeBarImages[i].sprite = upgradeBarSprites_5[_lifeRank];
+                        _upgradeBarImages[i].sprite = upgradeBarSprites_5[lifeRank];
                         break;
                 }
             }
@@ -120,6 +122,49 @@ public class UpgradeManager : MonoBehaviour
             // Deactivate the pause menu object
             pauseMenu.SetActive(false);
         }            
+    }
+
+    /// <summary>
+    /// Function used by the game manager, to maintain the player shooting statistics ranks between scenes
+    /// </summary>
+    /// <param name="strength">Current strength rank</param>
+    /// <param name="speed">Current speed rank</param>
+    /// <param name="range">Current range rank</param>
+    /// <param name="rateOfFire">Current rate of fire rank</param>
+    /// <param name="energy">Current energy rank</param>
+    /// <param name="energyRegen">Current energy regen rank</param>
+    /// <param name="life">Current life rank</param>
+    public void SetUpgradeRanks(int strength, int speed, int range, int rateOfFire, int energy, int energyRegen, int life)
+    {
+        _magicalGemController = gameObject.GetComponent<MagicalGemController>();
+
+        // Set the current respective rank and recalculate all statistics, by using the magical gem controller upgrades function
+        strengthRank = strength;
+        for (int i = 0; i < strengthRank; i++)
+            _magicalGemController.StrengthUpgrade(strengthUpgrade, isPercentage);
+
+        speedRank = speed;
+        for (int i = 0; i < speedRank; i++)
+            _magicalGemController.SpeedUpgrade(speedUpgrade, isPercentage);
+
+        rangeRank = range;
+        for (int i = 0; i < rangeRank; i++)
+            _magicalGemController.RangeUpgrade(rangeUpgrade, isPercentage);
+
+        rateOfFireRank = rateOfFire;
+        for (int i = 0; i < rateOfFireRank; i++)
+            _magicalGemController.RateOfFireUpgrade(rateOfFireUpgrade, isPercentage);
+
+        energyRank = energy;
+        /*for (int i = 0; i < energyRank; i++)
+            _magicalGemController.EnergyUpgrade(energyUpgrade, isPercentage);*/
+
+        energyRegenRank = energyRegen;
+        for (int i = 0; i < energyRegenRank; i++)
+            _magicalGemController.EnergyRegenUpgrade(energyRegenUpgrade, isPercentage);
+
+        // Player life ranks are calculated in the player health script, here is used for the pause menu visual representation
+        lifeRank = life;
     }
 
     public void Initialize()
@@ -144,31 +189,31 @@ public class UpgradeManager : MonoBehaviour
         switch (upgrade)
         {
             case 1:
-                if (_strengthRank == strengthRankMax)
+                if (strengthRank == strengthRankMax)
                     return;
                 break;
             case 2:
-                if (_speedRank == speedRankMax)
+                if (speedRank == speedRankMax)
                     return;
                 break;
             case 3:
-                if (_rateOfFireRank == rateOfFireRankMax)
+                if (rateOfFireRank == rateOfFireRankMax)
                     return;
                 break;
             case 4:
-                if (_rangeRank == rangeRankMax)
+                if (rangeRank == rangeRankMax)
                     return;
                 break;
             case 5:
-                if (_energyRank == energyRankMax)
+                if (energyRank == energyRankMax)
                     return;
                 break;
             case 6:
-                if (_energyRegenRank == energyRegenRankMax)
+                if (energyRegenRank == energyRegenRankMax)
                     return;
                 break;
             case 7:
-                if (_lifeRank == lifeRankMax)
+                if (lifeRank == lifeRankMax)
                     return;
                 break;
         }
@@ -190,9 +235,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the strength indicator object and make it a child of the indicator parent object
                 Instantiate(strengthIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the strength rank
-                _strengthRank++;
+                strengthRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[_strengthRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[strengthRank];
                 break;
             // 2 = shoot speed upgrade
             case 2:
@@ -201,9 +246,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the speed indicator object and make it a child of the indicator parent object
                 Instantiate(speedIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the speed rank
-                _speedRank++;
+                speedRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_5[_speedRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_5[speedRank];
                 break;
             // 3 = rate of fire upgrade
             case 3:
@@ -212,9 +257,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the rate of fire indicator object and make it a child of the indicator parent object
                 Instantiate(rateOfFireIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the rate of fire rank
-                _rateOfFireRank++;
+                rateOfFireRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[_rateOfFireRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[rateOfFireRank];
                 break;
             // 4 = shoot range upgrade
             case 4:
@@ -223,9 +268,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the range indicator object and make it a child of the indicator parent object
                 Instantiate(rangeIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the range rank
-                _rangeRank++;
+                rangeRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_5[_rangeRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_5[rangeRank];
                 break;
             // 5 = maximum energy upgrade
             case 5:
@@ -234,9 +279,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the energy indicator object and make it a child of the indicator parent object
                 Instantiate(energyIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the energy rank
-                _energyRank++;
+                energyRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[_energyRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[energyRank];
                 break;
             // 6 = energy regen upgrade
             case 6:
@@ -245,9 +290,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the energy regen indicator object and make it a child of the indicator parent object
                 Instantiate(energyRegenIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the energy regen rank
-                _energyRegenRank++;
+                energyRegenRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[_energyRegenRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_10[energyRegenRank];
                 break;
             // 7 = player health upgrade
             case 7:
@@ -256,9 +301,9 @@ public class UpgradeManager : MonoBehaviour
                 // Instantiate the health indicator object and make it a child of the indicator parent object 
                 Instantiate(lifeIndicator).transform.SetParent(indicatorParent.transform);
                 // Increases the life rank
-                _lifeRank++;
+                lifeRank++;
                 // Change the respective upgrade bar to reflect the new rank attained
-                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_5[_lifeRank];
+                _upgradeBarImages[upgrade - 1].sprite = upgradeBarSprites_5[lifeRank];
                 break;
         }
 

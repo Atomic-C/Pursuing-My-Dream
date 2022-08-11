@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7733614724274630213}
   - component: {fileID: 3713534094058203355}
   - component: {fileID: 2885221662902825490}
+  - component: {fileID: 6208901238497642298}
   m_Layer: 0
   m_Name: EnergyUp
   m_TagString: collectable
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1234022654, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4969,9 +4970,22 @@ MonoBehaviour:
   minRandomRange: -100
   maxRandomRange: 100
   incrementValue: 0.25
-  dropChance: 0.4
+  dropChance: 0.2
   dropType: 1
   lifeSpan: 2
   vanishTime: 2
   vanishDeltaTime: 0.2
   flashingColor: {r: 0, g: 0, b: 0, a: 0}
+  fromShop: 1
+--- !u!114 &6208901238497642298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4545184618905446218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c19c00ee7ba411459b17c8d14ad3a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

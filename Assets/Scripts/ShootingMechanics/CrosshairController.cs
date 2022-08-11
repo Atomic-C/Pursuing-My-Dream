@@ -17,8 +17,14 @@ public class CrosshairController : MonoBehaviour
     /// </summary>
     private Camera _mainCamera;
 
+    /// <summary>
+    /// The crosshair original sprite
+    /// </summary>
     private Sprite _originalSprite;
 
+    /// <summary>
+    /// The sprite renderer of the crosshair game object
+    /// </summary>
     private SpriteRenderer _spriteRenderer;
 
     private void Awake()
@@ -35,6 +41,10 @@ public class CrosshairController : MonoBehaviour
         GameIsPaused();
     }
 
+    /// <summary>
+    /// Function that changes the sprite of this object with another
+    /// </summary>
+    /// <param name="sprite">Sprite that this object will use</param>
     public void ChangeSprite(Sprite sprite)
     {
         _spriteRenderer.sprite = sprite;
@@ -50,6 +60,9 @@ public class CrosshairController : MonoBehaviour
         transform.position = new Vector3(_mousePosition.x, _mousePosition.y, 0f);
     }
 
+    /// <summary>
+    /// If the game was paused, change the crosshair sprite with a hand pointer one
+    /// </summary>
     private void GameIsPaused()
     {
         if (Time.timeScale == 0)

@@ -22,7 +22,6 @@ public class ShopEntrance : MonoBehaviour
     private void Awake()
     {
         _arrowUp = Instantiate(arrowUp, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
-        _arrowUp.SetActive(false);
     }
 
     private void Update()
@@ -38,7 +37,7 @@ public class ShopEntrance : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            _arrowUp.SetActive(true);
+            _arrowUp.GetComponent<Animator>().SetBool("TouchingPlayer", true);
         } 
     }
 
@@ -50,7 +49,7 @@ public class ShopEntrance : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            _arrowUp.SetActive(false);
+            _arrowUp.GetComponent<Animator>().SetBool("TouchingPlayer", false);
         }
     }
 
@@ -59,7 +58,7 @@ public class ShopEntrance : MonoBehaviour
     /// </summary>
     private void CheckInput()
     {
-        if (_arrowUp.activeSelf && Input.GetKeyDown(KeyCode.W))
+        if (_arrowUp.GetComponent<Animator>().GetBool("TouchingPlayer") && Input.GetKeyDown(KeyCode.W))
         {
             GameObject.FindGameObjectWithTag("MainCamera").transform.Find("Fade_InOut_Canvas").GetComponent<Animator>().SetTrigger("FadeOut");
             Invoke("LoadScene", 0.2f);

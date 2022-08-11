@@ -53,7 +53,7 @@ public class ShopKeeper : MonoBehaviour
     /// Phrases for random speech
     /// </summary>
     readonly string[] _randomSpeech = { "I gave up that life a long time ago. It's no use to keep fighting them..", 
-                                        "I had a bright gem like yours, once. It don't float anymore..", 
+                                        "I had a bright gem like yours, once. It don't float anymore though..", 
                                         "How's the kingdom outside? I've heard the wizard lost another gem.."};
 
     /// <summary>
@@ -68,7 +68,7 @@ public class ShopKeeper : MonoBehaviour
         _speechTimer = speechTimer;
         animator = GetComponent<Animator>();
         _balloon = GameObject.FindGameObjectWithTag("ShopKeeperSpeech");
-        _speech = _balloon.transform.Find("Text").GetComponent<TextMeshPro>();
+        _speech = GameObject.Find("Text").GetComponent<TextMeshPro>();
         _balloon.SetActive(false);
     }
 

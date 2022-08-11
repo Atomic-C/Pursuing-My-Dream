@@ -393,7 +393,7 @@ public class MagicalGemController : MonoBehaviour
             energy = currentMaxEnergy;
 
         // Manipulate the energy bar local scale accordingly, if applicable (default shoot has the energy bar deactivated)
-        if(energyBar.activeSelf)
+        if(energyBar.activeSelf && currentBullet != 0)
             energyBar.transform.localScale = new Vector3(energy, _energyBarScale.y, _energyBarScale.z);
     }
 

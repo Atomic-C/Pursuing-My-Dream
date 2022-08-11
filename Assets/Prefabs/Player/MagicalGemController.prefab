@@ -54,11 +54,11 @@ MonoBehaviour:
   energyBar: {fileID: 0}
   energyBarIcon: {fileID: 0}
   energyBarSprites:
-  - {fileID: -4517549209914134686, guid: 964431dda26d47c418b5d6d976ec44c1, type: 3}
+  - {fileID: 0}
   - {fileID: -1027166025824103704, guid: 964431dda26d47c418b5d6d976ec44c1, type: 3}
   - {fileID: 8401347299046109351, guid: 964431dda26d47c418b5d6d976ec44c1, type: 3}
   energyIconSprites:
-  - {fileID: -1234022654, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
+  - {fileID: 0}
   - {fileID: -1568038566, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
   - {fileID: -2036758549, guid: 1c795a18520a6034bb6be6faaed270de, type: 3}
   originalBarMaterial: {fileID: 2100000, guid: da845563df30ca64dbfb2f1132d36fa0, type: 2}

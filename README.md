@@ -19,8 +19,10 @@ Already implemented:
 - Implemented a target dummy spawner with animated targets and damage mechanic
 - Implemented a fully functional upgrade system: shoot strength, speed, range, rate of fire upgrades! Max energy and energy regen too!
 - Implemented the player health system which is too upgradeable
-- Implemented a pause feature with a pause menu showing all current upgrade ranks the player has, for each statistics
+- Implemented a pause feature with a pause menu showing all current upgrade ranks the player has, for each statistics (with UI explanation)
 - Implemented a damage indicator feature so the player can see the ammount of damage being inflicted on enemies
+- Progress is now maintained between scenes with the use of scriptable object
+- Shop now available! Player can spend those coins on some stuff
 
 Next steps:
 - Finish the visual aspects of the level

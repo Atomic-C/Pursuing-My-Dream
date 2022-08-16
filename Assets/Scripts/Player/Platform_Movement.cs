@@ -1,4 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
